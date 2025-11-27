@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kemet Game: My Written Truth - Ancient Egypt Mobile Game</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #542814;
+            color: #eeeeee;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(84, 40, 20, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(241, 197, 35, 0.2);
+        }
+
+        .navbar.scrolled {
+            background: rgba(84, 40, 20, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: #f1c523;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .nav-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #f1c523 0%, #aa6800 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #542814;
+        }
+
+        .nav-logo-icon img{
+            height: 100%;
+            width: 100%;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #eeeeee;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #f1c523;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f1c523, #aa6800);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #f1c523 0%, #aa6800 100%);
+            color: #542814;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #f1c523;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Page Content */
+        .page-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Typography system */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f1c523 0%, #aa6800 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f1c523 0%, #aa6800 100%);
+            color: #542814;
+            box-shadow: 0 8px 25px rgba(241, 197, 35, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(241, 197, 35, 0.4);
+        }
+
+        .btn-secondary {
+            background: #8200cd;
+            color: #eeeeee;
+            box-shadow: 0 8px 25px rgba(130, 0, 205, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(130, 0, 205, 0.4);
+            background: #9a1ae6;
+        }
+
+        /* Container and layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-alt {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hero section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(241, 197, 35, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(130, 0, 205, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #542814 0%, #3d1e0f 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 35px,
+                    rgba(241, 197, 35, 0.03) 35px,
+                    rgba(241, 197, 35, 0.03) 70px
+                );
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #f1c523 0%, #aa6800 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 0 50px rgba(241, 197, 35, 0.3),
+                0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        /* .hero-logo::before {
+            content: "𓉘";
+            font-size: 5rem;
+            color: #542814;
+        } */
+
+        .hero-logo img{
+            height: 100%;
+            width: 100%;
+            border-radius: 100px;
+        }
+        .tagline {
+            font-size: 1.4rem;
+            color: #9c9c9c;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Feature grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(241, 197, 35, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(241, 197, 35, 0.4);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f1c523 0%, #aa6800 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Page-specific styles */
+        .page-hero {
+            padding: 6rem 0 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(241, 197, 35, 0.1) 0%, transparent 50%);
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-hero p {
+            font-size: 1.2rem;
+            color: #9c9c9c;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Screenshots section */
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .screenshot-card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .screenshot-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #f1c523, #8200cd, #542814);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .screenshot-info {
+            padding: 1.5rem;
+        }
+
+        /* Character progression */
+        .progression-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .character-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .character-card:hover {
+            border-color: #f1c523;
+            transform: translateY(-5px);
+        }
+
+        .character-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f1c523 0%, #aa6800 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+
+        /* News grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .news-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f1c523, #8200cd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-date {
+            color: #9c9c9c;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #f1c523;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #9c9c9c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #f1c523;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(241, 197, 35, 0.2);
+            padding-top: 1rem;
+            text-align: center;
+            color: #9c9c9c;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(84, 40, 20, 0.98);
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .features-grid,
+            .screenshots-grid,
+            .progression-grid,
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hide all pages by default */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="WhatsApp Image 2025-09-20 at 15.35.56_534c986f.jpg" class="nav-logo" onclick="showPage('home')">
+                <div class="nav-logo-icon"><img src="WhatsApp Image 2025-09-20 at 15.35.56_534c986f.jpg" alt=""></div>
+                <span>Kemet Game</span>
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('gameplay')">Gameplay</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('characters')">Characters</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('screenshots')">Screenshots</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('news')">News</a></li>
+                <li><a href="#download" class="nav-cta">Download</a></li>
+            </ul>
+            
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Home Page -->
+        <div class="page active" id="home">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content fade-in">
+                        <div class="hero-logo">
+                            <img src="WhatsApp Image 2025-09-20 at 15.35.56_534c986f.jpg" alt="">
+                        </div>
+                        <h1>Kemet Game: My Written Truth</h1>
+                        <p class="tagline">Live the Life of Ancient Egypt — My Written Truth</p>
+                        
+                        <div class="hero-ctas">
+                            <a href="#download" class="btn btn-primary">Play Now</a>
+                            <a href="#" class="btn btn-secondary" onclick="showPage('gameplay')">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="section" id="features">
+                <div class="container">
+                    <div class="fade-in">
+                        <h2>Game Features</h2>
+                        
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">☀️</div>
+                                <h3>Day Cycle</h3>
+                                <p>Complete daily tasks authentic to your role - farm the fertile Nile banks, construct magnificent monuments, or record the pharaoh's decrees.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">🌙</div>
+                                <h3>Night Dreams</h3>
+                                <p>Experience mysterious dream sequences that transform into secret agent missions, uncovering ancient conspiracies and hidden truths.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">⚡</div>
+                                <h3>Character Progression</h3>
+                                <p>Rise through Egyptian society from Farmer to Artisan, Scribe, Advisor, and ultimately Pharaoh - each level unlocks new powers and responsibilities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Download Section -->
+            <section class="section section-alt" id="download">
+                <div class="container">
+                    <div class="fade-in" style="text-align: center;">
+                        <h2>Download Now</h2>
+                        <p>Begin your journey in Ancient Egypt today</p>
+                        
+                        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap;">
+                            <a href="#" class="btn btn-primary">📱 App Store</a>
+                            <a href="#" class="btn btn-primary">🤖 Google Play</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Gameplay Page -->
+        <div class="page" id="gameplay">
+            <section class="page-hero">
+                <div class="container">
+                    <h1>Gameplay</h1>
+                    <p>Discover the immersive world of Ancient Egypt through authentic gameplay mechanics</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">💪</div>
+                            <h3>Trait-Based Beginning</h3>
+                            <p>Choose personality traits that define your character and determine your starting position in Ancient Egyptian society. Will you be Strong like a warrior, or Patient like a wise scribe?</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🏺</div>
+                            <h3>Role Mapping</h3>
+                            <p>Your traits naturally lead to authentic jobs - Strong characters become builders, Patient ones become scribes, creating realistic progression paths through Egyptian society.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🏛️</div>
+                            <h3>Daily Life Simulation</h3>
+                            <p>Experience authentic Ancient Egyptian daily life - tend to crops during flood season, participate in religious ceremonies, and contribute to monumental construction projects.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🔍</div>
+                            <h3>Mystery Missions</h3>
+                            <p>Uncover ancient conspiracies through dream sequences that transform into thrilling secret agent missions, revealing hidden truths about Egyptian history.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Characters Page -->
+        <div class="page" id="characters">
+            <section class="page-hero">
+                <div class="container">
+                    <h1>Character Progression</h1>
+                    <p>Rise through the ranks of Ancient Egyptian society</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="progression-grid">
+                        <div class="character-card">
+                            <div class="character-icon">🌾</div>
+                            <h3>Farmer</h3>
+                            <p>Start your journey working the fertile lands along the Nile. Learn the basics of Egyptian life and society.</p>
+                        </div>
+                        
+                        <div class="character-card">
+                            <div class="character-icon">🔨</div>
+                            <h3>Artisan</h3>
+                            <p>Master crafts and trades. Create beautiful artifacts and contribute to the construction of monuments.</p>
+                        </div>
+                        
+                        <div class="character-card">
+                            <div class="character-icon">📜</div>
+                            <h3>Scribe</h3>
+                            <p>Learn hieroglyphics and become keeper of knowledge. Record important events and manage administrative duties.</p>
+                        </div>
+                        
+                        <div class="character-card">
+                            <div class="character-icon">🏛️</div>
+                            <h3>Advisor</h3>
+                            <p>Counsel the pharaoh and influence major decisions. Navigate complex political situations and court intrigue.</p>
+                        </div>
+                        
+                        <div class="character-card">
+                            <div class="character-icon">👑</div>
+                            <h3>Pharaoh</h3>
+                            <p>Rule all of Egypt with divine authority. Make decisions that will shape the kingdom for generations to come.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Screenshots Page -->
+        <div class="page" id="screenshots">
+            <section class="page-hero">
+                <div class="container">
+                    <h1>Screenshots</h1>
+                    <p>Experience the beauty and mystery of Ancient Egypt</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="screenshots-grid">
+                        <div class="screenshot-card">
+                            <div class="screenshot-placeholder">
+                                <div>
+                                    <h4 style="color: #f1c523; margin-bottom: 1rem;">Daily Tasks</h4>
+                                    <p>Complete your role-specific daily activities along the Nile</p>
+                                </div>
+                            </div>
+                            <div class="screenshot-info">
+                                <h3>Daily Life</h3>
+                                <p>Immerse yourself in authentic Egyptian daily routines and seasonal activities.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="screenshot-card">
+                            <div class="screenshot-placeholder">
+                                <div>
+                                    <h4 style="color: #f1c523; margin-bottom: 1rem;">Pyramid Construction</h4>
+                                    <p>Help build the great monuments that will stand for millennia</p>
+                                </div>
+                            </div>
+                            <div class="screenshot-info">
+                                <h3>Monument Building</h3>
+                                <p>Participate in the construction of Egypt's most iconic structures.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="screenshot-card">
+                            <div class="screenshot-placeholder">
+                                <div>
+                                    <h4 style="color: #f1c523; margin-bottom: 1rem;">Dream Mysteries</h4>
+                                    <p>Uncover ancient secrets in mysterious nighttime adventures</p>
+                                </div>
+                            </div>
+                            <div class="screenshot-info">
+                                <h3>Secret Missions</h3>
+                                <p>Explore hidden conspiracies through thrilling dream sequences.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="screenshot-card">
+                            <div class="screenshot-placeholder">
+                                <div>
+                                    <h4 style="color: #f1c523; margin-bottom: 1rem;">Court Politics</h4>
+                                    <p>Navigate the complex world of Egyptian royal court</p>
+                                </div>
+                            </div>
+                            <div class="screenshot-info">
+                                <h3>Political Intrigue</h3>
+                                <p>Make crucial decisions that affect the entire kingdom.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="screenshot-card">
+                            <div class="screenshot-placeholder">
+                                <div>
+                                    <h4 style="color: #f1c523; margin-bottom: 1rem;">Religious Ceremonies</h4>
+                                    <p>Participate in sacred rituals and festivals</p>
+                                </div>
+                            </div>
+                            <div class="screenshot-info">
+                                <h3>Sacred Rituals</h3>
+                                <p>Experience the spiritual side of Ancient Egyptian culture.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="screenshot-card">
+                            <div class="screenshot-placeholder">
+                                <div>
+                                    <h4 style="color: #f1c523; margin-bottom: 1rem;">Nile Exploration</h4>
+                                    <p>Discover hidden locations along the great river</p>
+                                </div>
+                            </div>
+                            <div class="screenshot-info">
+                                <h3>Exploration</h3>
+                                <p>Journey through diverse landscapes and discover ancient secrets.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- News Page -->
+        <div class="page" id="news">
+            <section class="page-hero">
+                <div class="container">
+                    <h1>Latest News</h1>
+                    <p>Stay updated with the latest developments and content updates</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="news-grid">
+                        <div class="news-card">
+                            <div class="news-image">
+                                <div>New Update: Valley of the Kings</div>
+                            </div>
+                            <div class="news-content">
+                                <div class="news-date">January 15, 2025</div>
+                                <h3>Major Content Update Released</h3>
+                                <p>Explore the mysterious Valley of the Kings in our latest update. Discover new tombs, uncover ancient treasures, and face new challenges in this expanded region.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <div>Character Customization Enhanced</div>
+                            </div>
+                            <div class="news-content">
+                                <div class="news-date">December 20, 2024</div>
+                                <h3>Enhanced Character System</h3>
+                                <p>New trait combinations and character customization options now available. Create more unique characters with expanded personality traits and appearance options.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <div>Community Event: Festival of Opet</div>
+                            </div>
+                            <div class="news-content">
+                                <div class="news-date">November 30, 2024</div>
+                                <h3>Special Festival Event</h3>
+                                <p>Join players worldwide in celebrating the Festival of Opet. Participate in special ceremonies and earn exclusive rewards during this limited-time event.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <div>Performance Improvements</div>
+                            </div>
+                            <div class="news-content">
+                                <div class="news-date">November 10, 2024</div>
+                                <h3>Game Optimization Update</h3>
+                                <p>Significant performance improvements and bug fixes. The game now runs smoother on all devices with enhanced graphics and reduced loading times.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <div>New Storyline: The Pharaoh's Secret</div>
+                            </div>
+                            <div class="news-content">
+                                <div class="news-date">October 25, 2024</div>
+                                <h3>Mystery Storyline Added</h3>
+                                <p>Uncover a conspiracy that threatens the very foundation of the kingdom in our new mystery storyline. New characters, locations, and plot twists await.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="news-card">
+                            <div class="news-image">
+                                <div>Community Milestone Reached</div>
+                            </div>
+                            <div class="news-content">
+                                <div class="news-date">October 1, 2024</div>
+                                <h3>1 Million Players!</h3>
+                                <p>We've reached 1 million players worldwide! Thank you for joining us on this incredible journey through Ancient Egypt. Special rewards for all players!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Game</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showPage('gameplay')">Gameplay</a></li>
+                        <li><a href="#" onclick="showPage('characters')">Characters</a></li>
+                        <li><a href="#" onclick="showPage('screenshots')">Screenshots</a></li>
+                        <li><a href="#download">Download</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showPage('news')">News</a></li>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Reddit</a></li>
+                        <li><a href="#">Forums</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Bug Reports</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">EULA</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Kemet Game: My Written Truth. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigation active state
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Find and activate the corresponding nav link
+            const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+            if (activeLink && activeLink.classList.contains('nav-link')) {
+                activeLink.classList.add('active');
+            }
+            
+            // Close mobile menu if open
+            const navMenu = document.getElementById('navMenu');
+            const mobileToggle = document.getElementById('mobileToggle');
+            navMenu.classList.remove('active');
+            mobileToggle.classList.remove('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            const navMenu = document.getElementById('navMenu');
+            const mobileToggle = document.getElementById('mobileToggle');
+            
+            navMenu.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#download') {
+                    e.preventDefault();
+                    showPage('home');
+                    setTimeout(() => {
+                        document.getElementById('download').scrollIntoView({ 
+                            behavior: 'smooth' 
+                        });
+                    }, 100);
+                }
+            });
+        });
+
+        // Scroll-triggered animations
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        function checkFadeIn() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(element => {
+                if (isInViewport(element) || element.getBoundingClientRect().top < window.innerHeight * 0.8) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Check for elements in viewport on scroll and load
+        window.addEventListener('scroll', checkFadeIn);
+        window.addEventListener('load', checkFadeIn);
+        
+        // Initial check for fade-in elements
+        checkFadeIn();
+
+        // Button press animation enhancement
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mousedown', function() {
+                this.style.transform = 'translateY(2px) scale(0.98)';
+            });
+            
+            btn.addEventListener('mouseup', function() {
+                this.style.transform = '';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // Feature card hover enhancement
+        document.querySelectorAll('.feature-card, .character-card, .news-card, .screenshot-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 15px 35px rgba(241, 197, 35, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navMenu = document.getElementById('navMenu');
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navbar = document.getElementById('navbar');
+            
+            if (!navbar.contains(e.target) && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+            }
+        });
+
+        // Prevent mobile menu from closing when clicking inside it
+        document.getElementById('navMenu').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>

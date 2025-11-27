@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machines Map - Binova</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        /* Custom map styles */
+        #map {
+            width: 100%;
+            height: 500px;
+            background-color: #f0f0f0;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .leaflet-container {
+            background-color: #f0f0f0;
+        }
+        
+        .custom-marker {
+            background: transparent !important;
+            border: none !important;
+        }
+        
+        /* Debug styles */
+        .map-container {
+            position: relative;
+            min-height: 500px;
+        }
+        
+        .map-debug {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="margin-top: 120px;">
+        <div class="text-center mb-4">
+            <h1>Find Binova Machines Near You</h1>
+            <p>Locate the nearest recycling machine and start earning points today.</p>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="map-debug" id="mapDebug">Loading map...</div>
+        </div>
+
+        <div class="grid grid-2 mt-4">
+            <div class="card">
+                <h3>🟢 Active Machines</h3>
+                <p id="activeMachines">Loading...</p>
+            </div>
+            <div class="card">
+                <h3>📍 Nearest Location</h3>
+                <p id="nearestLocation">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="navigation.js"></script>
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Dummy machine data
+        const machines = [
+            {
+                id: 1,
+                name: 'محطة وسط البلد',
+                lat: 30.0444,
+                lng: 31.2357,
+                status: 'active',
+                address: 'وسط البلد، القاهرة، مصر',
+                bottlesCollected: 1250,
+                lastMaintenance: '2025-01-10'
+            },
+            {
+                id: 2,
+                name: 'محطة المعادي',
+                lat: 29.9792,
+                lng: 31.1342,
+                status: 'active',
+                address: 'المعادي، القاهرة، مصر',
+                bottlesCollected: 2100,
+                lastMaintenance: '2025-01-12'
+            },
+            {
+                id: 3,
+                name: 'محطة الزمالك',
+                lat: 30.0596,
+                lng: 31.2235,
+                status: 'active',
+                address: 'الزمالك، القاهرة، مصر',
+                bottlesCollected: 890,
+                lastMaintenance: '2025-01-08'
+            },
+            {
+                id: 4,
+                name: 'محطة مصر الجديدة',
+                lat: 30.0877,
+                lng: 31.3302,
+                status: 'active',
+                address: 'مصر الجديدة، القاهرة، مصر',
+                bottlesCollected: 1670,
+                lastMaintenance: '2025-01-11'
+            },
+            {
+                id: 5,
+                name: 'محطة المهندسين',
+                lat: 30.0626,
+                lng: 31.2497,
+                status: 'active',
+                address: 'المهندسين، الجيزة، مصر',
+                bottlesCollected: 1950,
+                lastMaintenance: '2025-01-09'
+            },
+            {
+                id: 6,
+                name: 'محطة الدقي',
+                lat: 30.0378,
+                lng: 31.2147,
+                status: 'inactive',
+                address: 'الدقي، الجيزة، مصر',
+                bottlesCollected: 750,
+                lastMaintenance: '2025-01-05'
+            },
+            {
+                id: 7,
+                name: 'محطة العجوزة',
+                lat: 30.0500,
+                lng: 31.2000,
+                status: 'active',
+                address: 'العجوزة، الجيزة، مصر',
+                bottlesCollected: 1420,
+                lastMaintenance: '2025-01-13'
+            },
+            {
+                id: 8,
+                name: 'محطة الهرم',
+                lat: 29.9792,
+                lng: 31.1342,
+                status: 'active',
+                address: 'الهرم، الجيزة، مصر',
+                bottlesCollected: 2300,
+                lastMaintenance: '2025-01-14'
+            }
+        ];
+
+        let map;
+        let markers = [];
+
+        function initMap() {
+            try {
+                // Check if Leaflet is loaded
+                if (typeof L === 'undefined') {
+                    document.getElementById('mapDebug').innerHTML = 'Error: Leaflet not loaded';
+                    return;
+                }
+
+                document.getElementById('mapDebug').innerHTML = 'Initializing map...';
+
+                // Initialize Leaflet map centered on Cairo, Egypt
+                map = L.map('map').setView([30.0444, 31.2357], 11);
+
+                document.getElementById('mapDebug').innerHTML = 'Adding map tiles...';
+
+                // Add OpenStreetMap tiles
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                document.getElementById('mapDebug').innerHTML = 'Adding markers...';
+
+                // Add markers for each machine
+                machines.forEach((machine, index) => {
+                    // Create custom marker icon
+                    const markerIcon = L.divIcon({
+                        className: 'custom-marker',
+                        html: `<div style="
+                            width: 32px; 
+                            height: 32px; 
+                            border-radius: 50%; 
+                            background: ${machine.status === 'active' ? '#22C55E' : '#EF4444'};
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: white;
+                            font-weight: bold;
+                            font-size: 16px;
+                            cursor: pointer;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                            border: 2px solid white;
+                        ">R</div>`,
+                        iconSize: [32, 32],
+                        iconAnchor: [16, 16]
+                    });
+
+                    const marker = L.marker([machine.lat, machine.lng], { icon: markerIcon }).addTo(map);
+
+                    // Create popup content
+                    const popupContent = `
+                        <div style="padding: 10px; min-width: 200px;">
+                            <h3 style="margin: 0 0 8px 0; color: #22C55E;">${machine.name}</h3>
+                            <p style="margin: 4px 0; color: #666;"><strong>Status:</strong> 
+                                <span style="color: ${machine.status === 'active' ? '#22C55E' : '#EF4444'};">
+                                    ${machine.status.toUpperCase()}
+                                </span>
+                            </p>
+                            <p style="margin: 4px 0; color: #666;"><strong>Address:</strong> ${machine.address}</p>
+                            <p style="margin: 4px 0; color: #666;"><strong>Bottles Collected:</strong> ${machine.bottlesCollected.toLocaleString()}</p>
+                            <p style="margin: 4px 0; color: #666;"><strong>Last Maintenance:</strong> ${machine.lastMaintenance}</p>
+                        </div>
+                    `;
+
+                    marker.bindPopup(popupContent);
+                    markers.push(marker);
+                });
+
+                document.getElementById('mapDebug').innerHTML = 'Map loaded successfully!';
+
+                // Update stats
+                const activeMachines = machines.filter(m => m.status === 'active').length;
+                document.getElementById('activeMachines').textContent = `${activeMachines} out of ${machines.length} machines are currently active`;
+                document.getElementById('nearestLocation').textContent = machines[0].name + ' - ' + machines[0].address;
+
+            } catch (error) {
+                console.error('Map initialization error:', error);
+                document.getElementById('mapDebug').innerHTML = 'Error: ' + error.message;
+            }
+        }
+
+        // Initialize map when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Small delay to ensure Leaflet is fully loaded
+            setTimeout(() => {
+                initMap();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

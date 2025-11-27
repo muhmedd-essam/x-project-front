@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Email Template</title>
+ <link rel="stylesheet" href="./style.css">
+ <meta name="description" content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
+  <meta name="author" content="X Project">
+  
+  <meta property="og:title" content="X Project | Official Website">
+  <meta property="og:description" content="Join X Project, the leading student activity at Cairo University since 2012.">
+  <meta property="og:image" content="https://x-project.co/X-Project/img/logo.png">
+  <meta property="og:url" content="https://x-project.co/X-Project/home.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="https://x-project.co/X-Project/img/logo.png" type="image/png">
+ <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+<body>
+  <section class="container">
+    <div class="logo"><img src="./img/logo & Slogan.png" alt="logo"></div>
+    <div class="word"><h1>Welcome to Xproject</h1></div>
+    <label>Email To Committee</label>
+    <select id="committeeSelect" onchange="updateHeadAndHR()">
+      <option value=""> Select Committee</option>
+      <option value="web">web</option>
+      <option value="GD">GD</option>
+      <option value="camera">camera</option>
+      <option value="HR">HR</option>
+      <option value="Marketing">Marketing</option>
+      <option value="PR">PR</option>
+      <option value="Logistics">Logistics</option>
+      <option value="FR">FR</option>
+      <option value="SR">SR</option>
+      <option value="PM">PM</option>
+      <option value="AC">AC</option>
+    </select>
+    <label>Subject</label>
+    <select id="subjectSelect" onchange="toggleSubjectFields()">
+      <option value="">-- Select Subject --</option>
+      <option value="excuse">Excuse</option>
+      <option value="task">Task</option>
+    </select>
+   
+    
+    <div id="excuseOptions" class="hidden">
+      <label>Session Time</label>
+      <input type="text" id="sessionTime" placeholder="e.g. today's session">
+      <label>Reason</label>
+      <select id="excuseReason">
+        <option value="">-- Select Reason --</option>
+        <option>Late Arrival</option>
+        <option>Personal Issue</option>
+        <option>Medical Reason</option>
+        <option>Have an exam</option>
+        <option>Traveling</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div id="taskUpload" class="hidden">
+      <label>Upload Task File</label>
+      <input type="file" id="taskFile">
+    </div>
+    <label>Description</label>
+    <textarea id="description" placeholder="Add any notes or details..."></textarea>
+
+    <label>Your Name</label>
+<input type="text" id="senderName" placeholder="Enter your full name">
+
+<label>Your Email</label>
+<input type="email" id="senderEmail" placeholder="Enter your email address">
+<button onclick="submitForm()">Submit</button>
+  </section>
+<script src="./style.js"></script>
+</body>
+</html>

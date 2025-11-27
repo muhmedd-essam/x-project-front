@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Arty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">Arty</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="learn.html" class="nav-link">Learn</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="materials.html" class="nav-link">Materials</a>
+                <a href="cart.html" class="nav-link cart-link">
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+                <a href="login.html" class="nav-link login-btn">Login</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="min-height: calc(100vh - 140px); background: linear-gradient(135deg, var(--orange), var(--purple)); display: flex; align-items: center;">
+        <div class="form-container">
+            <h2 class="form-title">Join Arty!</h2>
+            <p style="text-align: center; color: var(--gray); margin-bottom: 32px;">Create your account to start your handmade journey</p>
+            
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                    <div id="name-error" class="form-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                    <div id="email-error" class="form-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role" class="form-label">Account Type</label>
+                    <select id="role" name="role" class="form-input" required>
+                        <option value="customer">Customer - I want to buy and learn</option>
+                        <option value="seller">Seller - I want to sell my handmade items</option>
+                    </select>
+                    <div id="role-error" class="form-error"></div>
+                </div>
+                
+                <!-- Seller-specific fields (hidden by default) -->
+                <div id="seller-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="shop-name" class="form-label">Shop Name</label>
+                        <input type="text" id="shop-name" name="shop-name" class="form-input">
+                        <div id="shop-name-error" class="form-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description" class="form-label">Shop Description</label>
+                        <textarea id="description" name="description" class="form-input" rows="3" placeholder="Tell us about your handmade items..."></textarea>
+                        <div id="description-error" class="form-error"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                    <div id="password-error" class="form-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" class="form-input" required>
+                    <div id="confirm-password-error" class="form-error"></div>
+                </div>
+                
+                <div id="register-message" class="form-error"></div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 16px;">Create Account</button>
+            </form>
+            
+            <div style="text-align: center;">
+                <p>Already have an account? <a href="login.html" style="color: var(--orange); text-decoration: none;">Sign in here</a></p>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // Show/hide seller fields based on role selection
+        document.getElementById('role').addEventListener('change', function() {
+            const sellerFields = document.getElementById('seller-fields');
+            const shopNameInput = document.getElementById('shop-name');
+            const descriptionInput = document.getElementById('description');
+            
+            if (this.value === 'seller') {
+                sellerFields.style.display = 'block';
+                shopNameInput.required = true;
+                descriptionInput.required = true;
+            } else {
+                sellerFields.style.display = 'none';
+                shopNameInput.required = false;
+                descriptionInput.required = false;
+            }
+        });
+
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            clearFormMessages();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const role = document.getElementById('role').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const shopName = document.getElementById('shop-name').value.trim();
+            const description = document.getElementById('description').value.trim();
+            
+            // Validation
+            if (name.length < 2) {
+                showFormError('name-error', 'Name must be at least 2 characters long.');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showFormError('email-error', 'Please enter a valid email address.');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showFormError('password-error', 'Password must be at least 6 characters long.');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showFormError('confirm-password-error', 'Passwords do not match.');
+                return;
+            }
+            
+            // Seller-specific validation
+            if (role === 'seller') {
+                if (shopName.length < 3) {
+                    showFormError('shop-name-error', 'Shop name must be at least 3 characters long.');
+                    return;
+                }
+                
+                if (description.length < 10) {
+                    showFormError('description-error', 'Description must be at least 10 characters long.');
+                    return;
+                }
+            }
+            
+            // Attempt registration
+            const result = auth.register(name, email, password, confirmPassword, role, shopName, description);
+            
+            if (result.success) {
+                showFormSuccess('register-message', result.message);
+                // Redirect will be handled by auth.register() based on user role
+            } else {
+                showFormError('register-message', result.message);
+            }
+        });
+    </script>
+</body>
+</html>

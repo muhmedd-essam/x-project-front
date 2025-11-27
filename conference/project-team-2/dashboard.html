@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Demo -   Weقaya | وقاية  </title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html"><span class="logo-text">  Weقaya  </span></a>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="features.html" class="nav-link">Features</a>
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+  
+                <a href="future.html" class="nav-link">Join Us</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Dashboard Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <h1 class="page-title">Health Dashboard</h1>
+                <p class="page-subtitle">Real-time monitoring and health insights</p>
+            </div>
+        </section>
+
+        <!-- Dashboard Content -->
+        <section class="dashboard-section">
+            <div class="container">
+                <!-- Status Cards -->
+                <div class="status-grid">
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="status-info">
+                            <h3>Heart Rate</h3>
+                            <span class="status-value" id="heartRate">72</span>
+                            <span class="status-unit">BPM</span>
+                        </div>
+                        <div class="status-indicator normal">Normal</div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <div class="status-info">
+                            <h3>Temperature</h3>
+                            <span class="status-value" id="temperature">98.6</span>
+                            <span class="status-unit">°F</span>
+                        </div>
+                        <div class="status-indicator normal">Normal</div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-walking"></i>
+                        </div>
+                        <div class="status-info">
+                            <h3>Steps Today</h3>
+                            <span class="status-value" id="steps">2,847</span>
+                            <span class="status-unit">steps</span>
+                        </div>
+                        <div class="status-indicator good">Good</div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div class="status-info">
+                            <h3>Pills Left</h3>
+                            <span class="status-value" id="pillsLeft">4</span>
+                            <span class="status-unit">pills</span>
+                        </div>
+                        <div class="status-indicator warning">Low</div>
+                    </div>
+                </div>
+
+                <!-- Emergency Section -->
+                <div class="emergency-section">
+                    <div class="emergency-card">
+                        <h3>Emergency Controls</h3>
+                        <button class="emergency-btn" id="emergencyBtn">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            EMERGENCY
+                        </button>
+                        <button class="pill-reminder-btn" id="pillReminderBtn">
+                            <i class="fas fa-bell"></i>
+                            Test Pill Reminder
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-card">
+                        <h3>Heart Rate Trend (24h)</h3>
+                        <canvas id="heartRateChart"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>Blood Pressure (7 days)</h3>
+                        <canvas id="bloodPressureChart"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>Blood Sugar Levels</h3>
+                        <canvas id="bloodSugarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- GPS Map Section -->
+                <div class="map-section">
+                    <div class="map-card">
+                        <h3>Current Location & Safe Zones</h3>
+                        <div class="map-container">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345093747!2d144.9537353153167!3d-37.81627997975171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d4c2b349649%3A0xb6899234e561db11!2sEnvato!5e0!3m2!1sen!2sau!4v1639096953056!5m2!1sen!2sau" 
+                                width="100%" 
+                                height="300" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        <div class="location-info">
+                            <p><i class="fas fa-map-marker-alt"></i> Last updated: 2 minutes ago</p>
+                            <p><i class="fas fa-shield-alt"></i> Status: Inside Safe Zone</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>  Weقaya  </h3>
+                    <p>Protecting health, ensuring safety</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Emergency Hotline</h4>
+                    <p class="hotline">📞 +1-800-WEQAYA</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Weقaya | وقاية. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

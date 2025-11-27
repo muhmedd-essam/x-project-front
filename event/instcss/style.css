@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("../BG.png"); 
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+  }
+  .container {
+    max-width: 70%;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .logo {
+    width: 100px;
+  }
+  input[type="text"],
+  input[type="tel"],
+  textarea {
+    width: 85%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  button {
+    background-color: #f99325;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+  }
+  button:hover {
+    background-color: #0000008c;
+  }
+  form p {
+    font-size: 14px;
+    color: #000000;
+    margin-top: 10px;
+  }
+  input[type="file"] {
+    transition: 0.3s ease;
+    cursor: pointer;
+    width: 85%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  input[type="file"]::file-selector-button {
+    background-color: #f99325;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-weight: 15px;
+  }
+  input[type="file"]::file-selector-button:hover {
+    background-color: #f99325;
+    transform: scale(1.05) rotate(-1deg);
+  }
+  

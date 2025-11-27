@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magilearn Academy - Admin Portal</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="magical-bg admin-bg">
+        <div class="stars"></div>
+        
+        <nav class="magical-nav">
+            <div class="nav-content">
+                <h1 class="nav-title">🔮 Admin Portal</h1>
+                <div class="nav-actions">
+                    <a href="index.html" class="back-btn">🏠 Back to Academy</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="admin-container">
+            <header class="admin-header">
+                <h2>🧙‍♂️ Master Wizard Control Panel</h2>
+                <p>Generate magical activation codes for your students</p>
+            </header>
+
+            <div class="admin-section">
+                <div class="code-generator">
+                    <h3>🗝️ Generate Activation Code</h3>
+                    <form onsubmit="generateCode(event)">
+                        <div class="input-group">
+                            <label for="studentEmail">📧 Student Email</label>
+                            <input type="email" id="studentEmail" required placeholder="student@school.com">
+                        </div>
+                        <div class="input-group">
+                            <label for="studentGrade">🎓 Student Grade</label>
+                            <select id="studentGrade" required>
+                                <option value="">Select Grade...</option>
+                                <option value="4">Grade 4</option>
+                                <option value="5">Grade 5</option>
+                                <option value="6">Grade 6</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="magic-btn">✨ Generate Magic Code</button>
+                    </form>
+                </div>
+
+                <div class="generated-code" id="generatedCode" style="display: none;">
+                    <h3>🎉 Code Generated Successfully!</h3>
+                    <div class="code-display">
+                        <span class="code-text" id="codeText"></span>
+                        <button onclick="copyCode()" class="copy-btn">📋 Copy Code</button>
+                    </div>
+                    <p class="code-info">Share this code with the student to activate their account!</p>
+                </div>
+
+                <div class="active-codes">
+                    <h3>📝 Active Codes</h3>
+                    <div class="codes-list" id="codesList">
+                        <!-- Active codes will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/admin.js"></script>
+    <script src="scripts/animations.js"></script>
+</body>
+</html>

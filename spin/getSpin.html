@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picked Names</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("https://x-project.co/public/api/picked-names")
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.getElementById("table-body");
+                    data.forEach(item => {
+                        let row = `<tr>
+                            <td>${item.id}</td>
+                            <td>${item.picker_name}</td>
+                            <td>${item.picker_committee}</td>
+                            <td>${item.picked_name}</td>
+                            <td>${item.picked_committee}</td>
+                            <td>${new Date(item.created_at).toLocaleString()}</td>
+                        </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        });
+    </script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Picked Names List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Picker Name</th>
+                <th>Picker Committee</th>
+                <th>Picked Name</th>
+                <th>Picked Committee</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+</body>
+</html>

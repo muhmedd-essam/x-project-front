@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Details - AutiConnect VR</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard">
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="dashboard-nav">
+                <h1 class="dashboard-title">Session Details</h1>
+                <div class="user-info">
+                    <a href="javascript:history.back()" class="btn btn-outline">← Back</a>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+        <div class="container">
+            <!-- Session Header -->
+            <div class="session-header">
+                <h2 style="color: var(--primary-600); margin-bottom: var(--space-2);">Ordering at a Café</h2>
+                <p style="color: var(--gray-600); margin-bottom: var(--space-4);">VR Session - Emma Johnson</p>
+                
+                <div class="session-meta">
+                    <div class="meta-item">
+                        <h4>Date & Time</h4>
+                        <div class="meta-value">Jan 29, 2025 - 2:30 PM</div>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Duration</h4>
+                        <div class="meta-value">12 minutes</div>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Status</h4>
+                        <div class="meta-value">
+                            <span class="status-badge status-completed">Completed</span>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Overall Stress</h4>
+                        <div class="stress-indicator stress-low">
+                            <span class="stress-dot"></span>
+                            Low
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Heart Rate Timeline -->
+                <div class="heart-rate-timeline">
+                    <div class="card-header">
+                        <h2 class="card-title">Heart Rate Timeline</h2>
+                        <span class="card-subtitle">Real-time monitoring during session</span>
+                    </div>
+                    <div class="timeline-chart">
+                        <div class="heart-rate-line"></div>
+                        <div class="heart-rate-indicators">
+                            <div class="heart-rate-indicator">
+                                <span class="indicator-dot success"></span>
+                                <span class="indicator-text">72-84 BPM Range</span>
+                            </div>
+                            <div class="heart-rate-indicator">
+                                <span class="indicator-dot current"></span>
+                                <span class="indicator-text">Current: 76 BPM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Session Metrics -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Session Metrics</h2>
+                    </div>
+                    <div style="display: grid; gap: var(--space-4);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--gray-600);">Average Heart Rate</span>
+                            <span style="font-weight: 600; color: var(--primary-600);">78 BPM</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--gray-600);">Peak Heart Rate</span>
+                            <span style="font-weight: 600; color: var(--warning-500);">94 BPM</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--gray-600);">Stress Events</span>
+                            <span style="font-weight: 600; color: var(--success-500);">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--gray-600);">Social Interactions</span>
+                            <span style="font-weight: 600; color: var(--primary-600);">4 completed</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--gray-600);">Confidence Score</span>
+                            <span style="font-weight: 600; color: var(--success-500);">8.5/10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session Timeline -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Session Timeline</h2>
+                    <span class="card-subtitle">Key events during the VR experience</span>
+                </div>
+                <div style="display: grid; gap: var(--space-4);">
+                    <div style="border-left: 3px solid var(--success-500); padding-left: var(--space-4);">
+                        <div style="font-weight: 600; color: var(--gray-800);">Session Started</div>
+                        <div style="font-size: 0.875rem; color: var(--gray-500);">2:30:00 PM - Heart rate: 72 BPM</div>
+                        <div style="margin-top: var(--space-1); color: var(--gray-600);">Emma entered the café environment and began the ordering scenario.</div>
+                    </div>
+                    <div style="border-left: 3px solid var(--primary-500); padding-left: var(--space-4);">
+                        <div style="font-weight: 600; color: var(--gray-800);">First Interaction</div>
+                        <div style="font-size: 0.875rem; color: var(--gray-500);">2:32:15 PM - Heart rate: 78 BPM</div>
+                        <div style="margin-top: var(--space-1); color: var(--gray-600);">Successfully greeted the virtual barista. Slight increase in heart rate is normal.</div>
+                    </div>
+                    <div style="border-left: 3px solid var(--warning-500); padding-left: var(--space-4);">
+                        <div style="font-weight: 600; color: var(--gray-800);">Complex Order</div>
+                        <div style="font-size: 0.875rem; color: var(--gray-500);">2:35:30 PM - Heart rate: 84 BPM</div>
+                        <div style="margin-top: var(--space-1); color: var(--gray-600);">Navigated a complex order with dietary restrictions. Handled well with minor stress.</div>
+                    </div>
+                    <div style="border-left: 3px solid var(--success-500); padding-left: var(--space-4);">
+                        <div style="font-weight: 600; color: var(--gray-800);">Session Completed</div>
+                        <div style="font-size: 0.875rem; color: var(--gray-500);">2:42:00 PM - Heart rate: 74 BPM</div>
+                        <div style="margin-top: var(--space-1); color: var(--gray-600);">Successfully completed the entire scenario. Excellent recovery and confidence building.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Notes -->
+            <div class="notes-section">
+                <div class="card-header">
+                    <h2 class="card-title">Doctor's Notes</h2>
+                    <span class="card-subtitle">Clinical observations and recommendations</span>
+                </div>
+                <div class="notes-content">
+                    <p><strong>Session Analysis:</strong></p>
+                    <p>Emma demonstrated excellent progress in this café ordering scenario. Her initial anxiety was well-managed, and she successfully completed all interaction points. The slight heart rate increase during the complex order phase is expected and shows appropriate engagement rather than distress.</p>
+                    
+                    <p style="margin-top: var(--space-3);"><strong>Recommendations:</strong></p>
+                    <ul style="margin-top: var(--space-2); padding-left: var(--space-4);">
+                        <li>Continue with café scenarios but introduce more variables (busy environment, multiple customers)</li>
+                        <li>Consider advancing to restaurant dining scenarios next week</li>
+                        <li>Maintain current session frequency (twice weekly)</li>
+                    </ul>
+                    
+                    <p style="margin-top: var(--space-3);"><em>Next session scheduled: Feb 1, 2025 - Dr. Martinez</em></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

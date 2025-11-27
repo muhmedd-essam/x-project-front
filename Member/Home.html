@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
+    <meta name="author" content="X Project">
+    
+    <meta property="og:title" content="X Project | Official Website">
+    <meta property="og:description" content="Join X Project, the leading student activity at Cairo University since 2012.">
+    <meta property="og:image" content="https://x-project.co/X-Project/img/logo.png">
+    <meta property="og:url" content="https://x-project.co/X-Project/home.html">
+    <meta property="og:type" content="website">
+
+    <meta name="keywords" content="X Project, X project, x project, xproject, Xproject, XProject,Student Activity, Cairo University, Entrepreneurship, Leadership, University Events">
+
+    <link rel="icon" href="../img/logo.png" type="image/png">
+
+    <title>Check Attendance</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <!-- start image -->
+    <div class="logo">
+        <img src="logo & Slogan.png" alt="X Project Logo" width="150px">
+    </div>
+    <!-- start table -->
+    <div class="table">
+        <header>
+            <h1>Check Attendance</h1>
+            <p id="welcomeMsg">Welcome!</p>
+            <button id="checkInBtn" class="check-in-btn">Check In</button>
+            <div id="popup" class="popup-overlay">
+                <div class="popup-content">
+                    <p id="popupMessage"></p>
+                    <button onclick="closePopup()">OK</button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="attendance-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="attendanceBody">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+       
+        const name = localStorage.getItem("memberName");
+        const committee = localStorage.getItem("memberCommittee");
+        document.getElementById("welcomeMsg").textContent = `Welcome, ${name} (${committee})`;
+
+        
+        document.getElementById('checkInBtn').addEventListener('click', async () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+
+                    try {
+                        const response = await fetch("https://x-project.co/public/api/sessions/check-in", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                            },
+                            body: JSON.stringify({ latitude: lat, longitude: lng })
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            showPopup(result.message);
+                        } else {
+                            showPopup(result.message || "Check-in failed.");
+                        }
+
+                    } catch (err) {
+                        showPopup("Network error while checking in.");
+                    }
+                }, () => {
+                    showPopup("Location permission was denied.");
+                });
+            } else {
+                showPopup("Geolocation is not supported by your browser.");
+            }
+        });
+
+        function showPopup(message) {
+        document.getElementById('popupMessage').textContent = message;
+        document.getElementById('popup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+    </script>
+
+<script>
+    async function loadAttendanceTable() {
+        try {
+            const response = await fetch("https://x-project.co/public/api/sessions/my-attendance", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+
+            const data = await response.json();
+            const tableBody = document.getElementById("attendanceBody");
+            tableBody.innerHTML = ''; // clear old rows
+
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(entry => {
+                    const dateObj = new Date(entry.date);
+                    const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+
+                    // Format status with late minutes if needed
+                    let statusText = entry.status;
+                    if (entry.status === "Late" && entry.late_by_minutes !== null) {
+                        statusText += ` (${entry.late_by_minutes} mins late)`;
+                    }
+
+                    const row = `
+                        <tr>
+                            <td>${dayName}</td>
+                            <td>${entry.date}</td>
+                            <td>${entry.time}</td>
+                            <td class="${entry.status.toLowerCase()}">${statusText}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            } else {
+                tableBody.innerHTML = `<tr><td colspan="4">No attendance records found.</td></tr>`;
+            }
+
+        } catch (error) {
+            console.error("Error loading attendance:", error);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', loadAttendanceTable);
+</script>
+
+    
+</body>
+</html>
+
+

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - Arty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--teal), var(--orange));
+            color: black;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .seller-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .seller-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 3px solid white;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: black;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .content-tabs {
+            display: flex;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            background: var(--teal);
+            color: gray;
+        }
+        
+        .tab-content {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tab-panel {
+            display: none;
+        }
+        
+        .tab-panel.active {
+            display: block;
+        }
+        
+        .product-card, .order-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--teal);
+        }
+        
+        .add-product-btn {
+            background: var(--teal);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-completed { background: #d4edda; color: #155724; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">Arty</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="learn.html" class="nav-link">Learn</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="materials.html" class="nav-link">Materials</a>
+                <a href="cart.html" class="nav-link cart-link">
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+                <a href="login.html" class="nav-link login-btn">Login</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="min-height: calc(100vh - 140px); background: #f5f5f5;">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <div class="seller-info">
+                    <img id="seller-avatar" src="" alt="Seller Avatar" class="seller-avatar">
+                    <div>
+                        <h1 id="seller-name">Seller Dashboard</h1>
+                        <p id="shop-name">Welcome to your seller dashboard!</p>
+                        <p id="shop-description" style="margin-top: 5px; opacity: 0.9;"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-products">0</div>
+                    <div class="stat-label">My Products</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-sales">0</div>
+                    <div class="stat-label">Total Sales</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-earnings">$0</div>
+                    <div class="stat-label">Total Earnings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="rating">0.0</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+
+            <div class="content-tabs">
+                <button class="tab-button active" data-tab="products">My Products</button>
+                <button class="tab-button" data-tab="orders">Orders</button>
+                <button class="tab-button" data-tab="analytics">Analytics</button>
+                <button class="tab-button" data-tab="profile">Profile</button>
+            </div>
+
+            <div class="tab-content">
+                <div id="products-tab" class="tab-panel active">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3>My Products</h3>
+                        <button class="add-product-btn" onclick="showAddProductForm()">+ Add New Product</button>
+                    </div>
+                    
+                    <!-- Add Product Form (Hidden by default) -->
+                    <div id="add-product-form" style="display: none; background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <h4 style="margin-bottom: 20px;">Add New Product</h4>
+                        
+                        <form id="product-form">
+                            <div class="product-form-grid">
+                                <div>
+                                    <div class="form-group">
+                                        <label for="product-title" class="form-label" style="color: black;">Product Title *</label>
+                                        <input type="text" id="product-title" class="form-input" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="product-category" class="form-label" style="color: black;">Category *</label>
+                                        <select id="product-category" class="form-input" required onchange="toggleCategoryFields()" style="color: white;">
+                                            <option value="">Select Category</option>
+                                            <option value="shop">Shop (Handmade Items)</option>
+                                            <option value="learn">Learn (Tutorials/Courses)</option>
+                                            <option value="materials">Materials (Crafting Supplies)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="product-price" class="form-label" style="color: black;">Price ($) *</label>
+                                        <input type="number" id="product-price"  style="color: white;" class="form-input" step="0.01" min="0"   required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="product-image" class="form-label" style="color: black;">Image URL</label>
+                                        <input type="url" id="product-image" style="color: white;" class="form-input" placeholder="https://example.com/image.jpg">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="form-group">
+                                        <label for="product-description" class="form-label" style="color: black;">Description *</label>
+                                        <textarea id="product-description" class="form-input" style="color: white;" rows="4" required></textarea>
+                                    </div>
+                                    
+                                    <!-- Shop-specific fields -->
+                                    <div id="shop-fields" class="category-fields" style="display: none;">
+                                        <h5 style="margin: 0 0 10px 0; color: var(--teal);">Shop Product Details</h5>
+                                        <div class="form-group">
+                                            <label for="product-stock" class="form-label">Stock Quantity</label>
+                                            <input type="number" id="product-stock" class="form-input" min="0" value="10">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Learn-specific fields -->
+                                    <div id="learn-fields" class="category-fields" style="display: none;">
+                                        <h5 style="margin: 0 0 10px 0; color: white;">Course Details</h5>
+                                        <div class="form-group">
+                                            <label for="product-duration" class="form-label">Duration</label>
+                                            <input type="text" id="product-duration" class="form-input" placeholder="e.g., 3 hours">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="product-students" class="form-label">Current Students</label>
+                                            <input type="number" id="product-students" class="form-input" min="0" value="0">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Materials-specific fields -->
+                                    <div id="materials-fields" class="category-fields" style="display: none;">
+                                        <h5 style="margin: 0 0 10px 0; color: white;">Material Details</h5>
+                                        <div class="form-group" >
+                                            <label for="product-brand" class="form-label" >Brand</label>
+                                            <input type="text" id="product-brand" class="form-input" placeholder="e.g., CraftPro">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="product-stock-materials" class="form-label">Stock Quantity</label>
+                                            <input type="number" id="product-stock-materials" class="form-input" min="0" value="50">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Add Product</button>
+                                <button type="button" class="btn btn-secondary" onclick="hideAddProductForm()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div id="products-list"></div>
+                </div>
+
+                <div id="orders-tab" class="tab-panel">
+                    <h3>Recent Orders</h3>
+                    <div id="orders-list"></div>
+                </div>
+
+                <div id="analytics-tab" class="tab-panel">
+                    <h3>Sales Analytics</h3>
+                    <div id="analytics-content">
+                        <p>Sales analytics will be displayed here...</p>
+                    </div>
+                </div>
+
+                <div id="profile-tab" class="tab-panel">
+                    <h3>Shop Profile</h3>
+                    <div id="profile-content">
+                        <div class="product-card">
+                            <h4>Shop Information</h4>
+                            <p><strong>Shop Name:</strong> <span id="profile-shop-name"></span></p>
+                            <p><strong>Description:</strong> <span id="profile-description"></span></p>
+                            <p><strong>Join Date:</strong> <span id="profile-join-date"></span></p>
+                            <p><strong>Total Sales:</strong> <span id="profile-total-sales"></span></p>
+                            <p><strong>Total Earnings:</strong> <span id="profile-total-earnings"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // Check if user is seller
+        if (!auth.isLoggedIn() || !auth.hasRole('seller')) {
+            window.location.href = 'login.html';
+        }
+
+        const currentUser = auth.getCurrentUser();
+
+        // Update seller info
+        document.getElementById('seller-avatar').src = currentUser.avatar;
+        document.getElementById('seller-name').textContent = currentUser.name;
+        document.getElementById('shop-name').textContent = currentUser.shopName;
+        document.getElementById('shop-description').textContent = currentUser.description;
+
+        // Tab functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and panels
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding panel
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId + '-tab').classList.add('active');
+            });
+        });
+
+        // Load dashboard data
+        function loadDashboardData() {
+            // Update stats
+            document.getElementById('total-products').textContent = currentUser.products.length;
+            document.getElementById('total-sales').textContent = currentUser.totalSales;
+            document.getElementById('total-earnings').textContent = '$' + currentUser.earnings.toFixed(2);
+            document.getElementById('rating').textContent = currentUser.rating.toFixed(1);
+
+            // Load products
+            loadProducts();
+            
+            // Load orders
+            loadOrders();
+            
+            // Load profile
+            loadProfile();
+        }
+
+        function loadProducts() {
+            const productsList = document.getElementById('products-list');
+            productsList.innerHTML = '';
+
+            if (currentUser.products.length === 0) {
+                productsList.innerHTML = '<p style="text-align: center; color: var(--gray);">No products yet. Add your first product!</p>';
+                return;
+            }
+
+            currentUser.products.forEach(productId => {
+                const product = getProductById(productId);
+                if (product) {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    
+                    // Get category-specific info
+                    let categoryInfo = '';
+                    if (product.category === 'shop') {
+                        categoryInfo = `<span style="background: #e3f2fd; color: #1976d2; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">Shop</span>`;
+                    } else if (product.category === 'learn') {
+                        categoryInfo = `<span style="background: #f3e5f5; color: #7b1fa2; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">Course</span>`;
+                    } else if (product.category === 'materials') {
+                        categoryInfo = `<span style="background: #e8f5e8; color: #388e3c; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">Material</span>`;
+                    }
+                    
+                    productCard.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center;">
+                                <img src="${product.image}" alt="${product.title}" class="product-image">
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                                        <h4 style="margin: 0; color: black;" >${product.title}</h4>
+                                        ${categoryInfo}
+                                    </div>
+                                    <p style="margin: 5px 0; color: black;">${product.description.substring(0, 100)}...</p>
+                                    <p style="margin: 5px 0; font-size: 0.9rem; color: black; font-weight: 600;">$${product.price}</p>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                ${product.stock ? `<p style="margin: 0; font-size: 0.9rem; color: black;">Stock: ${product.stock}</p>` : ''}
+                                ${product.duration ? `<p style="margin: 5px 0; font-size: 0.9rem; color: black;">Duration: ${product.duration}</p>` : ''}
+                                ${product.brand ? `<p style="margin: 5px 0; font-size: 0.9rem; color: black;">Brand: ${product.brand}</p>` : ''}
+                                ${product.rating ? `<p style="margin: 5px 0; font-size: 0.9rem; color: black;">Rating: ${product.rating}⭐</p>` : ''}
+                                <div style="margin-top: 10px;">
+                                    <button style="background: var(--teal); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-right: 5px;">Edit</button>
+                                    <button style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    productsList.appendChild(productCard);
+                }
+            });
+        }
+
+        function loadOrders() {
+            const ordersList = document.getElementById('orders-list');
+            ordersList.innerHTML = '';
+
+            // Filter orders that contain seller's products
+            const sellerOrders = sampleOrders.filter(order => {
+                return order.items.some(item => currentUser.products.includes(item.productId));
+            });
+
+            if (sellerOrders.length === 0) {
+                ordersList.innerHTML = '<p style="text-align: center; color: var(--gray);">No orders yet.</p>';
+                return;
+            }
+
+            sellerOrders.forEach(order => {
+                const user = sampleUsers.find(u => u.id === order.userId);
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card';
+                orderCard.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="margin: 0;">Order #${order.id}</h4>
+                            <p style="margin: 5px 0; color: var(--gray);">Customer: ${user ? user.name : 'Unknown'}</p>
+                            <p style="margin: 5px 0; font-size: 0.9rem;">Date: ${order.date}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <h4 style="margin: 0; color: var(--teal);">$${order.total.toFixed(2)}</h4>
+                            <span class="status-badge status-${order.status}">${order.status}</span>
+                        </div>
+                    </div>
+                `;
+                ordersList.appendChild(orderCard);
+            });
+        }
+
+        function loadProfile() {
+            document.getElementById('profile-shop-name').textContent = currentUser.shopName;
+            document.getElementById('profile-description').textContent = currentUser.description;
+            document.getElementById('profile-join-date').textContent = currentUser.joinDate;
+            document.getElementById('profile-total-sales').textContent = currentUser.totalSales;
+            document.getElementById('profile-total-earnings').textContent = '$' + currentUser.earnings.toFixed(2);
+        }
+
+        function showAddProductForm() {
+            document.getElementById('add-product-form').style.display = 'block';
+            document.getElementById('product-form').reset();
+            hideAllCategoryFields();
+        }
+
+        function hideAddProductForm() {
+            document.getElementById('add-product-form').style.display = 'none';
+        }
+
+        function toggleCategoryFields() {
+            const category = document.getElementById('product-category').value;
+            hideAllCategoryFields();
+            
+            if (category === 'shop') {
+                document.getElementById('shop-fields').style.display = 'block';
+            } else if (category === 'learn') {
+                document.getElementById('learn-fields').style.display = 'block';
+            } else if (category === 'materials') {
+                document.getElementById('materials-fields').style.display = 'block';
+            }
+        }
+
+        function hideAllCategoryFields() {
+            document.getElementById('shop-fields').style.display = 'none';
+            document.getElementById('learn-fields').style.display = 'none';
+            document.getElementById('materials-fields').style.display = 'none';
+        }
+
+        // Handle product form submission
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                title: document.getElementById('product-title').value,
+                category: document.getElementById('product-category').value,
+                price: parseFloat(document.getElementById('product-price').value),
+                description: document.getElementById('product-description').value,
+                image: document.getElementById('product-image').value || 'https://images.pexels.com/photos/6621342/pexels-photo-6621342.jpeg'
+            };
+
+            // Add category-specific data
+            if (formData.category === 'shop') {
+                formData.stock = parseInt(document.getElementById('product-stock').value) || 10;
+                formData.seller = currentUser.name;
+                formData.rating = 0;
+            } else if (formData.category === 'learn') {
+                formData.duration = document.getElementById('product-duration').value || '2 hours';
+                formData.students = parseInt(document.getElementById('product-students').value) || 0;
+                formData.teacher = currentUser.name;
+                formData.rating = 0;
+            } else if (formData.category === 'materials') {
+                formData.brand = document.getElementById('product-brand').value || 'Generic';
+                formData.stock = parseInt(document.getElementById('product-stock-materials').value) || 50;
+                formData.rating = 0;
+            }
+
+            // Create new product
+            const newProduct = createNewProduct(formData);
+            
+            if (newProduct) {
+                // Add to seller's products
+                currentUser.products.push(newProduct.id);
+                
+                // Update localStorage
+                localStorage.setItem('arty-user', JSON.stringify(currentUser));
+                
+                // Reload dashboard
+                loadDashboardData();
+                
+                // Hide form
+                hideAddProductForm();
+                
+                // Show success message
+                alert('Product added successfully!');
+            }
+        });
+
+        function createNewProduct(formData) {
+            const productId = `${formData.category}-${Date.now()}`;
+            
+            const newProduct = {
+                id: productId,
+                title: formData.title,
+                description: formData.description,
+                price: formData.price,
+                image: formData.image,
+                category: formData.category,
+                rating: formData.rating
+            };
+
+            // Add category-specific properties
+            if (formData.category === 'shop') {
+                newProduct.seller = formData.seller;
+                newProduct.stock = formData.stock;
+            } else if (formData.category === 'learn') {
+                newProduct.teacher = formData.teacher;
+                newProduct.duration = formData.duration;
+                newProduct.students = formData.students;
+            } else if (formData.category === 'materials') {
+                newProduct.brand = formData.brand;
+                newProduct.stock = formData.stock;
+            }
+
+            // Add to appropriate array
+            if (formData.category === 'shop') {
+                shopProducts.push(newProduct);
+            } else if (formData.category === 'learn') {
+                learnProducts.push(newProduct);
+            } else if (formData.category === 'materials') {
+                materialsProducts.push(newProduct);
+            }
+
+            return newProduct;
+        }
+
+        // Initialize dashboard
+        loadDashboardData();
+    </script>
+</body>
+</html> 

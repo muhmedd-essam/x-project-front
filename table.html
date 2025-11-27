@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Table</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #eee;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+    textarea {
+      width: 100%;
+      height: 40px;
+      font-size: 14px;
+      padding: 3px;
+    }
+    button {
+      padding: 5px 10px;
+      margin-top: 5px;
+    }
+    .img-preview {
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .img-preview:hover {
+      transform: scale(1.1);
+    }
+    #imgModal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    #imgModal img {
+      margin: 5% auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80%;
+    }
+  </style>
+</head>
+<body>
+
+<div id="imgModal" onclick="this.style.display='none'">
+  <img id="modalImg" src="" alt="Expanded Image" />
+</div>
+
+<input type="text" id="searchInput" placeholder="Search by name or number" onkeyup="filterTable()" style="margin-bottom: 10px; padding: 5px; width: 50%;">
+
+<select id="filterHR" onchange="filterTable()">
+  <option value="">Filter HR</option>
+  <option value="1">True</option>
+  <option value="0">False</option>
+  <option value="null">Not Checked</option>
+</select>
+
+<select id="filterFR" onchange="filterTable()">
+  <option value="">Filter FR</option>
+  <option value="1">True</option>
+  <option value="0">False</option>
+  <option value="null">Not Checked</option>
+</select>
+
+<select id="filterRole" onchange="filterTable()">
+  <option value="">Filter by Role</option>
+  <option value="Member">Member</option>
+  <option value="Delegate">Delegate</option>
+  <option value="Outcomer">Outcomer</option>
+</select>
+
+<table id="dataTable">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Email</th>
+      <th>Photo</th>
+      <th>Committee</th>
+      <th>Attend</th>
+      <th>FR</th>
+      <th>Custom Message</th>
+      <th>Send Default</th>
+    </tr>
+  </thead>
+  <tbody id="dataBody"></tbody>
+</table>
+
+<script>
+function sanitizeNumber(number) {
+  if (!number) return '';
+  number = number.replace(/\s+/g, '');
+  if (/^0\d{10}$/.test(number)) {
+    return number;
+  }
+  number = number.replace(/^\+20?/, '');
+  if (!number.startsWith('0')) {
+    number = '0' + number;
+  }
+  return number;
+}
+
+function renderTable(data) {
+  const tbody = document.getElementById('dataBody');
+  tbody.innerHTML = '';
+  data.forEach((entry, index) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${entry.name}</td>
+      <td>${sanitizeNumber(entry.whatsapp)}</td>
+      <td>${entry.email}</td>
+      <td><img src="${entry.payment_screenshot_url}" width="40" height="40" class="img-preview" onclick="showImage('${entry.payment_screenshot_url}')" /></td>
+      <td>${entry.applied_for}</td>
+      <td>
+        <label><input type="radio" name="hr${entry.id}" value="1" onchange="updateCheck(${entry.id}, 'hr_checked', 1)" ${entry.hr_checked === 1 ? 'checked' : ''}> True</label><br>
+        <label><input type="radio" name="hr${entry.id}" value="0" onchange="updateCheck(${entry.id}, 'hr_checked', 0)" ${entry.hr_checked === 0 ? 'checked' : ''}> False</label>
+      </td>
+      <td>
+        <label><input type="radio" name="fr${entry.id}" value="1" onchange="updateCheck(${entry.id}, 'fr_checked', 1)" ${entry.fr_checked === 1 ? 'checked' : ''}> True</label><br>
+        <label><input type="radio" name="fr${entry.id}" value="0" onchange="updateCheck(${entry.id}, 'fr_checked', 0)" ${entry.fr_checked === 0 ? 'checked' : ''}> False</label>
+      </td>
+      <td>
+        <textarea placeholder="Write your message here"></textarea>
+        <button onclick="sendCustomMessage(this, '${entry.whatsapp}')">Send</button>
+      </td>
+      <td>
+        <button onclick="sendDefaultMessage('${entry.name}', '${entry.whatsapp}', '${entry.applied_for}')">Send</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function showImage(url) {
+  const modal = document.getElementById('imgModal');
+  const modalImg = document.getElementById('modalImg');
+  modalImg.src = url;
+  modal.style.display = 'block';
+}
+
+function updateCheck(id, field, value) {
+  fetch(`https://x-project.co/api/openning/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({ [field]: value })
+  })
+  .then(res => res.json())
+  .then(data => console.log('Updated:', data))
+  .catch(err => console.error('Error:', err));
+}
+
+function filterTable() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const filterHR = document.getElementById('filterHR').value;
+  const filterFR = document.getElementById('filterFR').value;
+  const filterRole = document.getElementById('filterRole').value.toLowerCase();
+
+  const rows = document.querySelectorAll('#dataBody tr');
+
+  rows.forEach(row => {
+    const name = row.children[1].textContent.toLowerCase();
+    const number = row.children[2].textContent.toLowerCase();
+    const role = row.children[5].textContent.toLowerCase();
+    const hrInput = row.querySelector('input[name^="hr"]:checked');
+    const frInput = row.querySelector('input[name^="fr"]:checked');
+    const hrChecked = hrInput ? hrInput.value : 'null';
+    const frChecked = frInput ? frInput.value : 'null';
+
+    const matchesSearch = name.includes(input) || number.includes(input);
+    const matchesHR = !filterHR || hrChecked === filterHR;
+    const matchesFR = !filterFR || frChecked === filterFR;
+    const matchesRole = !filterRole || role.includes(filterRole);
+
+    row.style.display = matchesSearch && matchesHR && matchesFR && matchesRole ? '' : 'none';
+  });
+}
+
+async function sendDefaultMessage(name, number, role) {
+  try {
+    const message = `مساء الخير ${name}، معاك تيم FR من X project، بنأكد على حضورك مؤتمر Infinity X event يوم الجمعة الموافق 4/7، الساعة 1 ظهراً في قاعة المؤتمرات، المجلس العربي للطفولة، شارع مكرم عبيد امام طارق السلاب وقباني للأثاث وبجوار مسجد الايمان.`;
+
+    const cleanNumber = sanitizeNumber(number);
+    const internationalNumber = '+2' + cleanNumber;
+
+    window.open(`https://wa.me/${internationalNumber}?text=${encodeURIComponent(message)}`, '_blank');
+  } catch (err) {
+    console.error("خطأ أثناء إرسال الرسالة:", err);
+    alert("حدث خطأ أثناء إرسال الرسالة");
+  }
+}
+
+function sendCustomMessage(button, number) {
+  const textarea = button.previousElementSibling;
+  const message = textarea.value.trim();
+  if (message) {
+    const cleanNumber = sanitizeNumber(number);
+    const internationalNumber = '2' + cleanNumber.slice(1);
+    const url = `https://wa.me/${internationalNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  } else {
+    alert('Please write a message first.');
+  }
+}
+
+fetch('https://x-project.co/api/openning')
+  .then(res => res.json())
+  .then(data => renderTable(data))
+  .catch(err => console.error('Failed to fetch data:', err));
+</script>
+
+</body>
+</html>

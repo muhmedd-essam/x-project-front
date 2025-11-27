@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Arty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 48px;
+            margin: 48px 0;
+        }
+
+        .checkout-section {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 24px;
+        }
+
+        .checkout-section h3 {
+            color: var(--navy);
+            margin-bottom: 24px;
+            font-size: 1.25rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .order-summary {
+            background: var(--gray-light);
+            padding: 32px;
+            border-radius: 12px;
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .order-total {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--navy);
+            padding: 16px 0;
+            border-top: 2px solid var(--orange);
+            margin-top: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-summary {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">Arty</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="learn.html" class="nav-link">Learn</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="materials.html" class="nav-link">Materials</a>
+                <a href="cart.html" class="nav-link cart-link">
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+                <a href="login.html" class="nav-link login-btn">Login</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header" style="background: linear-gradient(135deg, var(--purple), var(--navy));">
+        <div class="container">
+            <h1 class="page-title">Checkout</h1>
+            <p class="page-subtitle">Complete your order and get your handmade treasures delivered</p>
+        </div>
+    </header>
+
+    <main style="padding: 48px 0; min-height: calc(100vh - 200px);">
+        <div class="container">
+            <div class="checkout-grid">
+                <div class="checkout-form">
+                    <form id="checkout-form">
+                        <div class="checkout-section">
+                            <h3>Shipping Information</h3>
+                            <div class="form-group">
+                                <label for="full-name" class="form-label">Full Name</label>
+                                <input type="text" id="full-name" name="full-name" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="address" class="form-label">Street Address</label>
+                                <input type="text" id="address" name="address" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city" class="form-label">City</label>
+                                    <input type="text" id="city" name="city" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="zipcode" class="form-label">ZIP Code</label>
+                                    <input type="text" id="zipcode" name="zipcode" class="form-input" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="checkout-section">
+                            <h3>Payment Method</h3>
+                            <div class="form-group">
+                                <label for="payment-method" class="form-label">Payment Method</label>
+                                <select id="payment-method" name="payment-method" class="form-input" required>
+                                    <option value="">Select payment method</option>
+                                    <option value="credit-card">Credit Card</option>
+                                    <option value="debit-card">Debit Card</option>
+                                    <option value="paypal">PayPal</option>
+                                </select>
+                            </div>
+                            
+                            <div id="card-details" style="display: none;">
+                                <div class="form-group">
+                                    <label for="card-number" class="form-label">Card Number</label>
+                                    <input type="text" id="card-number" name="card-number" class="form-input" placeholder="1234 5678 9012 3456">
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="exp-date" class="form-label">Expiry Date</label>
+                                        <input type="text" id="exp-date" name="exp-date" class="form-input" placeholder="MM/YY">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cvv" class="form-label">CVV</label>
+                                        <input type="text" id="cvv" name="cvv" class="form-input" placeholder="123">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="checkout-message" class="form-error"></div>
+                        
+                        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">
+                            Complete Order
+                        </button>
+                    </form>
+                </div>
+
+                <div class="order-summary">
+                    <h3 style="color: var(--navy); margin-bottom: 24px;">Order Summary</h3>
+                    <div id="order-items">
+                        <!-- Order items loaded by JavaScript -->
+                    </div>
+                    <div class="order-total" id="order-total">
+                        <!-- Total loaded by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Arty</h4>
+                    <p>Your handmade world in one place. Supporting artisans and crafters worldwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="learn.html">Learn</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="materials.html">Materials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Account</h4>
+                    <ul>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Arty. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load order summary
+            const orderItems = document.getElementById('order-items');
+            const orderTotal = document.getElementById('order-total');
+            
+            if (cart.items.length === 0) {
+                document.querySelector('.checkout-grid').innerHTML = `
+                    <div style="grid-column: 1 / -1;">
+                        <div class="empty-state">
+                            <h3>Your cart is empty</h3>
+                            <p>Add some items to your cart before checking out.</p>
+                            <a href="shop.html" class="btn btn-primary">Start Shopping</a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            orderItems.innerHTML = cart.items.map(item => `
+                <div class="order-item">
+                    <div>
+                        <p style="font-weight: 500;">${item.title}</p>
+                        <p style="font-size: 14px; color: var(--gray);">Qty: ${item.quantity}</p>
+                    </div>
+                    <p style="font-weight: 600;">$${(item.price * item.quantity).toFixed(2)}</p>
+                </div>
+            `).join('');
+
+            orderTotal.innerHTML = `
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Total:</span>
+                    <span>$${cart.getTotal().toFixed(2)}</span>
+                </div>
+            `;
+
+            // Pre-fill user info if logged in
+            if (auth.isLoggedIn()) {
+                document.getElementById('full-name').value = auth.currentUser.name;
+                document.getElementById('email').value = auth.currentUser.email;
+            }
+
+            // Handle payment method selection
+            document.getElementById('payment-method').addEventListener('change', function(e) {
+                const cardDetails = document.getElementById('card-details');
+                if (e.target.value === 'credit-card' || e.target.value === 'debit-card') {
+                    cardDetails.style.display = 'block';
+                } else {
+                    cardDetails.style.display = 'none';
+                }
+            });
+
+            // Handle form submission
+            document.getElementById('checkout-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate order processing
+                const messageDiv = document.getElementById('checkout-message');
+                messageDiv.className = 'success-message';
+                messageDiv.textContent = 'Processing your order...';
+                
+                setTimeout(() => {
+                    cart.clear();
+                    alert('Order placed successfully! Thank you for shopping with Arty!');
+                    window.location.href = 'index.html';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

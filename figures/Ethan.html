@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethan Marcotte - X Project</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-image: url('BG.png');
+      background-size: auto;
+      background-repeat: repeat;
+      background-attachment: fixed;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      padding: 0 20px;
+    }
+
+
+    .hero-img {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0;
+    }
+
+    .hero-img img {
+      max-width: 100%;
+      width: 280px;
+      border-radius: 10px;
+      border: 4px solid #f99325;
+    }
+
+    .article {
+      max-width: 900px;
+      margin: 0 auto 100px auto;
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 40px;
+      border-radius: 15px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      color: #f99325;
+      font-size: 2rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .translation {
+      font-family: 'Cairo', sans-serif;
+      font-size: 1.1rem;
+      color: #f0e9e1;
+      direction: rtl;
+      text-align: right;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 30px 0;
+      color: #fff;
+      text-align: center;
+      width: 99vw;
+      margin: 0 -20px; 
+
+    
+    }
+
+    footer .icons {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      font-size: 1.4rem;
+    }
+
+    footer .icons a {
+      color: #f99325;
+      transition: transform 0.2s;
+    }
+
+    footer .icons a:hover {
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 600px) {
+      .article {
+        padding: 20px;
+        font-size: 1rem;
+      }
+
+      .section h2 {
+        font-size: 1.4rem;
+      }
+
+      .hero-img img {
+        width: 200px;
+      }
+
+      footer .icons {
+        font-size: 1.2rem;
+        gap: 10px;
+      }
+    }
+
+    #scrollTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+  font-size: 20px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 50%;
+  background-color: #f99325;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background 0.3s;
+}
+
+#scrollTopBtn:hover {
+  background-color: #d87c1c;
+}
+
+  </style>
+</head>
+<body>
+  <button onclick="scrollToTop()" id="scrollTopBtn" title="Go to top">↑</button>
+
+  <div class="hero-img">
+    <img src="IMG_8002.JPG" alt="Philip Kotler" />
+  </div>
+
+  <div class="article">
+    <div class="section">
+      <h2 style="font-size: 25px;">Ethan Marcotte: The Man Who Redefined the Web</h2>
+    </div>
+  
+    <div class="section">
+      Long before smartphones ruled our lives… Before “mobile first” became a mandate… Before websites became ecosystems — there was one man who saw what no one else did.
+    </div>
+  
+    <div class="section">
+      Ethan Marcotte, a thoughtful web designer with a sharp eye for the future, noticed something odd: The web was growing but staying stuck. Designers built fixed pages for fixed screens. Developers crafted separate sites for phones, tablets, desktops. The internet was evolving but design wasn’t keeping up.
+    </div>
+  
+    <div class="section">
+      And he asked a question that would change everything: What if the web could adapt “like water to whatever shape it’s poured into?” That single question sparked a digital revolution.
+    </div>
+  
+    <div class="section">
+      While others scrambled to patch and resize, Ethan was laying the foundation for a new era. He coined a phrase that would shake the entire industry: Responsive Web Design.
+    </div>
+  
+    <div class="section">
+      A new philosophy was born — not about building for devices, but for people. Not about control, but flexibility. Not about screens, but experiences.
+    </div>
+  
+    <div class="section">
+      He didn’t just introduce fluid grids, flexible images, and media queries — he offered a new lens for the internet itself.
+    </div>
+  
+    <div class="section">
+      Ethan Marcotte didn’t just tweak design. He redefined how we see and build the web. Because for him, design wasn’t just about aesthetics — it was about access. It wasn’t about pixels — it was about people. It wasn’t about building separate sites — it was about building a web for everyone.
+    </div>
+  
+    <div class="section">
+      And suddenly, everything changed. Browsers followed. Frameworks adapted. Tech giants listened. Web teams rewrote their entire playbooks.
+    </div>
+  
+    <div class="section">
+      He didn’t just publish a book — he published a manifesto. Universities taught his methods. Agencies swore by his principles. Startups and corporations alike embraced his vision.
+    </div>
+  
+    <div class="section">
+      From scrappy dev teams to billion-dollar brands, Ethan’s ideas became the DNA of the modern web.
+    </div>
+  
+    <div class="section">
+      He inspired designers to think deeper: To build with empathy. To anticipate change. To make the digital world resilient, inclusive, and beautiful on every screen, for every user.
+    </div>
+  
+    <div class="section">
+      In a world full of fragmented devices, Ethan built unity. In a chaotic digital landscape, he gave us order.
+    </div>
+  
+    <div class="section">
+      Even today, every swipe, scroll, and seamless experience still echoes with his thinking.
+    </div>
+  
+    <div class="section">
+      Ethan Marcotte didn’t just join the design world. He transformed it. He proved that web design isn’t just craft — it’s culture. A culture that adapts, connects, and never stops moving.
+    </div>
+  
+    <div class="section">
+      Because the web isn’t one size. And neither is our future.
+    </div>
+  </div>
+  
+
+
+  <footer>
+    <p>&copy; copyright 2025 - X-Project Web Development Committee | Cairo University</p>
+    <div class="icons">
+      <a href="https://www.facebook.com/XProject.CU" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com/xprojectcu/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@xprojectcu" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.linkedin.com/company/xproject-eg/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://www.threads.net/@xprojectcu" target="_blank"><i class="fab fa-threads"></i></a>
+      <a href="https://x.com/xprojectcu?s=21&t=_mFBe2HxHtj93WPlzFzggA" target="_blank"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://youtube.com/@xproject4688?si=g7I_Sz2NpK7qrIjl" target="_blank"><i class="fab fa-youtube"></i></a>
+      <a href="http://behance.net/Xprojectcu" target="_blank"><i class="fab fa-behance"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    window.onscroll = function() {
+      scrollTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+    };
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+  </script>
+  
+
+</body>
+</html>

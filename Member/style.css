@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background: url('BG.png') ;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+}
+
+
+.login {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 30px;
+    text-align: center;
+    margin: 40px auto;
+}
+
+
+.logo {
+    margin-bottom: 20px;
+}
+
+.login-form h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.submit-btn {
+    display: inline-block;
+    background-color: #f99325;
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #de7a23;
+    transform: translateY(-2px);
+}
+
+
+.links {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.links a {
+    color: #de7a23;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.links a:hover {
+    color: #3a5bef;
+    text-decoration: underline;
+}
+
+
+.main-footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+.footer-links a {
+    color: #aaa;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #de7a23;
+}
+
+.main-footer p {
+    margin-bottom: 10px;
+    color: #ddd;
+}
+
+select {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--light-color);
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.3s ease;
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
+  select:hover {
+    background-color: #615549;
+    transform: scale(1.02);
+  }
+  
+  select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(214, 114, 26, 0.7);
+  }
+  

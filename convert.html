@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
+    <meta name="author" content="X Project">
+    
+    <meta property="og:title" content="X Project | File Format Converter">
+    <meta property="og:description" content="Join X Project, the leading student activity at Cairo University since 2012.">
+    <meta property="og:image" content="https://x-project.co/img/logo.png">
+    <meta property="og:url" content="https://x-project.co/home.html">
+    <meta property="og:type" content="website">
+
+
+    <link rel="icon" href="img/logo.png" type="image/png">
+
+    <title>File Format Converter</title>
+    <script src="https://cdn.jsdelivr.net/npm/heic2any"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+    <style>
+         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+        body {
+            font-family: "Poppins", sans-serif;
+            text-align: center;
+            background-color: #1e1e1e;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1e1e1e;
+            padding: 20px 0;
+        }
+
+        header img {
+            width: 100px;
+        }
+
+        h1 {
+            color: #f99325;
+            margin: 20px 0;
+        }
+
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        input {
+            width: 60%;
+            max-width: 400px;
+        }
+
+        button {
+            background-color: #ffa500;
+            color: #000;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff8c00;
+        }
+
+        #progress-container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        #progress-bar {
+            width: 0;
+            height: 20px;
+            background-color: #4caf50;
+            transition: width 0.3s;
+        }
+
+        #progress-text {
+            margin-top: 5px;
+            color: #ffa500;
+        }
+
+        #preview {
+            width: auto;
+            height: auto;
+            max-width: 300px;
+            max-height: 300px;
+            margin: 20px auto;
+            display: none;
+            border: 2px solid #ffa500;
+            border-radius: 10px;
+        }
+
+        canvas {
+            display: none;
+        }
+
+        footer {
+            margin-top: 20px;
+            color: #777;
+                    }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="img/logo.png" alt="X Project Logo">
+        <h1>X Project - File Format Converter</h1>
+    </header>
+
+    
+    <input type="file" id="upload" accept=".heic,.HEIC,image/*,.pdf">
+    <select id="format">
+        <option value="image/jpg">JPG</option>
+        <option value="image/jpeg">JPEG</option>
+        <option value="image/png">PNG</option>
+        <option value="image/webp">WEBP</option>
+    </select>
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+        <div id="progress-text">0%</div>
+    </div>
+    <canvas id="canvas"></canvas>
+    <img id="preview" alt="Converted Image" >
+    <button id="download" style="display: none; position: relative; left: 50%; transform: translateX(-50%);">Download</button>
+
+    <footer>
+        <p>&copy; 2025 X Project - All Rights Reserved</p>
+    </footer>
+
+    <script>
+        document.getElementById("upload").addEventListener("change", async function(event) {
+            let file = event.target.files[0];
+            if (file) {
+                const outputFormat = document.getElementById("format").value;
+
+                // Show progress bar
+                const progressContainer = document.getElementById("progress-container");
+                const progressBar = document.getElementById("progress-bar");
+                const progressText = document.getElementById("progress-text");
+                progressContainer.style.display = "block";
+                progressBar.style.width = "0%";
+                progressText.textContent = "0%";
+
+                const updateProgress = (value) => {
+                    progressBar.style.width = `${value}%`;
+                    progressText.textContent = `${value}%`;
+                };
+
+                try {
+                    updateProgress(10);
+
+                    if (file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")) {
+                        const pdfjsLib = window['pdfjs-dist/build/pdf'];
+                        pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js";
+
+                        const fileReader = new FileReader();
+                        fileReader.onload = async function() {
+                            const typedarray = new Uint8Array(this.result);
+                            const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                            const canvas = document.getElementById("canvas");
+                            const ctx = canvas.getContext("2d");
+
+                            for (let i = 0; i < pdf.numPages; i++) {
+                                updateProgress(10 + ((i / pdf.numPages) * 70));
+                                const page = await pdf.getPage(i + 1);
+                                const viewport = page.getViewport({ scale: 2 });
+
+                                canvas.width = viewport.width;
+                                canvas.height = viewport.height;
+
+                                const renderContext = {
+                                    canvasContext: ctx,
+                                    viewport: viewport
+                                };
+
+                                await page.render(renderContext).promise;
+
+                                const img = document.createElement("img");
+                                img.src = canvas.toDataURL(outputFormat);
+                                img.style.marginTop = "10px";
+                                img.alt = `Page ${i + 1}`;
+                                document.body.appendChild(img);
+                            }
+                            document.getElementById("download").style.display = "block";
+
+                            updateProgress(100);
+                        };
+
+                        fileReader.readAsArrayBuffer(file);
+                        return;
+                    }
+
+                    let convertedBlob;
+                    if (file.type === "image/heic" || file.type === "image/HEIC" || file.name.toLowerCase().endsWith(".heic")) {
+                        try {
+                            convertedBlob = await heic2any({
+                                blob: file,
+                                toType: outputFormat,
+                                quality: 1.0 // الحفاظ على الجودة العالية
+                            });
+                        } catch (heicError) {
+                            alert("HEIC conversion is not supported in your browser or environment.");
+                            console.error(heicError);
+                            progressContainer.style.display = "none";
+                            return;
+                        }
+                    } else {
+                        convertedBlob = file; // No conversion needed for non-HEIC formats
+                    }
+
+                    updateProgress(70);
+
+                    let reader = new FileReader();
+                    reader.onload = function(e) {
+                        let img = document.getElementById("preview");
+                        img.src = e.target.result;
+                        img.style.display = "block";
+
+                        // Save the image to Canvas to maintain high quality
+                        let canvas = document.getElementById("canvas");
+                        let ctx = canvas.getContext("2d");
+                        let imgObj = new Image();
+                        imgObj.onload = function () {
+                            canvas.width = imgObj.width;
+                            canvas.height = imgObj.height;
+                            ctx.drawImage(imgObj, 0, 0, imgObj.width, imgObj.height);
+
+                            // Show the download button
+                            document.getElementById("download").style.display = "block";
+                            updateProgress(100);
+                        };
+                        imgObj.src = e.target.result;
+                    };
+
+                    reader.readAsDataURL(convertedBlob);
+
+                } catch (error) {
+                    alert("Error converting the file. Try another file.");
+                    console.error(error);
+                    progressContainer.style.display = "none";
+                }
+            }
+        });
+
+        document.getElementById("download").addEventListener("click", function() {
+            const outputFormat = document.getElementById("format").value;
+            let canvas = document.getElementById("canvas");
+            let link = document.createElement("a");
+            link.download = `converted.${outputFormat.split('/')[1]}`;
+            link.href = canvas.toDataURL(outputFormat, 1.0);
+            link.click();
+        });
+    </script>
+
+</body>
+</html>

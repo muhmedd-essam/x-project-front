@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Hero Kid - Support for Parents and Educators</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://images.pexels.com/photos/8471822/pexels-photo-8471822.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="Hero Kid Logo" class="logo-img">
+                <span class="logo-text">Hero Kid</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="play.html" class="nav-link">Play</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero contact-hero">
+        <div class="container">
+            <h1 class="page-title">Get in Touch</h1>
+            <p class="page-subtitle">We're here to support parents, educators, and young heroes</p>
+        </div>
+    </section>
+
+    <section class="contact-content">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Contact Information</h2>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-icon">Email</div>
+                            <div class="contact-details">
+                                <h3>Email Support</h3>
+                                <p>support@herokid.com</p>
+                                <span>Response within 24 hours</span>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">Phone</div>
+                            <div class="contact-details">
+                                <h3>Phone Support</h3>
+                                <p>1-800-HERO-KID</p>
+                                <span>Mon-Fri, 9AM-5PM EST</span>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">School</div>
+                            <div class="contact-details">
+                                <h3>Educational Resources</h3>
+                                <p>educators@herokid.com</p>
+                                <span>Classroom materials & guides</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <form class="contact-form" onsubmit="submitForm(event)">
+                        <h2>Send us a Message</h2>
+                        
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="role">I am a...</label>
+                            <select id="role" name="role" required>
+                                <option value="">Select your role</option>
+                                <option value="parent">Parent</option>
+                                <option value="educator">Educator</option>
+                                <option value="student">Student</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">
+                            <span>Send Message</span>
+                            <div class="button-glow"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="container">
+            <h2 class="section-title">Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">Guide</div>
+                    <h3>Parent Guide</h3>
+                    <p>Tips for discussing safety with your children</p>
+                    <a href="#" class="resource-link">Download PDF</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">Toolkit</div>
+                    <h3>Educator Toolkit</h3>
+                    <p>Lesson plans and classroom activities</p>
+                    <a href="#" class="resource-link">Access Toolkit</a>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">Manual</div>
+                    <h3>Game Manual</h3>
+                    <p>Complete guide to Hero Kid gameplay</p>
+                    <a href="#" class="resource-link">View Online</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="https://images.pexels.com/photos/8471822/pexels-photo-8471822.jpeg?auto=compress&cs=tinysrgb&w=80&h=80&fit=crop" alt="Hero Kid Logo" class="footer-logo">
+                    <span class="footer-title">Hero Kid</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="contact.html" class="footer-link">Support</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">IG</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hero Kid. All rights reserved. Made with love for children's safety.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

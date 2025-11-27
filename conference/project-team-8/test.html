@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Test - Arty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        
+        .test-result {
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        
+        .test-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .test-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .test-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body style="background: #f5f5f5;">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">Arty</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="login.html" class="nav-link login-btn">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="test-container">
+        <h1>System Test Results</h1>
+        
+        <div class="test-section">
+            <h3>Authentication System</h3>
+            <div id="auth-test-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>User Management</h3>
+            <div id="user-test-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Navigation</h3>
+            <div id="nav-test-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Quick Actions</h3>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="login.html" class="btn btn-primary">Test Login</a>
+                <a href="register.html" class="btn btn-secondary">Test Register</a>
+                <a href="admin-dashboard.html" class="btn btn-outline">Admin Dashboard</a>
+                <a href="seller-dashboard.html" class="btn btn-outline">Seller Dashboard</a>
+                <a href="profile.html" class="btn btn-outline">Profile</a>
+                <a href="orders.html" class="btn btn-outline">Orders</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        function runTests() {
+            const authResults = document.getElementById('auth-test-results');
+            const userResults = document.getElementById('user-test-results');
+            const navResults = document.getElementById('nav-test-results');
+            
+            // Test Authentication
+            let authHTML = '';
+            
+            // Test if auth object exists
+            if (typeof auth !== 'undefined') {
+                authHTML += '<div class="test-result test-success">✅ Authentication system loaded successfully</div>';
+                
+                // Test user data
+                if (sampleUsers && sampleUsers.length > 0) {
+                    authHTML += `<div class="test-result test-success">✅ Found ${sampleUsers.length} users in system</div>`;
+                    
+                    // Test different user types
+                    const customers = sampleUsers.filter(u => u.role === 'customer');
+                    const sellers = sampleUsers.filter(u => u.role === 'seller');
+                    const admins = sampleUsers.filter(u => u.role === 'admin');
+                    
+                    authHTML += `<div class="test-result test-info">📊 Users: ${customers.length} customers, ${sellers.length} sellers, ${admins.length} admins</div>`;
+                } else {
+                    authHTML += '<div class="test-result test-error">❌ No users found in system</div>';
+                }
+                
+                // Test current user
+                if (auth.isLoggedIn()) {
+                    const currentUser = auth.getCurrentUser();
+                    authHTML += `<div class="test-result test-success">✅ User logged in: ${currentUser.name} (${currentUser.role})</div>`;
+                } else {
+                    authHTML += '<div class="test-result test-info">ℹ️ No user currently logged in</div>';
+                }
+            } else {
+                authHTML += '<div class="test-result test-error">❌ Authentication system not loaded</div>';
+            }
+            
+            authResults.innerHTML = authHTML;
+            
+            // Test User Management
+            let userHTML = '';
+            
+            if (sampleUsers) {
+                sampleUsers.forEach(user => {
+                    const status = user.role === 'admin' ? '👑' : user.role === 'seller' ? '🏪' : '👤';
+                    userHTML += `<div class="test-result test-info">${status} ${user.name} (${user.email}) - ${user.role}</div>`;
+                });
+            }
+            
+            userResults.innerHTML = userHTML;
+            
+            // Test Navigation
+            let navHTML = '';
+            
+            const loginBtn = document.querySelector('.login-btn');
+            if (loginBtn) {
+                navHTML += '<div class="test-result test-success">✅ Navigation loaded successfully</div>';
+                navHTML += `<div class="test-result test-info">🔗 Login button text: "${loginBtn.textContent}"</div>`;
+            } else {
+                navHTML += '<div class="test-result test-error">❌ Navigation not loaded properly</div>';
+            }
+            
+            navResults.innerHTML = navHTML;
+        }
+        
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html> 

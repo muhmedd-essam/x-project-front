@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X Project</title>
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body >
+    <div class="container">
+        <div class="logo">
+            <img src="img/qr/logo & Slogan.png" alt="X Project Logo and Slogan">
+        </div><br>
+        
+        <div class="social-section">
+            <div class="social-links">
+                <a href="https://x-project.co/home.html" class="social-link"><img src="img/qr/website.png" alt="Website"> <div><span>Our Website</span><span>X-project.co</span></div></a>
+                <a href="https://www.facebook.com/share/1EDWaJkKk6/?mibextid=wwXIfr" class="social-link"><img src="img/qr/Facebook.png" alt="Facebook"> <div><span>Become a fan</span><span>Facebook</span></div></a>
+                <a href="https://www.instagram.com/xprojectcu?igsh=dXBzdzFtdzJqNjJx" class="social-link"><img src="img/qr/Instgram.png" alt="Instagram"> <div><span>Follow us</span><span>Instagram</span></div></a>
+                <a href="https://www.linkedin.com/company/xproject-eg/" class="social-link"><img src="img/qr/Linkedin.png" alt="LinkedIn"> <div><span>Connect with us</span><span>LinkedIn</span></div></a>
+                <a href="https://www.tiktok.com/@xprojectcu?_t=ZS-8tTrmlDTzRC&_r=1" class="social-link"><img src="img/qr/Tik-tok.png" alt="TikTok"> <div><span>Our TikTok</span><span>TikTok</span></div></a>
+                <a href="https://www.threads.net/@xprojectcu?igshid=NTc4MTIwNjQ2YQ==" class="social-link"><img src="img/qr/Threads.png" alt="Threads"> <div><span>Follow us</span><span>Threads</span></div></a>
+                
+                <!-- stlye inline because img behance less than others img  -->
+                <a href="http://behance.net/Xprojectcu" class="social-link" style="margin-left: -6px;"><img src="img/qr/behance-01.png" alt="Behance" style="width: 75px; margin-right: -15px;"> <div><span>Follow us</span><span>Behance</span></div></a>
+            </div>
+        </div>
+        
+        <div class="share-button" onclick="copyLink()">
+          <img src="img/qr/share.png" alt="Share this page">
+        </div>
+      
+      <div class="copy-message" id="copyMessage">Link copied to clipboard!</div>
+    </div>
+    
+    <script>
+      function copyLink() {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+              let message = document.getElementById('copyMessage');
+              message.style.display = 'block';
+              setTimeout(() => { message.style.display = 'none'; }, 2000);
+          });
+      }
+  </script>
+</body>
+</html>

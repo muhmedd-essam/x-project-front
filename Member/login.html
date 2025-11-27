@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
+    <meta name="author" content="X Project">
+    
+    <meta property="og:title" content="X Project | Official Website">
+    <meta property="og:description" content="Join X Project, the leading student activity at Cairo University since 2012.">
+    <meta property="og:image" content="https://x-project.co/X-Project/img/logo.png">
+    <meta property="og:url" content="https://x-project.co/X-Project/home.html">
+    <meta property="og:type" content="website">
+
+    <meta name="keywords" content="X Project, X project, x project, xproject, Xproject, XProject,Student Activity, Cairo University, Entrepreneurship, Leadership, University Events">
+
+    <link rel="icon" href="../img/logo.png" type="image/png">
+
+    <title>Login | X Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- start image -->
+    <div class="page">
+        <div class="login">
+            <div class="logo">
+                <img src="logo & Slogan.png" alt="X Project Logo" width="150px">
+            </div>
+            <!-- start form -->
+            <form class="login-form">
+                <h2>Welcome to X Project</h2>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+
+                <!-- <a href="Home.html" class="submit-btn">Login</a> -->
+
+                <button type="submit" class="submit-btn">Login</button>
+                <div class="links">
+                    
+                    <a href="register.html">Create Account</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>&copy;2025 X Project. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelector('.login-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+    
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            try {
+                const response = await fetch("https://x-project.co/public/api/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+    
+                const result = await response.json();
+                if (response.ok) {
+                    
+                    localStorage.setItem("token", result.token);
+                    localStorage.setItem("memberName", result.user.name);
+                    localStorage.setItem("memberCommittee", result.user.committee);
+    
+                    
+                    window.location.href = "Home.html";
+                } else {
+                    alert("Login failed: " + result.message);
+                }
+            } catch (err) {
+                alert("Network error");
+            }
+        });
+    </script>
+</body>
+
+</html>

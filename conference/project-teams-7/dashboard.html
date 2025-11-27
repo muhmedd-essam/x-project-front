@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Binova</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Optimized chart styles */
+        .chart-container {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-md);
+            margin: var(--space-lg) 0;
+        }
+        
+        .chart-container h3 {
+            margin-bottom: var(--space-md);
+            font-size: var(--font-size-lg);
+        }
+        
+        #recyclingChart {
+            max-height: 200px !important;
+            width: 100% !important;
+        }
+        
+        /* Reduce animation for better performance */
+        .chart-container canvas {
+            transition: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container" style="margin-top: 120px;">
+        <div class="text-center mb-4">
+            <h1>Welcome back, <span id="userName">Eco Warrior</span>! 🌱</h1>
+            <p>Keep up the great work saving our planet, one bottle at a time.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number" id="todayBottles">5</span>
+                <span class="stat-label">Bottles Today</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="weekBottles">28</span>
+                <span class="stat-label">This Week</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="monthBottles">124</span>
+                <span class="stat-label">This Month</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="yearBottles">1,247</span>
+                <span class="stat-label">This Year</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="totalPoints">2,840</span>
+                <span class="stat-label">Total Points</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="co2Saved">52</span>
+                <span class="stat-label">KG CO₂ Saved</span>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-container">
+            <h3>Your Recycling Progress</h3>
+            <div style="height: 200px; position: relative;">
+                <canvas id="recyclingChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Vouchers -->
+        <section>
+            <h2>Available Vouchers</h2>
+            <div class="vouchers-grid" id="vouchersGrid">
+                <!-- Vouchers will be populated by JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <script src="navigation.js"></script>
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Check authentication
+        const user = JSON.parse(localStorage.getItem('binovaUser') || 'null');
+        if (!user) {
+            window.location.href = 'login.html';
+        }
+
+        // Populate user data
+        document.getElementById('userName').textContent = user.name;
+
+        // Generate dummy vouchers with realistic point costs
+        const vouchers = [
+            { id: 1, brand: 'Starbucks', discount: '15% OFF', points: 50, description: 'Any beverage', code: 'STAR15' },
+            { id: 2, brand: 'Amazon', discount: '$5 OFF', points: 100, description: 'Orders over $25', code: 'AMAZ5' },
+            { id: 3, brand: 'Nike', discount: '20% OFF', points: 150, description: 'Sustainable collection', code: 'NIKE20' },
+            { id: 4, brand: 'Whole Foods', discount: '$3 OFF', points: 75, description: 'Organic products', code: 'WHOLE3' },
+            { id: 5, brand: 'Tesla', discount: '5% OFF', points: 300, description: 'Charging network', code: 'TESLA5' },
+            { id: 6, brand: 'Patagonia', discount: '25% OFF', points: 200, description: 'Recycled gear', code: 'PATA25' }
+        ];
+
+        function renderVouchers() {
+            const grid = document.getElementById('vouchersGrid');
+            grid.innerHTML = vouchers.map(voucher => {
+                const canAfford = user.totalPoints >= voucher.points;
+                const buttonClass = canAfford ? 'btn-primary' : 'btn-secondary';
+                const buttonText = canAfford ? 'Redeem Now' : `Need ${voucher.points - user.totalPoints} more points`;
+                
+                return `
+                    <div class="voucher-card">
+                        <div class="voucher-brand">${voucher.brand}</div>
+                        <div class="voucher-discount">${voucher.discount}</div>
+                        <p class="voucher-points">${voucher.points} points</p>
+                        <p style="color: var(--gray-600); font-size: var(--font-size-sm); margin-bottom: var(--space-md);">${voucher.description}</p>
+                        <button class="btn ${buttonClass}" 
+                                style="width: 100%;" 
+                                onclick="redeemVoucher(${voucher.id})"
+                                ${!canAfford ? 'disabled' : ''}>
+                            ${buttonText}
+                        </button>
+                        ${!canAfford ? `<p style="color: var(--gray-500); font-size: var(--font-size-sm); margin-top: var(--space-sm);">You have ${user.totalPoints} points</p>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function redeemVoucher(voucherId) {
+            const voucher = vouchers.find(v => v.id === voucherId);
+            if (!voucher) return;
+
+            if (user.totalPoints >= voucher.points) {
+                // Deduct points
+                user.totalPoints -= voucher.points;
+                localStorage.setItem('binovaUser', JSON.stringify(user));
+                
+                // Update display
+                document.getElementById('totalPoints').textContent = user.totalPoints.toLocaleString();
+                
+                // Show voucher code
+                showVoucherCode(voucher);
+                
+                // Re-render vouchers
+                renderVouchers();
+            } else {
+                alert(`You don't have enough points. You need ${voucher.points - user.totalPoints} more points.`);
+            }
+        }
+
+        function showVoucherCode(voucher) {
+            // Create modal for voucher code
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: white;
+                    padding: var(--space-2xl);
+                    border-radius: var(--radius-xl);
+                    text-align: center;
+                    max-width: 400px;
+                    width: 90%;
+                ">
+                    <h3 style="color: var(--primary-green); margin-bottom: var(--space-lg);">🎉 Voucher Redeemed Successfully!</h3>
+                    <div style="
+                        background: var(--gray-100);
+                        padding: var(--space-lg);
+                        border-radius: var(--radius-lg);
+                        margin: var(--space-lg) 0;
+                        font-family: monospace;
+                        font-size: var(--font-size-xl);
+                        font-weight: bold;
+                        color: var(--primary-green);
+                        letter-spacing: 2px;
+                    ">
+                        ${voucher.code}
+                    </div>
+                    <p style="margin-bottom: var(--space-lg);">Use this code at ${voucher.brand} to get ${voucher.discount}</p>
+                    <button class="btn btn-primary" onclick="this.closest('div[style*=\"position: fixed\"]').remove()">
+                        Got it!
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Auto-remove after 15 seconds
+            setTimeout(() => {
+                if (modal.parentNode) {
+                    modal.remove();
+                }
+            }, 15000);
+        }
+
+        // Create recycling chart
+        function createChart() {
+            try {
+                const canvas = document.getElementById('recyclingChart');
+                if (!canvas) {
+                    console.error('Chart canvas not found');
+                    return;
+                }
+
+                const ctx = canvas.getContext('2d');
+                if (!ctx) {
+                    console.error('Could not get canvas context');
+                    return;
+                }
+
+                // Generate data for the last 7 days only (smaller dataset)
+                const labels = [];
+                const data = [];
+                for (let i = 6; i >= 0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - i);
+                    labels.push(date.toLocaleDateString('ar-EG', { weekday: 'short' }));
+                    data.push(Math.floor(Math.random() * 10) + 3); // Smaller range
+                }
+                
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'الزجاجات',
+                            data: data,
+                            borderColor: '#22C55E',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: '#22C55E',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 1,
+                            pointRadius: 3,
+                            pointHoverRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: '#22C55E',
+                                borderWidth: 1,
+                                cornerRadius: 6,
+                                displayColors: false,
+                                callbacks: {
+                                    title: function(context) {
+                                        return context[0].label;
+                                    },
+                                    label: function(context) {
+                                        return context.parsed.y + ' زجاجة';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#666666',
+                                    font: {
+                                        size: 10
+                                    },
+                                    maxTicksLimit: 5,
+                                    callback: function(value) {
+                                        return value;
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#666666',
+                                    font: {
+                                        size: 10
+                                    },
+                                    maxTicksLimit: 7
+                                }
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        },
+                        elements: {
+                            point: {
+                                hoverBackgroundColor: '#16A34A'
+                            }
+                        },
+                        animation: {
+                            duration: 1000
+                        }
+                    }
+                });
+
+                console.log('Chart created successfully');
+            } catch (error) {
+                console.error('Error creating chart:', error);
+                // Fallback: show a simple message if chart fails
+                const chartContainer = document.querySelector('.chart-container');
+                if (chartContainer) {
+                    chartContainer.innerHTML = `
+                        <h3>Your Recycling Progress</h3>
+                        <div style="padding: 15px; text-align: center; color: #666; height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                            <p>📊 Last 7 days: ${Math.floor(Math.random() * 50) + 20} bottles recycled</p>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                renderVouchers();
+                
+                // Check if Chart.js is loaded
+                if (typeof Chart !== 'undefined') {
+                    // Small delay to ensure everything is ready
+                    setTimeout(() => {
+                        createChart();
+                    }, 50);
+                } else {
+                    // Load Chart.js dynamically if not loaded
+                    const script = document.createElement('script');
+                    script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                    script.onload = () => {
+                        setTimeout(() => {
+                            createChart();
+                        }, 50);
+                    };
+                    script.onerror = () => {
+                        console.error('Failed to load Chart.js');
+                        // Show fallback chart
+                        const chartContainer = document.querySelector('.chart-container');
+                        if (chartContainer) {
+                            chartContainer.innerHTML = `
+                                <h3>Your Recycling Progress</h3>
+                                <div style="padding: 15px; text-align: center; color: #666; height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                                    <p>📊 Last 7 days: ${Math.floor(Math.random() * 50) + 20} bottles recycled</p>
+                                </div>
+                            `;
+                        }
+                    };
+                    document.head.appendChild(script);
+                }
+            } catch (error) {
+                console.error('Dashboard initialization error:', error);
+                renderVouchers();
+            }
+        });
+    </script>
+</body>
+</html>

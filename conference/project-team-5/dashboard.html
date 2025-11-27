@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magilearn Academy - Your Magical Dashboard</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="magical-bg">
+        <div class="stars"></div>
+        <div class="floating-sparkles"></div>
+        
+        <nav class="magical-nav">
+            <div class="nav-content">
+                <h1 class="nav-title">✨ Magilearn Academy</h1>
+                <div class="nav-actions">
+                    <span class="welcome-text">Welcome, <span id="studentName"></span>!</span>
+                    <button class="logout-btn" onclick="logout()">🚪 Exit Academy</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="dashboard-container">
+            <header class="dashboard-header">
+                <h2>🏰 Your Magical Learning Journey</h2>
+                <p class="grade-level">Grade <span id="gradeLevel"></span> - <span id="wizardLevel"></span></p>
+            </header>
+
+            <div class="progress-section">
+                <h3>📊 Your Progress Spells</h3>
+                <div class="progress-grid" id="progressGrid">
+                    <!-- Progress cards will be dynamically generated -->
+                </div>
+            </div>
+
+            <div class="subjects-section">
+                <h3>📚 Choose Your Subject Spellbook</h3>
+                <div class="subjects-grid" id="subjectsGrid">
+                    <!-- Subject cards will be dynamically generated -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/animations.js"></script>
+</body>
+</html>

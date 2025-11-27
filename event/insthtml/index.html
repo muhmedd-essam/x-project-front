@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form | X Project</title>
+  <link rel="stylesheet" href="../instcss/style.css" />
+  <link rel="icon" href="../logo.png" type="image/png">
+  <style>
+    .message {
+      padding: 10px;
+      margin-top: 15px;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .success { background-color: #d4edda; color: #155724; }
+    .error { background-color: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="../logo & Slogan.png" alt="logo" class="logo" />
+
+    <form id="speakerForm" enctype="multipart/form-data">
+      <input type="text" name="name" placeholder="Name" required /><br /><br />
+      <input type="tel" name="phone" placeholder="Phone Number" required /><br /><br />
+      <input type="text" name="title" placeholder="Title" /><br /><br />
+      <textarea name="brief" placeholder="Brief"></textarea><br /><br />
+
+      <label for="file">Upload your speaker photo:</label><br />
+      <input type="file" name="file" id="file" accept="image/*" required /><br /><br />
+
+      <p>📅 Note: the event will take place on 4th of July</p>
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- ✅ Message container -->
+    <div id="messageBox"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('speakerForm');
+    const messageBox = document.getElementById('messageBox');
+
+    function showMessage(message, type = 'success') {
+      messageBox.innerHTML = `<div class="message ${type}">${message}</div>`;
+      setTimeout(() => messageBox.innerHTML = '', 5000); // Hide after 5s
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const res = await fetch('https://x-project.co/public/api/event-registrations', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const json = await res.json();
+
+        if (res.ok) {
+          showMessage('Registration successful 🎉', 'success');
+          form.reset();
+        } else {
+          console.error(json);
+          showMessage('Validation error: please check your inputs.', 'error');
+        }
+      } catch (err) {
+        console.error(err);
+        showMessage('Error: Unable to connect to server.', 'error');
+      }
+    });
+  </script>
+</body>
+</html>

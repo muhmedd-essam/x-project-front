@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Binova</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container card">
+            <div class="text-center mb-4">
+                <a href="index.html" class="logo">🌱 Binova</a>
+                <h2>Join Binova</h2>
+                <p>Create your account to start recycling and earning rewards today.</p>
+            </div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" id="fullName" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                    <input type="tel" id="phoneNumber" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-input" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <span id="registerText">Create Account</span>
+                    <span id="registerLoading" class="loading" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <div class="text-center mt-4">
+                <p>Already have an account? <a href="login.html" style="color: var(--primary-green); font-weight: 600;">Sign in here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="navigation.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            const registerText = document.getElementById('registerText');
+            const registerLoading = document.getElementById('registerLoading');
+            
+            // Show loading state
+            registerText.style.display = 'none';
+            registerLoading.style.display = 'inline-block';
+            
+            // Simulate registration process
+            setTimeout(() => {
+                const user = {
+                    id: Date.now(),
+                    name: fullName,
+                    phoneNumber: phoneNumber,
+                    email: email,
+                    joinDate: new Date().toISOString(),
+                    bottlesRecycled: 0,
+                    totalPoints: 0,
+                    co2Saved: 0
+                };
+                
+                localStorage.setItem('binovaUser', JSON.stringify(user));
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

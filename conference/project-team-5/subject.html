@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magilearn Academy - Subject</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/subject.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="magical-bg">
+        <div class="stars"></div>
+        <div class="floating-sparkles"></div>
+        
+        <nav class="magical-nav">
+            <div class="nav-content">
+                <h1 class="nav-title">✨ Magilearn Academy</h1>
+                <div class="nav-actions">
+                    <a href="dashboard.html" class="back-btn">🏠 Back to Dashboard</a>
+                    <button class="logout-btn" onclick="logout()">🚪 Exit Academy</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="subject-container">
+            <header class="subject-header">
+                <h2 id="subjectTitle">📐 Mathematics Spellbook</h2>
+                <p>Choose a chapter to begin your magical learning adventure!</p>
+            </header>
+
+            <div class="units-grid" id="unitsGrid">
+                <!-- Units will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/subject.js"></script>
+    <script src="scripts/animations.js"></script>
+</body>
+</html>

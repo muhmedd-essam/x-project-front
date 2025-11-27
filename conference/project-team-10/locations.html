@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locations - Boothly</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/locations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Boothly</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="locations.html" class="nav-link active">Locations</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-outline">Login</a>
+                <a href="register.html" class="btn-primary">Sign Up</a>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-locations">
+            <div class="container">
+                <h1>Find Your Perfect <span class="text-primary">Meeting Space</span></h1>
+                <p>Discover available Boothly locations near you</p>
+                <div id="loginMessage" class="login-message" style="display: none;">
+                    <div class="alert alert-info">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 16v-4"/>
+                            <path d="M12 8h.01"/>
+                        </svg>
+                        <span>You must <a href="login.html">login</a> to book. <a href="register.html">Create new account</a></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="map-section">
+            <div class="container">
+                <div class="map-controls">
+                    <div class="search-box">
+                        <input type="text" id="locationSearch" placeholder="Search by city or address...">
+                        <button class="btn-primary" onclick="searchLocation()">Search</button>
+                    </div>
+                    <button class="btn-outline" onclick="findNearby()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="10" r="3"/>
+                            <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+                        </svg>
+                        Find Nearby
+                    </button>
+                </div>
+                <div class="map-container" id="map"></div>
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <div class="legend-marker available"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-marker busy"></div>
+                        <span>Busy</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-marker maintenance"></div>
+                        <span>Maintenance</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="locations-list">
+            <div class="container">
+                <h2 class="section-title">All Locations</h2>
+                <div class="filters">
+                    <select id="cityFilter" class="form-input">
+                        <option value="">All Cities</option>
+                        <option value="cairo">Cairo</option>
+                        <option value="alexandria">Alexandria</option>
+                        <option value="giza">Giza</option>
+                        <option value="sharm-el-sheikh">Sharm El Sheikh</option>
+                        <option value="hurghada">Hurghada</option>
+                        <option value="luxor">Luxor</option>
+                        <option value="aswan">Aswan</option>
+                        <option value="port-said">Port Said</option>
+                    </select>
+                    <select id="availabilityFilter" class="form-input">
+                        <option value="">All Status</option>
+                        <option value="available">Available Now</option>
+                        <option value="busy">Busy</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="locations-grid" id="locationsGrid">
+                    <!-- Locations will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Boothly</h3>
+                    <p>Professional meeting spaces for the modern world.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: support@boothly.com</p>
+                    <p>Phone: +20 (2) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Boothly. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/locations.js"></script>
+</body>
+</html>

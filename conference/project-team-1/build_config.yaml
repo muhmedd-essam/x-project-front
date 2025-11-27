@@ -1,0 +1,47 @@
+# AutiConnect Escrow App Build Configuration
+
+app_name: "AutiConnect Escrow"
+package_name: "com.AutiConnect.escrow"
+version: "1.0.0"
+build_number: 1
+
+# App Icon
+icon_path: "assets/images/app_icon.svg"
+
+# Target URL
+web_url: "https://x-project.co/conference/project-team-6"
+
+# Build Settings
+android:
+  min_sdk_version: 21
+  target_sdk_version: 33
+  compile_sdk_version: 33
+  
+  permissions:
+    - android.permission.INTERNET
+    - android.permission.ACCESS_NETWORK_STATE
+    - android.permission.RECEIVE_BOOT_COMPLETED
+    - android.permission.VIBRATE
+
+# Features
+features:
+  - webview
+  - notifications
+  - connectivity_check
+  - error_handling
+  - arabic_support
+
+# Dependencies
+dependencies:
+  flutter:
+    sdk: flutter
+  webview_flutter: ^4.4.2
+  flutter_local_notifications: ^16.3.0
+  connectivity_plus: ^5.0.2
+  cupertino_icons: ^1.0.2
+
+# Build Commands
+build_commands:
+  debug: "flutter build apk --debug"
+  release: "flutter build apk --release"
+  bundle: "flutter build appbundle --release" 

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binova - Recycle Bottles, Save the Planet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="fade-in">Recycle Bottles, Save the Planet with Binova</h1>
+            <p class="fade-in">Transform your plastic bottles into rewards while protecting our environment through smart recycling technology.</p>
+            <div class="flex-center" style="gap: var(--space-lg);">
+                <a href="login.html" class="btn btn-primary">Get Started</a>
+                <a href="machines.html" class="btn btn-outline">Find Machines</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center">How Binova Works</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-icon">1</div>
+                    <h3>Insert Bottle</h3>
+                    <p>Place your plastic bottle into any Binova smart recycling machine.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">2</div>
+                    <h3>Get Your Code</h3>
+                    <p>Receive a QR code or numeric code from the machine.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">3</div>
+                    <h3>Scan with App</h3>
+                    <p>Use the Binova mobile app to scan your code.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">4</div>
+                    <h3>Earn Rewards</h3>
+                    <p>Collect points and redeem vouchers from partner brands.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Counter -->
+    <section class="impact-counter">
+        <div class="container">
+            <h2>Our Collective Impact</h2>
+            <div class="impact-stats">
+                <div class="impact-stat">
+                    <span class="impact-number" id="bottlesCount">120,000</span>
+                    <span>Bottles Recycled</span>
+                </div>
+                <div class="impact-stat">
+                    <span class="impact-number" id="co2Saved">50</span>
+                    <span>Tons CO₂ Saved</span>
+                </div>
+                <div class="impact-stat">
+                    <span class="impact-number" id="usersCount">8,450</span>
+                    <span>Active Users</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center">Why Choose Binova?</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>🌍 Environmental Impact</h3>
+                    <p>Every bottle you recycle helps reduce plastic waste and carbon emissions. Track your personal environmental contribution.</p>
+                </div>
+                <div class="card">
+                    <h3>💰 Earn Rewards</h3>
+                    <p>Convert your recycling efforts into real value with points that can be redeemed for vouchers from top brands.</p>
+                </div>
+                <div class="card">
+                    <h3>📱 Smart Technology</h3>
+                    <p>Our AI-powered machines and mobile app make recycling convenient, trackable, and rewarding.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CO2 Impact Section -->
+    <section class="section" style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2>🌱 Your Environmental Impact</h2>
+                <p>Every recycled bottle makes a real difference</p>
+            </div>
+            
+            <div class="co2-impact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-xl); margin: var(--space-2xl) 0;">
+                <div class="co2-card" style="
+                    background: white;
+                    padding: var(--space-xl);
+                    border-radius: var(--radius-xl);
+                    text-align: center;
+                    box-shadow: var(--shadow-md);
+                    border: 2px solid var(--accent-teal);
+                ">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-md);">🌿</div>
+                    <h3 style="color: var(--accent-teal); margin-bottom: var(--space-sm);">CO2 Saved</h3>
+                    <div style="font-size: var(--font-size-2xl); font-weight: 700; color: var(--accent-teal); margin-bottom: var(--space-sm);" id="co2SavedTotal">0.5 kg</div>
+                    <p style="color: var(--gray-600); font-size: var(--font-size-sm);">Saved from recycling</p>
+                </div>
+                
+                <div class="co2-card" style="
+                    background: white;
+                    padding: var(--space-xl);
+                    border-radius: var(--radius-xl);
+                    text-align: center;
+                    box-shadow: var(--shadow-md);
+                    border: 2px solid var(--primary-green);
+                ">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-md);">💡</div>
+                    <h3 style="color: var(--primary-green); margin-bottom: var(--space-sm);">Energy Saved</h3>
+                    <div style="font-size: var(--font-size-2xl); font-weight: 700; color: var(--primary-green); margin-bottom: var(--space-sm);" id="energySaved">3 hours</div>
+                    <p style="color: var(--gray-600); font-size: var(--font-size-sm);">LED light power</p>
+                </div>
+                
+                <div class="co2-card" style="
+                    background: white;
+                    padding: var(--space-xl);
+                    border-radius: var(--radius-xl);
+                    text-align: center;
+                    box-shadow: var(--shadow-md);
+                    border: 2px solid var(--primary-blue);
+                ">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-md);">🌊</div>
+                    <h3 style="color: var(--primary-blue); margin-bottom: var(--space-sm);">Water Saved</h3>
+                    <div style="font-size: var(--font-size-2xl); font-weight: 700; color: var(--primary-blue); margin-bottom: var(--space-sm);" id="waterSaved">2 liters</div>
+                    <p style="color: var(--gray-600); font-size: var(--font-size-sm);">Fresh water preserved</p>
+                </div>
+            </div>
+            
+            <!-- Motivational Quote Section -->
+            <div class="co2-quote-section" style="
+                background: white;
+                padding: var(--space-xl);
+                border-radius: var(--radius-xl);
+                text-align: center;
+                margin: var(--space-xl) 0;
+                box-shadow: var(--shadow-md);
+                border-left: 4px solid var(--accent-teal);
+            ">
+                <div style="font-size: 2rem; margin-bottom: var(--space-md);">💬</div>
+                <blockquote style="
+                    font-size: var(--font-size-lg);
+                    font-style: italic;
+                    color: var(--gray-700);
+                    margin: 0;
+                    line-height: 1.6;
+                " id="mainQuote">
+                    "Every item you recycle is one less puff of CO2 in our atmosphere. Small actions, big impact."
+                </blockquote>
+                <p style="
+                    color: var(--accent-teal);
+                    font-weight: 600;
+                    margin-top: var(--space-md);
+                    margin-bottom: 0;
+                " id="quoteAuthor">- Environmental Wisdom</p>
+            </div>
+            
+            <!-- Live Counter Section -->
+            <div class="live-counter-section" style="
+                background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-teal) 100%);
+                color: white;
+                padding: var(--space-xl);
+                border-radius: var(--radius-xl);
+                text-align: center;
+                margin: var(--space-xl) 0;
+                box-shadow: var(--shadow-lg);
+            ">
+                <h3 style="margin-bottom: var(--space-lg);">🎯 Live Impact Counter</h3>
+                <div style="font-size: var(--font-size-2xl); font-weight: 700; margin-bottom: var(--space-md);" id="liveCounter">
+                    You've helped reduce CO₂ emissions by 82.7% every time you recycle aluminum!
+                </div>
+                <p style="opacity: 0.9; margin-bottom: 0;">Real-time environmental impact tracking</p>
+            </div>
+            
+            <!-- Leaderboard Section -->
+            <div class="leaderboard-section" style="
+                background: white;
+                padding: var(--space-xl);
+                border-radius: var(--radius-xl);
+                text-align: center;
+                margin: var(--space-xl) 0;
+                box-shadow: var(--shadow-md);
+                border: 2px solid var(--primary-green);
+            ">
+                <h3 style="color: var(--primary-green); margin-bottom: var(--space-lg);">🏆 Weekly Recycling Champions</h3>
+                <div style="font-size: var(--font-size-xl); font-weight: 600; color: var(--primary-green); margin-bottom: var(--space-md);" id="leaderboardQuote">
+                    Top recycler this week helped cut 12.5 kg of CO2—equivalent to planting 1.5 trees!
+                </div>
+                <p style="color: var(--gray-600); margin-bottom: 0;">Join the leaderboard and make a difference</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="navigation.js"></script>
+    <script>
+        // Animate counters
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, 20);
+        }
+
+        // Update CO2 impact indicators
+        function updateCO2Impact() {
+            const user = JSON.parse(localStorage.getItem('binovaUser') || 'null');
+            if (user && user.bottlesRecycled) {
+                const bottles = user.bottlesRecycled;
+                const co2Saved = (bottles * 0.5).toFixed(1);
+                const energyHours = Math.floor(bottles * 6);
+                const waterLiters = bottles * 2;
+                
+                document.getElementById('co2SavedTotal').textContent = co2Saved + ' kg';
+                document.getElementById('energySaved').textContent = energyHours + ' hours';
+                document.getElementById('waterSaved').textContent = waterLiters + ' liters';
+            }
+        }
+
+        // Motivational quotes array
+        const motivationalQuotes = [
+            {
+                text: "Every item you recycle is one less puff of CO2 in our atmosphere. Small actions, big impact.",
+                author: "Environmental Wisdom"
+            },
+            {
+                text: "You've helped reduce CO₂ emissions by 82.7% every time you recycle aluminum!",
+                author: "Climate Research"
+            },
+            {
+                text: "Top recycler this week helped cut 12.5 kg of CO2—equivalent to planting 1.5 trees!",
+                author: "Binova Team"
+            },
+            {
+                text: "Every plastic bottle you recycle saves enough energy to power an LED light for 6 hours!",
+                author: "Energy Conservation"
+            },
+            {
+                text: "Recycling one aluminum can saves enough energy to run a TV for 3 hours. Imagine the impact when everyone recycles!",
+                author: "Environmental Science"
+            }
+        ];
+
+        // Update quotes randomly
+        function updateQuotes() {
+            const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+            document.getElementById('mainQuote').textContent = randomQuote.text;
+            document.getElementById('quoteAuthor').textContent = `- ${randomQuote.author}`;
+            
+            // Update live counter with dynamic data
+            const user = JSON.parse(localStorage.getItem('binovaUser') || 'null');
+            if (user && user.bottlesRecycled) {
+                const bottles = user.bottlesRecycled;
+                const co2Saved = (bottles * 0.5).toFixed(1);
+                const percentage = Math.min(82.7 + (bottles * 2), 95).toFixed(1);
+                
+                document.getElementById('liveCounter').textContent = 
+                    `You've helped reduce CO₂ emissions by ${percentage}% every time you recycle aluminum!`;
+                
+                const treesEquivalent = (bottles * 0.1).toFixed(1);
+                document.getElementById('leaderboardQuote').textContent = 
+                    `Top recycler this week helped cut ${co2Saved} kg of CO2—equivalent to planting ${treesEquivalent} trees!`;
+            }
+        }
+
+        // Initialize counter animations
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                animateCounter(document.getElementById('bottlesCount'), 120000);
+                animateCounter(document.getElementById('co2Saved'), 50);
+                animateCounter(document.getElementById('usersCount'), 8450);
+            }, 500);
+            
+            // Update CO2 impact indicators
+            updateCO2Impact();
+            
+            // Update quotes
+            updateQuotes();
+            
+            // Update quotes every 30 seconds
+            setInterval(updateQuotes, 30000);
+        });
+    </script>
+</body>
+</html>

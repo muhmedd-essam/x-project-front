@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Kid - Be the Hero, Stay Safe, Learn Smart Choices</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://images.pexels.com/photos/8471822/pexels-photo-8471822.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="Hero Kid Logo" class="logo-img">
+                <span class="logo-text">Hero Kid</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="play.html" class="nav-link">Play</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-background">
+            <div class="animated-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-logo">
+                <img src="https://images.pexels.com/photos/8471822/pexels-photo-8471822.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop" alt="Hero Kid Logo" class="main-logo">
+                <h1 class="hero-title">Hero Kid</h1>
+            </div>
+            <p class="hero-tagline">Be the hero, stay safe, learn smart choices</p>
+            <button class="cta-button" onclick="window.location.href='play.html'">
+                <span>Play Now</span>
+                <div class="button-glow"></div>
+            </button>
+        </div>
+        <div class="hero-decoration">
+            <img src="https://images.pexels.com/photos/8471952/pexels-photo-8471952.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop" alt="Hero Character" class="hero-character">
+        </div>
+    </section>
+
+    <section class="characters-section">
+        <div class="container">
+            <h2 class="section-title">Meet Your Heroes</h2>
+            <p class="section-subtitle">Choose your character and start your adventure</p>
+            <div class="characters-carousel">
+                <div class="character-card active">
+                    <div class="character-image">
+                        <img src="https://images.pexels.com/photos/8471871/pexels-photo-8471871.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Brave Emma">
+                    </div>
+                    <h3>Brave Emma</h3>
+                    <p>The courageous leader who always stands up for others</p>
+                </div>
+                <div class="character-card">
+                    <div class="character-image">
+                        <img src="https://images.pexels.com/photos/8471935/pexels-photo-8471935.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Smart Alex">
+                    </div>
+                    <h3>Smart Alex</h3>
+                    <p>The clever problem-solver who thinks before acting</p>
+                </div>
+                <div class="character-card">
+                    <div class="character-image">
+                        <img src="https://images.pexels.com/photos/8471849/pexels-photo-8471849.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop" alt="Kind Sofia">
+                    </div>
+                    <h3>Kind Sofia</h3>
+                    <p>The caring friend who helps everyone feel included</p>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn prev" onclick="previousCharacter()">‹</button>
+                <div class="carousel-dots">
+                    <span class="dot active" onclick="currentCharacter(0)"></span>
+                    <span class="dot" onclick="currentCharacter(1)"></span>
+                    <span class="dot" onclick="currentCharacter(2)"></span>
+                </div>
+                <button class="carousel-btn next" onclick="nextCharacter()">›</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Game Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Interactive Stories</h3>
+                    <p>Engaging adventures that teach important safety lessons through fun gameplay</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Safety Learning</h3>
+                    <p>Learn to recognize and respond to different situations in a safe environment</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Hero Rewards</h3>
+                    <p>Earn badges and unlock new characters as you complete safety challenges</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Friend System</h3>
+                    <p>Play with friends and learn the importance of teamwork and support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="https://images.pexels.com/photos/8471822/pexels-photo-8471822.jpeg?auto=compress&cs=tinysrgb&w=80&h=80&fit=crop" alt="Hero Kid Logo" class="footer-logo">
+                    <span class="footer-title">Hero Kid</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="contact.html" class="footer-link">Support</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">IG</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hero Kid. All rights reserved. Made with love for children's safety.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

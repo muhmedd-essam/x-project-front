@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+
+body {
+    background-image: url('../img/qr/BG.png');
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+.container {
+    width: 950%;
+    max-width: 400px;
+    margin: auto;
+    padding-top: 50px;
+    text-align: center;
+}
+.logo img {
+    width: 250px;
+}
+.social-section {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 100px;
+}
+.social-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    width: fit-content;
+}
+.social-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.2em;
+    gap: 15px;
+    width: 100%;
+}
+.social-link img {
+    width: 65px;
+    margin-right: -10px;
+}
+.social-link div {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    white-space: nowrap;
+}
+.social-link div span:first-child {
+    font-weight: 50;
+}
+.social-link div span:last-child {
+    font-weight: bold;
+}
+.share-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    cursor: pointer;
+}
+.share-button img {
+    width: 200px;
+}
+.copy-message {
+    display: none;
+    position: fixed;
+    bottom: 50px;
+    left: 51%;
+    transform: translateX(-50%);
+    background: rgba(249, 147, 37, 0.9);
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+}

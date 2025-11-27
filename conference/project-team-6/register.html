@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Trusti</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="index.html" class="auth-brand">
+                    <span class="brand-icon">🛡️</span>
+                    <span class="brand-text">Trusti</span>
+                </a>
+                <h1>Create Your Account</h1>
+                <p>Join our secure trading platform</p>
+            </div>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="userType">Account Type</label>
+                    <select id="userType" name="userType" required>
+                        <option value="">Select account type</option>
+                        <option value="buyer">Buyer - I want to purchase products/services</option>
+                        <option value="seller">Seller - I want to sell products/services</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/storage.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script>
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+                // User is already logged in, redirect to appropriate dashboard
+                if (currentUser.userType === 'buyer') {
+                    window.location.href = 'buyer-dashboard.html';
+                } else {
+                    window.location.href = 'seller-dashboard.html';
+                }
+                return;
+            }
+            
+            // Add event listener for register form
+            document.getElementById('registerForm').addEventListener('submit', handleRegister);
+        });
+    </script>
+</body>
+</html>

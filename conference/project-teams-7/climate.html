@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Impact - Binova</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="margin-top: 120px;">
+        <div class="text-center mb-4">
+            <h1>Climate Change Projections</h1>
+            <p>See how rising sea levels will affect our planet in the coming decades. Every bottle we recycle helps fight climate change.</p>
+        </div>
+
+        <div class="climate-maps">
+            <div class="map-tabs">
+                <button class="map-tab active" onclick="showMap(2040, this)">2040</button>
+                <button class="map-tab" onclick="showMap(2050, this)">2050</button>
+                <button class="map-tab" onclick="showMap(2080, this)">2080</button>
+            </div>
+
+            <div id="mapContainer">
+                <iframe 
+                    id="climateMap" 
+                    class="map-iframe"
+                    src="https://coastal.climatecentral.org/embed/map/8/31.355/30.6734/?theme=sea_level_rise&map_type=year&basemap=roadmap&contiguous=true&elevation_model=best_available&forecast_year=2040&pathway=ssp3rcp70&percentile=p50&return_level=return_level_1&rl_model=coast_rp&slr_model=ipcc_2021_med"
+                    title="Climate Central Sea Level Rise Map">
+                </iframe>
+            </div>
+        </div>
+
+        <div class="grid grid-2 mt-4">
+            <div class="card">
+                <h3>🌊 Sea Level Impact</h3>
+                <p>Climate Central's projections show potential flooding scenarios based on current emission trends. By recycling plastic, we reduce the carbon footprint of manufacturing new bottles.</p>
+            </div>
+            <div class="card">
+                <h3>♻️ How Recycling Helps</h3>
+                <p>Each recycled bottle saves approximately 0.04 kg of CO₂ emissions. This might seem small, but together we can make a significant impact on climate change.</p>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <h3>Our Commitment to Climate Action</h3>
+            <p>Binova is committed to reducing plastic waste and fighting climate change. Through our smart recycling technology, we're making it easier for everyone to contribute to a sustainable future.</p>
+            <div class="impact-stats" style="margin-top: var(--space-lg); justify-content: space-around;">
+                <div class="impact-stat">
+                    <span class="impact-number" style="color: var(--primary-green);">2.4M</span>
+                    <span>Bottles Prevented from Oceans</span>
+                </div>
+                <div class="impact-stat">
+                    <span class="impact-number" style="color: var(--primary-blue);">890</span>
+                    <span>Tons CO₂ Reduction Goal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="navigation.js"></script>
+    <script>
+        const mapUrls = {
+            2040: 'https://coastal.climatecentral.org/embed/map/8/31.355/30.6734/?theme=sea_level_rise&map_type=year&basemap=roadmap&contiguous=true&elevation_model=best_available&forecast_year=2040&pathway=ssp3rcp70&percentile=p50&return_level=return_level_1&rl_model=coast_rp&slr_model=ipcc_2021_med',
+            2050: 'https://coastal.climatecentral.org/embed/map/8/31.3221/30.7962/?theme=sea_level_rise&map_type=year&basemap=roadmap&contiguous=true&elevation_model=best_available&forecast_year=2050&pathway=ssp3rcp70&percentile=p50&return_level=return_level_1&rl_model=coast_rp&slr_model=ipcc_2021_med',
+            2080: 'https://coastal.climatecentral.org/embed/map/8/31.355/30.6734/?theme=sea_level_rise&map_type=year&basemap=roadmap&contiguous=true&elevation_model=best_available&forecast_year=2080&pathway=ssp3rcp70&percentile=p50&return_level=return_level_1&rl_model=coast_rp&slr_model=ipcc_2021_med'
+        };
+
+        function showMap(year, button) {
+            // Update active tab
+            document.querySelectorAll('.map-tab').forEach(tab => tab.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Update iframe source
+            document.getElementById('climateMap').src = mapUrls[year];
+        }
+    </script>
+</body>
+</html>

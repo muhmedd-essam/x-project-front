@@ -1,0 +1,483 @@
+/* Transaction Detail Layout */
+.transaction-container {
+  padding: 40px 0;
+  min-height: calc(100vh - 80px);
+}
+
+.back-button {
+  margin-bottom: 32px;
+}
+
+.transaction-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 1024px) {
+  .transaction-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.transaction-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.transaction-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Transaction Info Card */
+.transaction-info-card {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--neutral-200);
+}
+
+.transaction-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.transaction-info-title {
+  flex: 1;
+}
+
+.transaction-info-title h2 {
+  margin-bottom: 8px;
+}
+
+.transaction-info-title .transaction-id {
+  font-size: 0.875rem;
+  color: var(--neutral-500);
+}
+
+.transaction-amount-display {
+  text-align: right;
+}
+
+.amount-label {
+  font-size: 0.875rem;
+  color: var(--neutral-500);
+  margin-bottom: 4px;
+}
+
+.amount-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-600);
+}
+
+.transaction-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.detail-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-group .detail-label {
+  font-size: 0.875rem;
+  color: var(--neutral-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.detail-group .detail-value {
+  color: var(--neutral-900);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* Progress Timeline */
+.progress-card {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--neutral-200);
+}
+
+.progress-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  position: relative;
+}
+
+.progress-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 60px;
+  width: 2px;
+  height: 24px;
+  background: var(--neutral-200);
+}
+
+.progress-step.completed::after {
+  background: var(--secondary-500);
+}
+
+.progress-step.active::after {
+  background: var(--primary-500);
+}
+
+.step-indicator {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.progress-step.completed .step-indicator {
+  background: var(--secondary-500);
+  color: var(--white);
+}
+
+.progress-step.active .step-indicator {
+  background: var(--primary-500);
+  color: var(--white);
+}
+
+.progress-step.inactive .step-indicator {
+  background: var(--neutral-200);
+  color: var(--neutral-500);
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-title {
+  font-weight: 600;
+  color: var(--neutral-900);
+  margin-bottom: 4px;
+}
+
+.step-description {
+  color: var(--neutral-600);
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.step-timestamp {
+  font-size: 0.75rem;
+  color: var(--neutral-400);
+  margin-top: 4px;
+}
+
+/* Action Buttons */
+.transaction-actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Chat Component */
+.chat-card {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--neutral-200);
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+}
+
+.chat-card:empty {
+  display: none;
+}
+
+.chat-header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--neutral-200);
+}
+
+.chat-header h3 {
+  margin: 0;
+  color: var(--primary-600);
+  font-size: 1.25rem;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-right: 8px;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: var(--neutral-100);
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: var(--neutral-300);
+  border-radius: 3px;
+}
+
+.message {
+  max-width: 70%;
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  word-wrap: break-word;
+  margin-bottom: 8px;
+}
+
+.message-content {
+  margin-bottom: 4px;
+}
+
+.message.sent {
+  align-self: flex-end;
+  background: var(--primary-500);
+  color: var(--white);
+  border-bottom-right-radius: 4px;
+}
+
+.message.received {
+  align-self: flex-start;
+  background: var(--neutral-100);
+  color: var(--neutral-900);
+  border-bottom-left-radius: 4px;
+}
+
+.message-info {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+.chat-input-container {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid var(--neutral-200);
+  border-radius: var(--border-radius);
+  resize: none;
+  max-height: 100px;
+  font-family: inherit;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: var(--primary-500);
+}
+
+.chat-send-btn {
+  padding: 12px 16px;
+  background: var(--primary-500);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.chat-send-btn:hover:not(:disabled) {
+  background: var(--primary-600);
+}
+
+.chat-send-btn:disabled {
+  background: var(--neutral-300);
+  cursor: not-allowed;
+}
+
+.chat-send-btn:disabled:hover {
+  background: var(--neutral-300);
+}
+
+/* Empty state for chat */
+.empty-state {
+  text-align: center;
+  color: var(--neutral-500);
+  font-style: italic;
+}
+
+/* Message typing indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  color: var(--neutral-500);
+  font-size: 0.875rem;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 2px;
+}
+
+.typing-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--neutral-400);
+  border-radius: 50%;
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Countdown Timer */
+.countdown-card {
+  background: linear-gradient(135deg, var(--warning-500), var(--warning-400));
+  color: var(--white);
+  border-radius: var(--border-radius-lg);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.countdown-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.countdown-timer {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.countdown-description {
+  opacity: 0.9;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* Error/Empty States */
+.error-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--neutral-500);
+}
+
+.error-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .transaction-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .chat-card {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 24px 0;
+  }
+  
+  .dashboard-header {
+    margin-bottom: 32px;
+  }
+  
+  .panel-card {
+    padding: 24px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .stat-card {
+    padding: 20px;
+  }
+  
+  .transaction-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .transaction-actions {
+    flex-direction: column;
+  }
+  
+  .transaction-actions .btn {
+    width: 100%;
+  }
+  
+  .chat-card {
+    height: 350px;
+    padding: 24px;
+  }
+  
+  .message {
+    max-width: 85%;
+  }
+  
+  .chat-input-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .chat-send-btn {
+    width: 100%;
+  }
+}

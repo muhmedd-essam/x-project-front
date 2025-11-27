@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Arty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">Arty</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="learn.html" class="nav-link">Learn</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="materials.html" class="nav-link">Materials</a>
+                <a href="cart.html" class="nav-link cart-link">
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+                <a href="login.html" class="nav-link login-btn">Login</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="min-height: calc(100vh - 140px); background: linear-gradient(135deg, var(--light-lilac), var(--teal)); display: flex; align-items: center;">
+        <div class="form-container">
+            <h2 class="form-title">Welcome Back!</h2>
+            <p style="text-align: center; color: var(--gray); margin-bottom: 32px;">Sign in to your Arty account</p>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                    <div id="email-error" class="form-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                    <div id="password-error" class="form-error"></div>
+                </div>
+                
+                <div id="login-message" class="form-error"></div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 16px;">Sign In</button>
+            </form>
+            
+            <div style="text-align: center;">
+                <p>Don't have an account? <a href="register.html" style="color: var(--orange); text-decoration: none;">Sign up here</a></p>
+            </div>
+            
+            <div style="margin-top: 24px; padding: 16px; background: var(--gray-light); border-radius: 8px;">
+                <p style="font-size: 14px; color: var(--gray); margin-bottom: 8px;"><strong>Demo Accounts:</strong></p>
+                <p style="font-size: 12px; color: var(--gray);">demo@arty.com / demo123 (Customer)</p>
+                <p style="font-size: 12px; color: var(--gray);">admin@arty.com / admin123 (Admin)</p>
+                <p style="font-size: 12px; color: var(--gray);">seller1@arty.com / seller123 (Seller)</p>
+                <p style="font-size: 12px; color: var(--gray);">seller2@arty.com / seller123 (Seller)</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            clearFormMessages();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Validation
+            if (!validateEmail(email)) {
+                showFormError('email-error', 'Please enter a valid email address.');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showFormError('password-error', 'Password must be at least 6 characters long.');
+                return;
+            }
+            
+            // Attempt login
+            const result = auth.login(email, password);
+            
+            if (result.success) {
+                showFormSuccess('login-message', result.message);
+                // Redirect will be handled by auth.login() based on user role
+            } else {
+                showFormError('login-message', result.message);
+            }
+        });
+    </script>
+</body>
+</html>

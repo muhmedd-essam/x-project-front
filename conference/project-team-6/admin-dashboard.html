@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Trusti</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <style>
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--neutral-200);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-600);
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            color: var(--neutral-600);
+            font-weight: 500;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--neutral-200);
+            margin-bottom: 24px;
+        }
+        
+        .admin-tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--neutral-600);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .admin-tab.active {
+            color: var(--primary-600);
+            border-bottom-color: var(--primary-600);
+        }
+        
+        .admin-tab:hover {
+            color: var(--primary-500);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .support-ticket {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--neutral-200);
+        }
+        
+        .ticket-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .ticket-priority {
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .priority-high {
+            background-color: var(--accent-100);
+            color: var(--accent-700);
+        }
+        
+        .priority-medium {
+            background-color: var(--warning-100);
+            color: var(--warning-700);
+        }
+        
+        .priority-low {
+            background-color: var(--secondary-100);
+            color: var(--secondary-700);
+        }
+        
+        .ticket-status {
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status-open {
+            background-color: var(--primary-100);
+            color: var(--primary-700);
+        }
+        
+        .status-closed {
+            background-color: var(--neutral-100);
+            color: var(--neutral-700);
+        }
+        
+        .ticket-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.875rem;
+        }
+        
+        .transaction-item {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--neutral-200);
+        }
+        
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .transaction-amount {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-600);
+        }
+        
+        .filters {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid var(--neutral-300);
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-icon">🛡️</span>
+                <span class="brand-text">Trusti Admin</span>
+            </div>
+            <div class="nav-links">
+                <span id="userGreeting" class="user-greeting"></span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Admin Dashboard</h1>
+                <p>Manage transactions and support tickets</p>
+            </div>
+
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalTransactions">0</div>
+                    <div class="stat-label">Total Transactions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalUsers">0</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="openTickets">0</div>
+                    <div class="stat-label">Open Support Tickets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalRevenue">$0</div>
+                    <div class="stat-label">Total Revenue</div>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="transactions">Transactions</button>
+                <button class="admin-tab" data-tab="support">Support Tickets</button>
+                <button class="admin-tab" data-tab="users">Users</button>
+            </div>
+
+            <!-- Transactions Tab -->
+            <div id="transactions" class="tab-content active">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select id="transactionStatusFilter">
+                            <option value="">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="completed">Completed</option>
+                            <option value="expired">Expired</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Sort by:</label>
+                        <select id="transactionSortFilter">
+                            <option value="date">Date</option>
+                            <option value="amount">Amount</option>
+                            <option value="status">Status</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="transactionsList" class="transactions-list">
+                    <!-- Transactions will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Support Tickets Tab -->
+            <div id="support" class="tab-content">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select id="ticketStatusFilter">
+                            <option value="">All</option>
+                            <option value="open">Open</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Priority:</label>
+                        <select id="ticketPriorityFilter">
+                            <option value="">All</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="supportTicketsList">
+                    <!-- Support tickets will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Users Tab -->
+            <div id="users" class="tab-content">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>User Type:</label>
+                        <select id="userTypeFilter">
+                            <option value="">All</option>
+                            <option value="buyer">Buyers</option>
+                            <option value="seller">Sellers</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="usersList">
+                    <!-- Users will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/storage.js"></script>
+    <script src="scripts/admin-dashboard.js"></script>
+</body>
+</html> 

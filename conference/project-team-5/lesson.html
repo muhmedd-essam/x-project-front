@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magilearn Academy - Lesson</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/lesson.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="magical-bg">
+        <div class="stars"></div>
+        
+        <nav class="magical-nav">
+            <div class="nav-content">
+                <h1 class="nav-title">✨ Magilearn Academy</h1>
+                <div class="nav-actions">
+                    <button class="back-btn" onclick="goBack()">⬅️ Back to Units</button>
+                    <button class="logout-btn" onclick="logout()">🚪 Exit Academy</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="lesson-layout">
+            <aside class="lessons-sidebar">
+                <h3>📖 Chapter Lessons</h3>
+                <div class="lessons-list" id="lessonsList">
+                    <!-- Lessons will be dynamically generated -->
+                </div>
+            </aside>
+
+            <main class="lesson-content">
+                <div class="lesson-header">
+                    <h2 id="lessonTitle">🎬 Lesson Title</h2>
+                    <div class="lesson-progress">
+                        <span id="lessonNumber">Lesson 1</span> of <span id="totalLessons">5</span>
+                    </div>
+                </div>
+
+                <div class="video-section" id="videoSection">
+                    <div class="video-container">
+                        <video id="lessonVideo" controls>
+                            <source src="" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="placeholder-content">
+                            <span class="video-icon">🎬</span>
+                            <h3>Ready to Learn?</h3>
+                            <p>Click play to start your magical lesson!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-section" id="quizSection" style="display: none;">
+                    <div class="quiz-container">
+                        <h3>🧠 Test Your Knowledge!</h3>
+                        <p id="quizQuestion">Question will appear here...</p>
+                        <div class="quiz-options" id="quizOptions">
+                            <!-- Quiz options will be dynamically generated -->
+                        </div>
+                        <div class="quiz-result" id="quizResult" style="display: none;">
+                            <div class="result-content">
+                                <span class="result-icon" id="resultIcon">✨</span>
+                                <p id="resultMessage"></p>
+                                <button class="next-lesson-btn" onclick="goToNextLesson()">Next Magical Lesson ➡️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="scripts/lesson.js"></script>
+    <script src="scripts/animations.js"></script>
+</body>
+</html>

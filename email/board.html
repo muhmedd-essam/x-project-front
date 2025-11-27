@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Email Template</title>
+  <!-- <link rel="stylesheet" href="./style.css"> -->
+  <meta name="description" content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
+  <meta name="author" content="X Project">
+  
+  <meta property="og:title" content="X Project | Official Website">
+  <meta property="og:description" content="Join X Project, the leading student activity at Cairo University since 2012.">
+  <meta property="og:image" content="https://x-project.co/X-Project/img/logo.png">
+  <meta property="og:url" content="https://x-project.co/X-Project/home.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="https://x-project.co/X-Project/img/logo.png" type="image/png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+  
+    body {
+      background: url('./img/BG.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+  
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      padding: 30px;
+    }
+  
+    .logo img {
+      display: block;
+      margin: 0 auto 20px;
+      width: 100px;
+    }
+  
+    .word {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+  
+    .word h1 {
+      color: #333;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 500;
+    }
+  
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+      background-color: #fff;
+    }
+  
+    input:focus, select:focus, textarea:focus {
+      border-color: #f99325;
+      outline: none;
+    }
+  
+    select {
+      background-color: rgba(255, 255, 255, 0.9);
+      font-weight: bold;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+  
+    select:hover {
+      background-color: #f2f2f2;
+      transform: scale(1.01);
+    }
+  
+    button {
+      background-color: #f99325;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+  
+    button:hover {
+      background-color: #de7a23;
+      transform: translateY(-2px);
+    }
+  
+    textarea {
+      resize: vertical;
+    }
+  
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <section class="container">
+    <div class="logo"><img src="./img/logo & Slogan.png" alt="logo"></div>
+    <div class="word"><h1>Welcome to Xproject</h1></div>
+
+    <label>Email To Committee</label>
+    <select id="committeeSelect" onchange="updateHeadAndHR()">
+  <option value=""> Select Committee</option>
+  <option value="ac_directors">AC Directors</option>
+  <option value="hr_directors">HR Directors</option>
+  <option value="operations">Operations</option>
+  <option value="multimedia">Multimedia Directors</option>
+  <option value="marketing">Marketing</option>
+  <option value="photography">Photography</option>
+  <option value="web">Web</option>
+  <option value="gd">GD</option>
+  <option value="pr">PR</option>
+  <option value="fr">FR</option>
+  <option value="logistics">Logistics</option>
+  <option value="hr">HR</option>
+  <option value="ac">AC</option>
+  <option value="sr">SR</option>
+  <option value="pm">PM</option>
+  <option value="other">other</option>
+ 
+</select>
+<div id="otherEmailContainer" class="hidden">
+    <label>Recipient Email</label>
+    <input type="email" id="otherEmail" placeholder="Enter recipient's email">
+  </div>
+    <label>Subject</label>
+    <select id="subjectSelect" onchange="toggleSubjectFields()">
+      <option value="">-- Select Subject --</option>
+      <option value="excuse">Excuse</option>
+      <option value="task">Task</option>
+      <option value="task_to_member">Task to Member</option>
+      <option value="session_booking">Session Booking</option>
+      <option value="room_request">Room Booking Request</option>
+      <option value="termination">Termination</option>
+      <option value="warning">Warning</option>
+
+
+      
+
+    </select>
+
+    <div id="excuseOptions" class="hidden">
+      <label>Session Time</label>
+      <input type="text" id="sessionTime" placeholder="e.g. today's session">
+      <label>Reason</label>
+      <select id="excuseReason">
+        <option value="">-- Select Reason --</option>
+        <option>Late Arrival</option>
+        <option>Personal Issue</option>
+        <option>Medical Reason</option>
+        <option>Have an exam</option>
+        <option>Traveling</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div id="warningFields" class="hidden">
+      <label>Member Name</label>
+      <input type="text" id="warningMemberName" placeholder="e.g. Youmna">
+
+      <label>Warning Reason</label>
+      <select id="warningReason">
+        <option value="">-- Select Reason --</option>
+        <option value="Task not submitted and no excuse given">Task not submitted and no excuse given</option>
+        <option value="Missed session without excuse">Missed session without excuse</option>
+        <option value="Bad attitude or unprofessional behavior">Bad attitude or unprofessional behavior</option>
+      </select>
+    </div>
+    
+    <div id="terminationFields" class="hidden">
+      <label>Member Name</label>
+      <input type="text" id="terminatedMemberName" placeholder="e.g. Youmna">
+    
+      <label>Termination Date</label>
+      <input type="date" id="terminationDate">
+    </div>
+    <div id="taskUpload" class="hidden">
+      <label>Upload Task File</label>
+      <input type="file" id="taskFile">
+    </div>
+
+    <div id="taskToMemberFields" class="hidden">
+        <label>Task Title</label>
+        <input type="text" id="memberTaskTitle" placeholder="e.g. Research Summary">
+      
+        <label>Task Details</label>
+        <textarea id="memberTaskDetails" placeholder="Provide the details of the task"></textarea>
+      
+        <label>Deadline</label>
+        <input type="text" id="memberTaskDeadline" placeholder="e.g. Monday 8 PM">
+      </div>
+      
+
+    <div id="sessionBooking" class="hidden">
+      <label>Day</label>
+      <input type="text" id="sessionDay">
+      <label>Time</label>
+      <input type="text" id="sessionTimeBooking">
+    </div>
+
+    <div id="sectionTask" class="hidden">
+      <label>Task Description</label>
+      <textarea id="taskDescription"></textarea>
+      <label>Reason for Request</label>
+      <textarea id="taskReason"></textarea>
+      <label>Project/Initiative</label>
+      <textarea id="taskProject"></textarea>
+    </div>
+
+    <div id="roomRequest" class="hidden">
+      <label>Day</label>
+      <input type="text" id="roomDay">
+      <label>Time</label>
+      <input type="text" id="roomTime">
+      <label>Room Requirements</label>
+      <textarea id="roomDetails"></textarea>
+      <label>Expected Attendees</label>
+      <input type="number" id="roomPeople">
+    </div>
+
+    <label>Description</label>
+    <textarea id="description" placeholder="Add any notes or details..."></textarea>
+
+    <label>Your Name</label>
+    <input type="text" id="senderName" placeholder="Enter your full name">
+    <label>Your Email</label>
+    <input type="email" id="senderEmail" placeholder="Enter your email address">
+
+    <button onclick="submitForm()">Submit</button>
+  </section>
+
+  <script>
+    const committeeData = {
+  marketing: { to: "marketing.XProject.25@gmail.com", cc: "" },
+  photography: { to: "Photography.heads.xproject@gmail.com", cc: "" },
+  web: { to: "webdevelopmenthead@gmail.com", cc: "" },
+  gd: { to: "gdxproject25@gmail.com", cc: "" },
+  pr: { to: "prheadsx@gmail.com", cc: "" },
+  fr: { to: "headsfrxproject25@gmail.com", cc: "" },
+  logistics: { to: "logisticsheads25@gmail.com", cc: "" },
+  hr: { to: "hrheadsxproject25@gmail.com", cc: "" },
+  ac: { to: "acheads.xproject25@gmail.com", cc: "" },
+  sr: { to: "Srheads1@gmail.com", cc: "" },
+  pm: { to: "pmheadsX25@gmail.com", cc: "" },
+  ac_directors: { to: "acdirectorsxproject25@gmail.com", cc: "" },
+  hr_directors: { to: "hr.directors.x25@gmail.com", cc: "" },
+  operations: { to: "operatingsectionx25@gmail.com", cc: "" },
+  multimedia: { to: "multimediadirectorssection@gmail.com", cc: "" }
+};
+
+function updateHeadAndHR() {
+  const committee = document.getElementById("committeeSelect").value;
+  const otherEmailContainer = document.getElementById("otherEmailContainer");
+  otherEmailContainer.classList.toggle("hidden", committee !== "other");
+}
+
+    function toggleSubjectFields() {
+  const subject = document.getElementById("subjectSelect").value;
+  document.getElementById("excuseOptions").classList.toggle("hidden", subject !== "excuse");
+  document.getElementById("taskUpload").classList.toggle("hidden", subject !== "task");
+  document.getElementById("sessionBooking").classList.toggle("hidden", subject !== "session_booking");
+  document.getElementById("roomRequest").classList.toggle("hidden", subject !== "room_request");
+  document.getElementById("sectionTask").classList.toggle("hidden", subject !== "section_task");
+  document.getElementById("taskToMemberFields").classList.toggle("hidden", subject !== "task_to_member");
+  document.getElementById("terminationFields").classList.toggle("hidden", subject !== "termination");
+  document.getElementById("warningFields").classList.toggle("hidden", subject !== "warning");
+
+
+}
+
+    function submitForm() {
+      const subject = document.getElementById("subjectSelect").value;
+      const otherEmail = document.getElementById("otherEmail")?.value || "";
+
+      const committee = document.getElementById("committeeSelect").value;
+      const description = document.getElementById("description").value || "";
+      const senderName = document.getElementById("senderName").value.trim();
+      const senderEmail = document.getElementById("senderEmail").value.trim();
+
+      let head = "", hr = "";
+      if (committeeData[committee]) {
+        head = committeeData[committee].to;
+        hr = committeeData[committee].cc;
+      }
+
+      let to = "", cc = "";
+
+        if (committee === "other") {
+        to = otherEmail;
+        } else {
+        if (subject === "task") {
+            to = head; cc = hr;
+        } else if (subject === "excuse") {
+            to = hr; cc = head;
+        } else {
+            to = head; cc = hr;
+        }
+        }
+
+        let body = "";
+
+      if (subject === "excuse") {
+        const sessionTime = document.getElementById("sessionTime").value;
+        const excuseReason = document.getElementById("excuseReason").value;
+        body += `Kindly be informed that I will not be able to attend (${sessionTime}) because of (${excuseReason}).\n\n`;
+      } else if (subject === "task") {
+        body += `Here's (Task - please find attached).\n\n`;
+      } else if (subject === "session_booking") {
+        const day = document.getElementById("sessionDay").value;
+        const time = document.getElementById("sessionTimeBooking").value;
+        body += `Confirmed at majal co-working space room 4 on ${day} from ${time} fees will be 30 LE for member hr seniors are exempted\n\nhttps://x-project.co/X-Project/location.html\n\n`;
+      } else if (subject === "room_request") {
+        const day = document.getElementById("roomDay").value;
+        const time = document.getElementById("roomTime").value;
+        const roomDetails = document.getElementById("roomDetails").value;
+        const people = document.getElementById("roomPeople").value;
+        body += `Dear Operations Heads,\n\nI am writing to request a room booking for our next session.\n\nExpected attendees: ${people} people.\nRequested time: ${day}, ${time}.\nSession duration: 3 hours.\nRoom requirements:\n${roomDetails}\n\n`;
+      } else if (subject === "section_task") {
+        const desc = document.getElementById("taskDescription").value;
+        const reason = document.getElementById("taskReason").value;
+        const proj = document.getElementById("taskProject").value;
+        body += `Dear Section Directors,\n\nI am reaching out to request your assistance with ${desc}.\nThis task is important for ${reason} and will help us move forward with ${proj}.\n\nTask Description: ${desc}\nExpected Outcome:\n\n`;
+      }
+
+      if (subject === "termination") {
+  const name = document.getElementById("terminatedMemberName").value;
+  const date = document.getElementById("terminationDate").value;
+
+  body += `Dear ${name},\n\nWe hope this email finds you well.\nAfter careful consideration, we regret to inform you that your participation in X-project season 2025 will be discontinued effective from ${date}.\n\nThis decision was made due to your inactivity in WhatsApp group, not attending any session without excuse and not submitting your tasks. Despite our previous discussions and opportunities for improvement, the necessary changes have not been observed.\n\nWe appreciate the time and effort you’ve dedicated to the team and hope that this experience has been valuable to you. If you have any questions or require clarification, please feel free to contact us directly.\n\nWe wish you all the best in your future endeavors and look forward to seeing you excel in other areas.\n\nSincerely,\nHR & QM Seniors\nXproject'25\n\n`;
+}
+
+      if (subject === "task_to_member") {
+  const title = document.getElementById("memberTaskTitle").value;
+  const details = document.getElementById("memberTaskDetails").value;
+  const deadline = document.getElementById("memberTaskDeadline").value;
+  to = otherEmail || to;
+  body += `Dear Member,\n\nYou have been assigned a new task titled: '${title}'.\n\nTask Details:\n${details}\n\nDeadline: ${deadline}\n\nPlease make sure to deliver it on time.\n\n`;
+}
+
+if (subject === "warning") {
+  const name = document.getElementById("warningMemberName").value;
+  const reason = document.getElementById("warningReason").value;
+
+  body += `Dear ${name},\n\nThis is an official warning regarding your recent behavior in X-project.\n\nReason: ${reason}.\n\nWe urge you to take this matter seriously and improve accordingly. Repeated issues may lead to further action including termination.\n\nIf you believe this is a misunderstanding or would like to clarify anything, please reach out to us.\n\nSincerely,\nHR & QM Seniors\nXproject'25\n\n`;
+}
+
+      if (description.trim()) {
+        body += "Additional Notes:\n" + description + "\n\n";
+      }
+
+      body += `Best regards,\n${senderName}\n${senderEmail}`;
+      const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&su=${encodeURIComponent(subject.replace('_', ' ').toUpperCase())}&body=${encodeURIComponent(body)}`;
+
+      if (/Mobi|Android/i.test(navigator.userAgent)) {
+        const mailtoLink = `mailto:${encodeURIComponent(to)}?cc=${encodeURIComponent(cc)}&subject=${encodeURIComponent(subject.replace('_', ' ').toUpperCase())}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoLink;
+
+      } else {
+        
+
+        window.open(gmailLink, '_blank');
+      }
+    }
+  </script>
+</body>
+</html>

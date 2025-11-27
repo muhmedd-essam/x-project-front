@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Hero Kid - Download and Start Your Adventure</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://images.pexels.com/photos/8471822/pexels-photo-8471822.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" alt="Hero Kid Logo" class="logo-img">
+                <span class="logo-text">Hero Kid</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="play.html" class="nav-link active">Play</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero play-hero">
+        <div class="container">
+            <h1 class="page-title">Start Your Hero Journey</h1>
+            <p class="page-subtitle">Download Hero Kid and begin learning through adventure</p>
+        </div>
+    </section>
+
+    <section class="download-section">
+        <div class="container">
+            <div class="download-content">
+                <h2>Choose Your Platform</h2>
+                <p class="download-subtitle">Hero Kid is available on all your favorite devices</p>
+                
+                <div class="platforms-grid">
+                    <div class="platform-card">
+                        <div class="platform-icon">PC</div>
+                        <h3>Windows PC</h3>
+                        <p>Windows 10 or later</p>
+                        <button class="platform-button" onclick="downloadGame('windows')">
+                            Download for Windows
+                        </button>
+                    </div>
+                    
+                    <div class="platform-card">
+                        <div class="platform-icon">Mac</div>
+                        <h3>macOS</h3>
+                        <p>macOS 10.15 or later</p>
+                        <button class="platform-button" onclick="downloadGame('mac')">
+                            Download for Mac
+                        </button>
+                    </div>
+                    
+                    <div class="platform-card">
+                        <div class="platform-icon">Mobile</div>
+                        <h3>Mobile</h3>
+                        <p>iOS 13+ / Android 8+</p>
+                        <button class="platform-button" onclick="downloadGame('mobile')">
+                            Get Mobile App
+                        </button>
+                    </div>
+                    
+                    <div class="platform-card featured">
+                        <div class="platform-icon">Steam</div>
+                        <h3>Steam</h3>
+                        <p>Available now on Steam</p>
+                        <button class="platform-button steam-button" onclick="window.open('https://store.steampowered.com/app/placeholder', '_blank')">
+                            <span>Play on Steam</span>
+                            <div class="button-shine"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="system-requirements">
+        <div class="container">
+            <h2 class="section-title">System Requirements</h2>
+            <div class="requirements-grid">
+                <div class="req-card">
+                    <h3>Minimum Requirements</h3>
+                    <ul>
+                        <li><strong>OS:</strong> Windows 10 / macOS 10.15</li>
+                        <li><strong>Processor:</strong> 2.0 GHz Dual Core</li>
+                        <li><strong>Memory:</strong> 4 GB RAM</li>
+                        <li><strong>Graphics:</strong> DirectX 11 compatible</li>
+                        <li><strong>Storage:</strong> 2 GB available space</li>
+                    </ul>
+                </div>
+                <div class="req-card">
+                    <h3>Recommended</h3>
+                    <ul>
+                        <li><strong>OS:</strong> Windows 11 / macOS 12</li>
+                        <li><strong>Processor:</strong> 3.0 GHz Quad Core</li>
+                        <li><strong>Memory:</strong> 8 GB RAM</li>
+                        <li><strong>Graphics:</strong> Dedicated graphics card</li>
+                        <li><strong>Storage:</strong> 4 GB available space</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="https://images.pexels.com/photos/8471822/pexels-photo-8471822.jpeg?auto=compress&cs=tinysrgb&w=80&h=80&fit=crop" alt="Hero Kid Logo" class="footer-logo">
+                    <span class="footer-title">Hero Kid</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="contact.html" class="footer-link">Support</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">FB</a>
+                    <a href="#" class="social-icon">TW</a>
+                    <a href="#" class="social-icon">IG</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hero Kid. All rights reserved. Made with love for children's safety.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

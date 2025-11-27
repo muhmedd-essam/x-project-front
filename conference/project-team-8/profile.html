@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Arty</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--lilac), var(--teal));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 4px solid white;
+        }
+        
+        .profile-tabs {
+            display: flex;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            background: var(--lilac);
+            color: white;
+        }
+        
+        .tab-content {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tab-panel {
+            display: none;
+        }
+        
+        .tab-panel.active {
+            display: block;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--lilac);
+        }
+        
+        .order-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--teal);
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-completed { background: #d4edda; color: #155724; }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+        
+        .role-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: var(--orange);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">Arty</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="learn.html" class="nav-link">Learn</a>
+                <a href="shop.html" class="nav-link">Shop</a>
+                <a href="materials.html" class="nav-link">Materials</a>
+                <a href="cart.html" class="nav-link cart-link">
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+                <a href="login.html" class="nav-link login-btn">Login</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main style="min-height: calc(100vh - 140px); background: #f5f5f5;">
+        <div class="profile-container">
+            <div class="profile-header">
+                <img id="user-avatar" src="" alt="User Avatar" class="profile-avatar">
+                <h1 id="user-name">User Profile</h1>
+                <p id="user-email"></p>
+                <span id="user-role" class="role-badge"></span>
+            </div>
+
+            <div class="profile-tabs">
+                <button class="tab-button active" data-tab="info">Profile Info</button>
+                <button class="tab-button" data-tab="orders">My Orders</button>
+                <button class="tab-button" data-tab="wishlist">Wishlist</button>
+                <button class="tab-button" data-tab="settings">Settings</button>
+            </div>
+
+            <div class="tab-content">
+                <div id="info-tab" class="tab-panel active">
+                    <h3>Profile Information</h3>
+                    <div class="info-card">
+                        <h4>Personal Details</h4>
+                        <p><strong>Name:</strong> <span id="profile-name"></span></p>
+                        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+                        <p><strong>Role:</strong> <span id="profile-role"></span></p>
+                        <p><strong>Member Since:</strong> <span id="profile-join-date"></span></p>
+                    </div>
+                    
+                    <div id="seller-info" class="info-card" style="display: none;">
+                        <h4>Shop Information</h4>
+                        <p><strong>Shop Name:</strong> <span id="shop-name"></span></p>
+                        <p><strong>Description:</strong> <span id="shop-description"></span></p>
+                        <p><strong>Total Sales:</strong> <span id="total-sales"></span></p>
+                        <p><strong>Total Earnings:</strong> <span id="total-earnings"></span></p>
+                        <p><strong>Rating:</strong> <span id="seller-rating"></span></p>
+                    </div>
+                </div>
+
+                <div id="orders-tab" class="tab-panel">
+                    <h3>My Orders</h3>
+                    <div id="orders-list">
+                        <p style="text-align: center; color: var(--gray);">No orders yet.</p>
+                    </div>
+                </div>
+
+                <div id="wishlist-tab" class="tab-panel">
+                    <h3>My Wishlist</h3>
+                    <div id="wishlist-list">
+                        <p style="text-align: center; color: var(--gray);">Your wishlist is empty.</p>
+                    </div>
+                </div>
+
+                <div id="settings-tab" class="tab-panel">
+                    <h3>Account Settings</h3>
+                    <div class="info-card">
+                        <h4>Change Password</h4>
+                        <form id="password-form">
+                            <div class="form-group">
+                                <label for="current-password" class="form-label">Current Password</label>
+                                <input type="password" id="current-password" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-password" class="form-label">New Password</label>
+                                <input type="password" id="new-password" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-new-password" class="form-label">Confirm New Password</label>
+                                <input type="password" id="confirm-new-password" class="form-input" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // Check if user is logged in
+        if (!auth.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+
+        const currentUser = auth.getCurrentUser();
+
+        // Update profile header
+        document.getElementById('user-avatar').src = currentUser.avatar;
+        document.getElementById('user-name').textContent = currentUser.name;
+        document.getElementById('user-email').textContent = currentUser.email;
+        document.getElementById('user-role').textContent = currentUser.role;
+
+        // Tab functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and panels
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding panel
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId + '-tab').classList.add('active');
+            });
+        });
+
+        // Load profile data
+        function loadProfileData() {
+            // Update profile info
+            document.getElementById('profile-name').textContent = currentUser.name;
+            document.getElementById('profile-email').textContent = currentUser.email;
+            document.getElementById('profile-role').textContent = currentUser.role;
+            document.getElementById('profile-join-date').textContent = currentUser.joinDate;
+
+            // Show seller info if applicable
+            if (currentUser.role === 'seller') {
+                document.getElementById('seller-info').style.display = 'block';
+                document.getElementById('shop-name').textContent = currentUser.shopName;
+                document.getElementById('shop-description').textContent = currentUser.description;
+                document.getElementById('total-sales').textContent = currentUser.totalSales;
+                document.getElementById('total-earnings').textContent = '$' + currentUser.earnings.toFixed(2);
+                document.getElementById('seller-rating').textContent = currentUser.rating.toFixed(1) + '⭐';
+            }
+
+            // Load orders
+            loadOrders();
+            
+            // Load wishlist
+            loadWishlist();
+        }
+
+        function loadOrders() {
+            const ordersList = document.getElementById('orders-list');
+            
+            // Filter orders for current user
+            const userOrders = sampleOrders.filter(order => order.userId === currentUser.id);
+
+            if (userOrders.length === 0) {
+                ordersList.innerHTML = '<p style="text-align: center; color: var(--gray);">No orders yet.</p>';
+                return;
+            }
+
+            ordersList.innerHTML = '';
+            userOrders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card';
+                orderCard.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="margin: 0;">Order #${order.id}</h4>
+                            <p style="margin: 5px 0; font-size: 0.9rem;">Date: ${order.date}</p>
+                            <p style="margin: 5px 0; font-size: 0.9rem;">Items: ${order.items.length}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <h4 style="margin: 0; color: var(--lilac);">$${order.total.toFixed(2)}</h4>
+                            <span class="status-badge status-${order.status}">${order.status}</span>
+                        </div>
+                    </div>
+                `;
+                ordersList.appendChild(orderCard);
+            });
+        }
+
+        function loadWishlist() {
+            const wishlistList = document.getElementById('wishlist-list');
+            
+            if (!currentUser.wishlist || currentUser.wishlist.length === 0) {
+                wishlistList.innerHTML = '<p style="text-align: center; color: var(--gray);">Your wishlist is empty.</p>';
+                return;
+            }
+
+            wishlistList.innerHTML = '';
+            currentUser.wishlist.forEach(productId => {
+                const product = getProductById(productId);
+                if (product) {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'order-card';
+                    productCard.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; align-items: center;">
+                                <img src="${product.image}" alt="${product.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; margin-right: 15px;">
+                                <div>
+                                    <h4 style="margin: 0;">${product.title}</h4>
+                                    <p style="margin: 5px 0; color: var(--gray);">$${product.price}</p>
+                                </div>
+                            </div>
+                            <button style="background: var(--lilac); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Add to Cart</button>
+                        </div>
+                    `;
+                    wishlistList.appendChild(productCard);
+                }
+            });
+        }
+
+        // Password change form
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+            
+            if (currentPassword !== currentUser.password) {
+                alert('Current password is incorrect');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                alert('New password must be at least 6 characters long');
+                return;
+            }
+            
+            if (newPassword !== confirmNewPassword) {
+                alert('New passwords do not match');
+                return;
+            }
+            
+            // Update password
+            currentUser.password = newPassword;
+            localStorage.setItem('arty-user', JSON.stringify(currentUser));
+            
+            alert('Password updated successfully!');
+            this.reset();
+        });
+
+        // Initialize profile
+        loadProfileData();
+    </script>
+</body>
+</html> 

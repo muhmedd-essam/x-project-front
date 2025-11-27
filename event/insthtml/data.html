@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registrations Table | X Project</title>
+  <link rel="stylesheet" href="../instcss/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-image: url("../BG.png"); 
+    background-size: cover;
+    background-position: center;
+    }
+
+    h2 {
+      text-align: center;
+      color: #f9f9f9;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      min-width: 800px;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #333;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    img.speaker-photo {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.2s;
+    }
+
+    img.speaker-photo:hover {
+      transform: scale(1.1);
+    }
+
+    .loading {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 5px 10px;
+      font-size: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .download-btn:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      th, td {
+        font-size: 12px;
+        padding: 8px;
+      }
+      img.speaker-photo {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Event Registrations</h2>
+
+  <div id="loading" class="loading">Loading data...</div>
+
+  <div class="table-container">
+    <table id="dataTable" style="display: none;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Title</th>
+          <th>Brief</th>
+          <th>Registered At</th>
+          <th>Photo</th>
+        </tr>
+      </thead>
+      <tbody id="dataBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    async function loadData() {
+      try {
+        const res = await fetch('https://x-project.co/public/api/event-registrations');
+        const json = await res.json();
+
+        const table = document.getElementById('dataTable');
+        const body = document.getElementById('dataBody');
+        const loading = document.getElementById('loading');
+
+        if (!json.data || json.data.length === 0) {
+          loading.innerText = "No registrations found.";
+          return;
+        }
+
+        json.data.forEach((item, index) => {
+          const row = document.createElement('tr');
+
+          let photoHTML = 'No photo';
+          if (item.photo_url) {
+            const fileName = `speaker_${item.id}.jpg`;
+            photoHTML = `
+              <a href="${item.photo_url}" target="_blank">
+                <img src="${item.photo_url}" class="speaker-photo" alt="Speaker Photo">
+              </a><br />
+              <a href="${item.photo_url}" download="${fileName}" class="download-btn">Download</a>
+            `;
+          }
+
+          row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${item.name}</td>
+            <td>${item.phone}</td>
+            <td>${item.title || '-'}</td>
+            <td>${item.brief || '-'}</td>
+            <td>${item.created_at}</td>
+            <td>${photoHTML}</td>
+          `;
+
+          body.appendChild(row);
+        });
+
+        loading.style.display = 'none';
+        table.style.display = 'table';
+      } catch (err) {
+        console.error(err);
+        document.getElementById('loading').innerText = "Failed to load data.";
+      }
+    }
+
+    loadData();
+  </script>
+</body>
+</html>

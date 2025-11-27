@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
+  <meta name="author" content="X Project">
+  
+  <meta property="og:title" content="X Project | Official Website">
+  <meta property="og:description" content="Join X Project, the leading student activity at Cairo University since 2012.">
+  <meta property="og:image" content="https://x-project.co/X-Project/img/logo.png">
+  <meta property="og:url" content="https://x-project.co/X-Project/home.html">
+  <meta property="og:type" content="website">
+
+  <meta name="keywords" content="X Project, X project, x project, xproject, Xproject, XProject,Student Activity, Cairo University, Entrepreneurship, Leadership, University Events">
+
+  <link rel="icon" href="https://x-project.co/X-Project/img/logo.png" type="image/png">
+
+  <title>X-project | Body Balance</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+  <style>
+    :root {
+      --light-color: #fff;
+      --light-text: #837c7c;
+      --orange-color: #f0e9e1;
+      --dark-orange: #f99325;
+      --gray-color: #615549;
+      --dark-color: #0d0d0d;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('BG.png');
+      background-size: cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    * { box-sizing: border-box; }
+    html { height: 100%; scroll-behavior: smooth; }
+    a { text-decoration: none; }
+
+    header {
+      height: 70vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .content { margin-bottom: 150px; color: var(--dark-orange); }
+    .line { font-size: large; width: 150px; height: 4px; background-color: var(--dark-orange); margin: 10px auto; border-radius: 5px; }
+    .content h1 { font-size: x-large; margin-top: 50px; margin-bottom: 30px; }
+
+    .btn {
+      font-size: 1.1rem;
+      border: none;
+      padding: 8px 10px;
+      background-color: var(--dark-orange);
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn:hover { background-color: #e57f1e; transform: translateY(-2px); }
+
+    .section { width: 80%; margin: 80px auto; }
+    .title { text-align: center; font-size: 4vmin; color: var(--dark-orange); }
+    .disc { text-align: center; font-size: 4vmin; color: var(--orange-color); }
+
+    .container {
+      max-width: 500px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .formbox { display: block; margin-bottom: 10px; }
+    label { font-weight: 500; margin-bottom: 5px; display: block; }
+    input[type="number"], select {
+      font-size: 1rem;
+      padding: 10px;
+      border-radius: 8px;
+      width: 100%;
+      border: 2px solid #ccc;
+    }
+
+    .result, .extra-results {
+      background-color: var(--orange-color);
+      color: var(--dark-color);
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 12px;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .result h3, .extra-results h3 { color: var(--dark-orange); margin-bottom: 15px; font-size: 1.4rem; text-align: center; }
+
+    .toggle-theme { position: absolute; top: 10px; right: 10px; }
+    .dark-theme {
+      --light-color: #1e1e1e;
+      --orange-color: #333;
+      --dark-orange: #f9a825;
+      --light-text: #ccc;
+      color: white;
+    }
+
+    .goal-extra { display: none; margin-top: 10px; }
+    .container .logo{
+      width: 60%;
+      height: 50vh;
+    
+      margin: auto;
+    }
+    .logo img{
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- <button class="btn toggle-theme" onclick="toggleTheme()">Toggle Theme</button> -->
+
+  <section>
+    
+    <!-- <div class="title"><h1>Welcome to Your Personal Calorie Tracker!</h1></div>
+    <div class="disc">
+      <p>This tool calculates your daily needs, ideal weight, BMI, BMR, fat %, risk level, and allows goal planning.</p>
+    </div> -->
+    <div class="container">
+
+      <div class="logo">
+        <img src="logo & Slogan.png" alt="" style="text-align: center;">
+      </div>
+      <div class="title" style="font-size: 15px;"><h1>Your Personal Calorie Tracker!</h1></div>
+
+      
+      <form id="form">
+        <div class="formbox">
+          <label>Age</label>
+          <input type="number" id="age">
+        </div>
+        <div class="formbox">
+          <label>Gender</label>
+          <label><input type="radio" name="gender" value="male"> Male</label>
+          <label><input type="radio" name="gender" value="female"> Female</label>
+        </div>
+        <div class="formbox">
+          <label>Height (cm)</label>
+          <input type="number" id="height">
+        </div>
+        <div class="formbox">
+          <label>Weight (kg)</label>
+          <input type="number" id="weight">
+        </div>
+        <div class="formbox">
+          <label>Workout days per week:</label>
+          <select id="activity">
+            <option value="1">1 day</option>
+            <option value="2">2 days</option>
+            <option value="3">3 days</option>
+            <option value="4">4 days</option>
+            <option value="5">5+ days</option>
+          </select>
+        </div>
+        <div class="formbox">
+          <label>Your Goal</label>
+          <label><input type="radio" name="goal" value="maintain"> Maintain</label>
+          <label><input type="radio" name="goal" value="lose" onchange="showGoalInput('lose')"> Lose</label>
+          <label><input type="radio" name="goal" value="gain" onchange="showGoalInput('gain')"> Gain</label>
+        </div>
+        <div id="goal-extra" class="goal-extra">
+          <label>Target weight change (kg):</label>
+          <input type="number" id="goalKg" placeholder="e.g. 8">
+          <label>Duration (weeks):</label>
+          <input type="number" id="goalWeeks" placeholder="e.g. 4">
+        </div>
+        <br>
+        <button type="button" class="btn" onclick="calculateAll()">Calculate Your Body Needs</button>
+      </form>
+      <div class="result"></div>
+      <div class="extra-results"></div>
+    </div>
+  </section>
+  <script>
+    const goalLabels = {
+    lose: "نظام للتخسيس",
+    maintain: "نظام لتثبيت الوزن",
+    gain: "نظام لزيادة الوزن"
+  };
+  const diet_data = [
+    {"Calories": 1200, "Goal": "lose", "Title": goalLabels["lose"], "Meals": `فطار: بيضة مسلوقة + 2 ملعقة جبنة قريش + ربع رغيف بلدي + خيار
+سناك: ثمرة تفاح أو برتقالة
+غداء: 100 جم صدر فراخ مشوي + 4 ملاعق خضار سوتيه + 2 ملعقة رز بني + طبق سلطة خضراء
+سناك: كوب زبادي لايت + نصف ملعقة شوفان
+عشاء: علبة تونة مصفاة من الزيت + نصف بيضة + ربع رغيف بلدي + خس وخيار`},
+
+    {"Calories": 1500, "Goal": "lose", "Title": goalLabels["lose"], "Meals": `فطار: 2 بيضة مسلوقة أو أومليت بدون زيت + ربع رغيف بلدي + خيارة + شاي أو قهوة بدون سكر
+سناك: موزة أو حفنة مكسرات (10 لوزات)
+غداء: 120 جم لحم مشوي أو صدر دجاج + 5 ملاعق رز أو برغل + خضار سوتيه + طبق سلطة
+سناك: زبادي لايت + 1 ملعقة شوفان + قرفة
+عشاء: بيضة + 2 ملعقة جبنة قريش + ربع رغيف بلدي + خس وخيار`},
+
+    {"Calories": 1800, "Goal": "lose", "Title": goalLabels["lose"], "Meals": `فطار: 3 بيضات (2 بياض + 1 صفار) + توست بني + 1 معلقة جبنة قريش + تفاحة
+سناك: زبادي لايت + ملعقة شوفان + نصف موزة + قرفة
+غداء: 150 جم دجاج أو سمك مشوي + 6 ملاعق مكرونة قمح كامل + خضار سوتيه + زيت زيتون (ملعقة صغيرة)
+سناك: نصف بطاطا + نصف بيضة + خس
+عشاء: 2 بيضة مسلوقة + ربع رغيف بلدي + سلطة`},
+
+    {"Calories": 2500, "Goal": "maintain", "Title": goalLabels["maintain"], "Meals": `فطار: 2 بيضة + 2 توست بني + ملعقة صغيرة زبدة فول سوداني + كوب لبن خالي الدسم + موزة
+سناك: شوفان باللبن + قرفة + مكسرات (10 لوزات)
+غداء: 180 جم دجاج أو لحمة + 8 ملاعق رز بني + طبق سلطة كبير + خضار مطبوخ + زيت زيتون (ملعقة كبيرة)
+سناك: جبنة قريش + توست بني + طماطم + خيار
+عشاء: علبة تونة + بيضة + رغيف بلدي صغير + خس`},
+
+    {"Calories": 3000, "Goal": "gain", "Title": goalLabels["gain"], "Meals": `فطار: 3 بيض + عيش بلدي + 3 ملاعق فول + ملعقة زيت زيتون + موزة
+سناك: ساندوتش زبدة فول سوداني بالعسل + كوب لبن كامل الدسم
+غداء: 200 جم لحمة أو دجاج + 10 ملاعق مكرونة + سلطة + خضار + ملعقة زيت
+سناك: بطاطا مسلوقة + لبن + تمر (3 حبات)
+عشاء: 2 بيضة + جبنة بيضاء قليلة الملح + رغيف بلدي + لبن`},
+
+    {"Calories": 4000, "Goal": "gain", "Title": goalLabels["gain"], "Meals": `فطار: 3 بيض + جبنة + فول + عيش بلدي + عصير طبيعي
+سناك: شوفان + لبن + زبدة فول سوداني + موز
+غداء: 250 جم فراخ + 12 ملاعق رز + خضار + زيت
+سناك: تمر + بطاطا + لبن كامل الدسم
+عشاء: بيض + جبنة + توست + لبن + مكسرات`},
+
+    {"Calories": 5000, "Goal": "gain", "Title": goalLabels["gain"], "Meals": `فطار: 4 بيض + فول + جبنة + عيش بلدي + عصير
+سناك: زبادي + شوفان + موز + عسل
+غداء: 300 جم لحمة + 12 ملاعق مكرونة + خضار + زيت
+سناك: بطاطا + لبن + تمر + مكسرات
+عشاء: بيض + جبنة + عيش + عصير + لبن + مكسرات`},
+{"Calories": 3000, "Goal": "lose", "Title": goalLabels["lose"], "Meals": `فطار: 4 بيض (2 صفار + 2 كامل) + 2 توست بني + موزة
+سناك: زبادي لايت + شوفان + عسل
+غداء: 200 جم فراخ مشوية + 8 ملاعق رز بني + خضار سوتيه + سلطة + زيت زيتون
+سناك: بطاطا مسلوقة + كوب لبن خالي الدسم + 5 تمرات
+عشاء: 2 بيضة + جبنة قريش + ربع رغيف + خس`},
+
+    // جديد - نظام 4000 تثبيت
+    {"Calories": 4000, "Goal": "maintain", "Title": goalLabels["maintain"], "Meals": `فطار: 3 بيض + فول + جبنة + عيش بلدي + عصير طبيعي
+سناك: زبادي + موز + مكسرات + شوفان
+غداء: 250 جم لحمة أو دجاج + 10 ملاعق رز + خضار مطبوخ + سلطة + زيت زيتون
+سناك: لبن + تمر + مكسرات + بطاطا
+عشاء: بيض + جبنة + توست + لبن + خس وخيار`},
+
+    // جديد - نظام 1200 تثبيت
+    {"Calories": 1200, "Goal": "maintain", "Title": goalLabels["maintain"], "Meals": `فطار: بيضة + ربع رغيف بلدي + خيارة + جبنة قريش
+سناك: تفاحة
+غداء: 100 جم دجاج + 3 ملاعق رز + خضار
+سناك: زبادي لايت
+عشاء: تونة + خس + بيضة`},
+
+    // جديد - نظام 1800 زيادة
+    {"Calories": 1800, "Goal": "gain", "Title": goalLabels["gain"], "Meals": `فطار: 2 بيض + 2 توست + فول + موزة
+سناك: زبادي + عسل + شوفان
+غداء: 150 جم لحمة + 6 ملاعق رز + خضار + زيت
+سناك: بطاطا + لبن
+عشاء: بيض + جبنة + توست + لبن`},
+
+    // جديد - نظام 5000 تخسيس (نادر لكن للتوازن)
+    {"Calories": 5000, "Goal": "lose", "Title": goalLabels["lose"], "Meals": `فطار: 4 بيض + 2 توست + فول + جبنة + لبن + موز
+سناك: زبادي + شوفان + تمر + عسل
+غداء: 300 جم لحمة + 12 ملاعق رز بني + خضار مطبوخ + زيت زيتون
+سناك: بطاطا + لبن + مكسرات
+عشاء: بيض + جبنة + عيش بلدي + لبن`},
+{"Calories": 1000, "Goal": "lose", "Title": goalLabels["lose"], "Meals": `فطار: بيضة + خيار + نصف رغيف سن
+سناك: تفاحة صغيرة
+غداء: 80 جم فراخ + 3 ملاعق خضار + سلطة
+سناك: زبادي لايت
+عشاء: تونة مصفاة + خس`},
+
+    {"Calories": 2200, "Goal": "maintain", "Title": goalLabels["maintain"], "Meals": `فطار: 2 بيض + توست بني + جبنة قريش + لبن
+سناك: موزة + مكسرات
+غداء: 180 جم لحمة + 6 ملاعق رز + خضار + سلطة + ملعقة زيت
+سناك: زبادي + تمر
+عشاء: بيض + جبنة + توست + خس`},
+
+    {"Calories": 3500, "Goal": "gain", "Title": goalLabels["gain"], "Meals": `فطار: 3 بيض + فول + عيش بلدي + لبن + موزة
+سناك: ساندوتش زبدة فول سوداني + لبن + تمر
+غداء: 250 جم لحمة + 10 ملاعق مكرونة + خضار + زيت
+سناك: بطاطا + لبن + مكسرات
+عشاء: بيض + جبنة + توست + لبن + فواكه`},
+
+    {"Calories": 2000, "Goal": "lose", "Title": goalLabels["lose"], "Meals": `فطار: 2 بيض + توست بني + موزة
+سناك: زبادي + شوفان + تمر
+غداء: 180 جم دجاج + 6 ملاعق رز + خضار + زيت
+سناك: بطاطا + لبن
+عشاء: بيض + جبنة + خس + نصف رغيف`},
+
+    {"Calories": 2700, "Goal": "maintain", "Title": goalLabels["maintain"], "Meals": `فطار: 3 بيض + فول + عيش بلدي + لبن
+سناك: زبادي + شوفان + تمر
+غداء: 200 جم لحمة + 8 ملاعق رز + خضار + سلطة + زيت زيتون
+سناك: بطاطا + مكسرات
+عشاء: بيض + جبنة + عيش + فواكه`},
+
+    {"Calories": 1500, "Goal": "maintain", "Title": goalLabels["maintain"], "Meals": `فطار: بيض + توست + خضار
+سناك: تفاحة
+غداء: 120 جم دجاج + 4 ملاعق رز + خضار + سلطة
+سناك: زبادي لايت
+عشاء: بيضة + جبنة + ربع رغيف`},
+
+    {"Calories": 2000, "Goal": "gain", "Title": goalLabels["gain"], "Meals": `فطار: 2 بيض + جبنة + فول + عيش بلدي
+سناك: موزة + زبادي + شوفان
+غداء: 150 جم لحمة + 6 ملاعق رز + خضار + زيت
+سناك: بطاطا + لبن
+عشاء: توست + بيض + لبن`},
+  
+  ];
+    function toggleTheme() {
+      document.body.classList.toggle("dark-theme");
+    }
+
+    function showGoalInput(goal) {
+      document.getElementById('goal-extra').style.display = (goal !== 'maintain') ? 'block' : 'none';
+    }
+
+    function getActivityFactor(days) {
+      return [1.2, 1.375, 1.55, 1.725, 1.9][Math.min(days - 1, 4)];
+    }
+
+    function calculateAll() {
+      const age = +document.getElementById("age").value;
+      const weight = +document.getElementById("weight").value;
+      const height = +document.getElementById("height").value;
+      const gender = document.querySelector('input[name="gender"]:checked')?.value;
+      const goal = document.querySelector('input[name="goal"]:checked')?.value;
+      const days = +document.getElementById("activity").value;
+      const goalKg = +document.getElementById("goalKg").value;
+      const goalWeeks = +document.getElementById("goalWeeks").value;
+
+      if (!age || !weight || !height || !gender || !goal || !days) return alert("Fill all fields");
+
+      const BMR = gender === 'female'
+        ? 10 * weight + 6.25 * height - 5 * age - 161
+        : 10 * weight + 6.25 * height - 5 * age + 5;
+
+      const activityFactor = getActivityFactor(days);
+      const maintenance = BMR * activityFactor;
+
+      let target = maintenance;
+      let goalMsg = '';
+
+      if (goal !== 'maintain' && goalKg > 0 && goalWeeks > 0) {
+        const kcalDiff = (goalKg * 7700) / (goalWeeks * 7);
+        target = goal === 'lose' ? maintenance - kcalDiff : maintenance + kcalDiff;
+        if (goal === 'lose' && target < 1500) {
+          target = 1500;
+          goalMsg = `<p style="color:red">Target calories adjusted to 1500 for safety.</p>`;
+        }
+        goalMsg += `<p>You need to ${goal} about ${goalKg}kg in ${goalWeeks} weeks.</p>`;
+      }
+
+      const protein = weight * 1.6;
+      const fat = (target * 0.25) / 9;
+      const carbs = (target - (protein * 4 + fat * 9)) / 4;
+      const water = (weight * 35) / 1000;
+
+      const heightM = height / 100;
+      const bmi = weight / (heightM * heightM);
+      const bmiStatus = bmi < 18.5 ? 'Underweight' : bmi < 25 ? 'Normal' : bmi < 30 ? 'Overweight' : 'Obese';
+      const idealMin = 18.5 * heightM * heightM;
+      const idealMax = 24.9 * heightM * heightM;
+
+      const bodyFat = gender === 'female'
+        ? (1.20 * bmi) + (0.23 * age) - 5.4
+        : (1.20 * bmi) + (0.23 * age) - 16.2;
+
+      const healthRisk = bmi < 18.5 ? 'Risk of nutritional deficiency' :
+                        bmi < 25 ? 'Low risk (healthy)' :
+                        bmi < 30 ? 'Moderate risk' :
+                        'High risk';
+
+      const advice = bmi >= 30 ? 'Try to include more movement and consider professional guidance.' :
+                    bmi >= 25 ? 'Consider reducing processed foods and increasing activity.' :
+                    bmi < 18.5 ? 'Consider increasing calorie intake with nutrient-dense foods.' :
+                    'Keep up your healthy habits!';
+
+      document.querySelector(".result").innerHTML = `
+        <h3>Your Daily Needs</h3>
+        ${goalMsg}
+        <p><strong>Calories:</strong> ${Math.round(target)} kcal</p>
+        <p><strong>Protein:</strong> ${Math.round(protein)} g</p>
+        <p><strong>Fats:</strong> ${Math.round(fat)} g</p>
+        <p><strong>Carbohydrates:</strong> ${Math.round(carbs)} g</p>
+        <p><strong>Water:</strong> ${water.toFixed(2)} L</p>
+      `;
+
+      document.querySelector(".extra-results").innerHTML = `
+        <h3>Body Analysis</h3>
+        <p><strong>BMI:</strong> ${bmi.toFixed(1)} (${bmiStatus})</p>
+        <p><strong>Ideal Weight Range:</strong> ${idealMin.toFixed(1)} - ${idealMax.toFixed(1)} kg</p>
+        <p><strong>BMR:</strong> ${Math.round(BMR)} kcal</p>
+        <p><strong>Estimated Body Fat:</strong> ${bodyFat.toFixed(1)}%</p>
+        <p><strong>Health Risk Level:</strong> ${healthRisk}</p>
+        <p><strong>Practical Advice:</strong> ${advice}</p>
+      `;
+      const dietMatch = diet_data
+      .filter(d => d.Goal === goal)
+      .sort((a, b) => Math.abs(a.Calories - target) - Math.abs(b.Calories - target))[0];
+
+      if (dietMatch) {
+        const dietHTML = `
+          <div class="result">
+            <h3>${dietMatch.Title}</h3>
+            <pre style="white-space: pre-wrap; font-size: 1rem;">${dietMatch.Meals}</pre>
+          </div>`;
+        document.querySelector(".extra-results").insertAdjacentHTML('beforeend', dietHTML);
+      }
+    }
+  </script>
+</body>
+</html>

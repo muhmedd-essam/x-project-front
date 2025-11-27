@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+:root {
+    --light-color: #fff;
+    --light-text: #837c7c;
+    --orange-color: #f0e9e1;
+    
+    --dark-orange: #f99325;
+    --gray-color: #615549;
+    --dark-color: #0d0d0d;
+  }
+  
+  /* scroll */
+  
+  body {
+    --sb-track-color: #232e33;
+    --sb-thumb-color: #de7a23;
+    --sb-size: 14px;
+    
+  }
+  
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+html {
+   height: 100%;
+    scroll-behavior: smooth;
+  }
+a{
+    text-decoration: none;
+}
+header{
+    height: 70vh ;
+    /* background-image: url(gem.jpg); */
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+}
+.content{
+    margin-bottom: 150px;
+    color: var(--dark-orange) ;
+    text-align: center;
+    
+   
+}
+.line{
+    font-size: large;
+    width: 150px;
+    height:4px;
+   background-color: var(--dark-orange);
+    margin: 10px auto ;
+    border-radius:5px ;
+}
+.content h1{
+    font-size: x-large;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+.btn{
+    font-size: 1.1rem ;
+    border: none;
+  padding: 8px 10px ;
+  background-color: var(--dark-orange);
+  border-radius: 50px;
+  color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn:hover{
+    background-color: #e57f1e;
+    transform: translateY(-2px);
+}
+
+
+.section{
+    width: 80%;
+    margin: 80px auto ;
+   
+}
+.title{
+    text-align: center;
+    font-size: 4vmin;
+    color: var(--dark-orange);
+}
+.disc{
+    text-align: center;
+    font-size: 4vmin;
+    color: var(--orange-color);;
+}
+.container {
+  max-width: 400px;
+  
+  margin: 60px auto;
+  background: var(--orange-color);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+.sec{
+ background-image: url(BG.png);
+}
+ 
+form {
+    background-color: var(--orange-color); 
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+ .formbox {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    
+}
+label{
+    display: block;
+    block-size: 30px;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+
+}
+
+
+input[type="number"] {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    border: 2px solid #ddd;
+}
+.result {
+    background-color: var(--orange-color);
+    color: var(--dark-color);
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 12px;
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-left: auto;
+    margin-right: auto;
+   
+}
+
+.result h3 {
+    color: var(--dark-orange);
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.result p {
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

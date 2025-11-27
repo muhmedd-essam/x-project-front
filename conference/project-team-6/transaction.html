@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Details - Trusti</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/transaction.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-icon">🛡️</span>
+                <span class="brand-text">Trusti</span>
+            </div>
+            <div class="nav-links">
+                <span id="userGreeting" class="user-greeting"></span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="transaction-container">
+        <div class="container">
+            <div class="back-button">
+                <button onclick="goBack()" class="btn btn-secondary">← Back to Dashboard</button>
+            </div>
+
+            <div id="transactionContent" class="transaction-content">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/storage.js"></script>
+    <script src="scripts/transactions.js"></script>
+    <script src="scripts/transaction-detail.js"></script>
+</body>
+</html>

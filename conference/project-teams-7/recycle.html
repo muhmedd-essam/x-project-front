@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recycle - Binova</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- QR Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <style>
+        .recycle-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+        
+        .recycle-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-lg);
+            margin: var(--space-xl) 0;
+        }
+        
+        .recycle-option {
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .recycle-option:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .recycle-option.active {
+            border-color: var(--primary-green);
+            background: rgba(34, 197, 94, 0.05);
+        }
+        
+        .recycle-icon {
+            font-size: 3rem;
+            margin-bottom: var(--space-md);
+        }
+        
+        .qr-scanner {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            margin: var(--space-lg) 0;
+            text-align: center;
+        }
+        
+        .code-input {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            margin: var(--space-lg) 0;
+        }
+        
+        .code-input input {
+            width: 100%;
+            padding: var(--space-lg);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-lg);
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+        
+        .code-input input:focus {
+            border-color: var(--primary-green);
+            outline: none;
+        }
+        
+        .recycle-result {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-teal) 100%);
+            color: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            margin: var(--space-lg) 0;
+            text-align: center;
+        }
+        
+        .points-earned {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin: var(--space-md) 0;
+        }
+        
+        .co2-impact-quote {
+            background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+            border: 2px solid var(--accent-teal);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            margin: var(--space-lg) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .co2-impact-quote::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(34, 197, 94, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .co2-icon {
+            font-size: 3rem;
+            color: var(--accent-teal);
+            margin-bottom: var(--space-sm);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .co2-saved-amount {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--accent-teal);
+            margin: var(--space-md) 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .co2-quote {
+            font-style: italic;
+            color: var(--gray-700);
+            margin-top: var(--space-md);
+            font-size: var(--font-size-lg);
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .co2-quote-author {
+            color: var(--accent-teal);
+            font-weight: 600;
+            margin-top: var(--space-md);
+            position: relative;
+            z-index: 1;
+        }
+        
+        #qr-reader {
+            width: 100%;
+            max-width: 400px;
+            margin: var(--space-lg) auto;
+        }
+        
+        .camera-controls {
+            margin: var(--space-lg) 0;
+        }
+        
+        .camera-controls button {
+            margin: 0 var(--space-sm);
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="margin-top: 120px;">
+        <div class="recycle-container">
+            <div class="text-center mb-4">
+                <h1>Scan and Earn</h1>
+                <p>Choose how to input your bottles and start earning points</p>
+            </div>
+
+            <!-- Recycling Options -->
+            <div class="recycle-options">
+                <div class="recycle-option" onclick="selectOption('qr')">
+                    <!-- <div class="recycle-icon">📱</div> -->
+                    <h3>Scan QR Code</h3>
+                    <p>Use camera to scan the code</p>
+                </div>
+                <div class="recycle-option" onclick="selectOption('code')">
+                    <!-- <div class="recycle-icon">🔢</div> -->
+                    <h3>Enter Code</h3>
+                    <p>Type the code from machine</p>
+                </div>
+            </div>
+
+            <!-- QR Scanner -->
+            <div id="qrScanner" class="qr-scanner" style="display: none;">
+                <h3>📱 Scan QR Code</h3>
+                <div id="qr-reader"></div>
+                <div class="camera-controls">
+                    <button class="btn btn-primary" onclick="startCamera()">Start Camera</button>
+                    <button class="btn btn-secondary" onclick="stopCamera()">Stop Camera</button>
+                </div>
+            </div>
+
+            <!-- Code Input -->
+            <div id="codeInput" class="code-input" style="display: none;">
+                <h3>🔢 Enter Code</h3>
+                <p class="text-center mb-4">Enter the 6-digit code from the recycling machine</p>
+                <input type="text" id="recycleCode" placeholder="000000" maxlength="6" pattern="[0-9]{6}">
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary" onclick="submitCode()">Submit Code</button>
+                </div>
+            </div>
+
+            <!-- Recycling Result -->
+            <div id="recycleResult" class="recycle-result" style="display: none;">
+                <h3>🎉 Recycling Successful!</h3>
+                <div class="points-earned" id="pointsEarned">+25 points</div>
+                <p>Points have been added to your account</p>
+                <button class="btn btn-secondary" onclick="resetRecycle()">Recycle Another</button>
+            </div>
+
+            <!-- CO2 Impact Quote -->
+            <div class="co2-impact-quote" id="co2ImpactQuote" style="display: none;">
+                <div class="co2-icon">🌱</div>
+                <h3>Your Environmental Impact</h3>
+                <div class="co2-saved-amount" id="co2SavedAmount">0.5 kg CO2</div>
+                <p>Saved from recycling bottles</p>
+                <div class="co2-quote" id="co2Quote">
+                    "Every plastic bottle you recycle saves enough energy to power an LED light for 6 hours!"
+                </div>
+                <div class="co2-quote-author" id="co2QuoteAuthor">- Binova Team</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="navigation.js"></script>
+    <script>
+        let selectedOption = '';
+        let user = JSON.parse(localStorage.getItem('binovaUser') || 'null');
+        let html5QrcodeScanner = null;
+        let isCameraActive = false;
+
+        // Check authentication
+        if (!user) {
+            window.location.href = 'login.html';
+        }
+
+        // CO2 motivational quotes
+        const co2Quotes = [
+            {
+                text: "Every plastic bottle you recycle saves enough energy to power an LED light for 6 hours!",
+                author: "Environmental Science"
+            },
+            {
+                text: "Recycling one aluminum can saves enough energy to run a TV for 3 hours. Imagine the impact when everyone recycles!",
+                author: "Energy Conservation"
+            },
+            {
+                text: "You've helped reduce CO₂ emissions by 82.7% every time you recycle aluminum!",
+                author: "Climate Research"
+            },
+            {
+                text: "Top recycler this week helped cut 12.5 kg of CO2—equivalent to planting 1.5 trees!",
+                author: "Binova Team"
+            },
+            {
+                text: "Every item you recycle is one less puff of CO2 in our atmosphere. Small actions, big impact.",
+                author: "Environmental Wisdom"
+            }
+        ];
+
+        function selectOption(option) {
+            selectedOption = option;
+            
+            // Update active state
+            document.querySelectorAll('.recycle-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Show appropriate section
+            document.getElementById('qrScanner').style.display = 'none';
+            document.getElementById('codeInput').style.display = 'none';
+            document.getElementById('recycleResult').style.display = 'none';
+            document.getElementById('co2ImpactQuote').style.display = 'none';
+            
+            if (option === 'qr') {
+                document.getElementById('qrScanner').style.display = 'block';
+                initQRScanner();
+            } else if (option === 'code') {
+                document.getElementById('codeInput').style.display = 'block';
+            }
+        }
+
+        function initQRScanner() {
+            if (html5QrcodeScanner) {
+                html5QrcodeScanner.clear();
+            }
+            
+            html5QrcodeScanner = new Html5Qrcode("qr-reader");
+        }
+
+        function startCamera() {
+            if (isCameraActive) return;
+            
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            
+            html5QrcodeScanner.start(
+                { facingMode: "environment" },
+                config,
+                onScanSuccess,
+                onScanFailure
+            ).then(() => {
+                isCameraActive = true;
+                document.querySelector('.camera-controls .btn-primary').textContent = 'Camera Active';
+                document.querySelector('.camera-controls .btn-primary').disabled = true;
+            }).catch(err => {
+                console.error('Camera start failed:', err);
+                alert('Failed to start camera. Please check permissions.');
+            });
+        }
+
+        function stopCamera() {
+            if (!isCameraActive) return;
+            
+            html5QrcodeScanner.stop().then(() => {
+                isCameraActive = false;
+                document.querySelector('.camera-controls .btn-primary').textContent = 'Start Camera';
+                document.querySelector('.camera-controls .btn-primary').disabled = false;
+            }).catch(err => {
+                console.error('Camera stop failed:', err);
+            });
+        }
+
+        function onScanSuccess(decodedText, decodedResult) {
+            console.log('QR Code scanned:', decodedText);
+            stopCamera();
+            processRecycling(25, 'QR Scan'); // 25 points for QR scan
+        }
+
+        function onScanFailure(error) {
+            // Handle scan failure silently
+        }
+
+        function submitCode() {
+            const code = document.getElementById('recycleCode').value;
+            
+            if (code.length !== 6 || !/^\d{6}$/.test(code)) {
+                alert('Please enter a valid 6-digit code');
+                return;
+            }
+            
+            // Simulate code processing
+            document.querySelector('#codeInput .btn').textContent = 'Processing...';
+            document.querySelector('#codeInput .btn').disabled = true;
+            
+            setTimeout(() => {
+                processRecycling(20, 'Manual Code'); // 20 points for manual code
+            }, 1500);
+        }
+
+        function processRecycling(points, method) {
+            // Update user points
+            user.totalPoints += points;
+            user.bottlesRecycled = (user.bottlesRecycled || 0) + 1;
+            localStorage.setItem('binovaUser', JSON.stringify(user));
+            
+            // Show result
+            document.getElementById('pointsEarned').textContent = `+${points} points`;
+            document.getElementById('recycleResult').style.display = 'block';
+            
+            // Hide other sections
+            document.getElementById('qrScanner').style.display = 'none';
+            document.getElementById('codeInput').style.display = 'none';
+            
+            // Reset buttons
+            document.querySelector('#codeInput .btn').textContent = 'Submit Code';
+            document.querySelector('#codeInput .btn').disabled = false;
+            
+            // Show CO2 impact after a delay
+            setTimeout(() => {
+                showCO2Impact();
+            }, 2000);
+        }
+
+        function showCO2Impact() {
+            // Calculate CO2 saved
+            const co2PerBottle = 0.5; // kg CO2 saved per bottle
+            const totalCO2 = (user.bottlesRecycled * co2PerBottle).toFixed(1);
+            
+            // Update CO2 display
+            document.getElementById('co2SavedAmount').textContent = totalCO2 + ' kg CO2';
+            
+            // Select random quote
+            const randomQuote = co2Quotes[Math.floor(Math.random() * co2Quotes.length)];
+            document.getElementById('co2Quote').textContent = randomQuote.text;
+            document.getElementById('co2QuoteAuthor').textContent = `- ${randomQuote.author}`;
+            
+            // Show CO2 impact
+            document.getElementById('co2ImpactQuote').style.display = 'block';
+            document.getElementById('recycleResult').style.display = 'none';
+        }
+
+        function resetRecycle() {
+            document.getElementById('recycleResult').style.display = 'none';
+            document.getElementById('co2ImpactQuote').style.display = 'none';
+            document.getElementById('recycleCode').value = '';
+            document.querySelectorAll('.recycle-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            
+            // Stop camera if active
+            if (isCameraActive) {
+                stopCamera();
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update user data if needed
+            if (!user.bottlesRecycled) {
+                user.bottlesRecycled = 0;
+                localStorage.setItem('binovaUser', JSON.stringify(user));
+            }
+        });
+    </script>
+</body>
+</html> 

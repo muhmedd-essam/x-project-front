@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-padding-top: 2rem;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --light-color: #fff;
+  --light-text: #837c7c;
+  --orange-color: #f0e9e1;
+  --dark-orange: #f99325;
+  --gray-color: #615549;
+  --dark-color: #0d0d0d;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* scroll */
+
+body {
+  --sb-track-color: #232e33;
+  --sb-thumb-color: #de7a23;
+  --sb-size: 14px;
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 1px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 1px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+}
+
+/* nav */
+
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
+  padding: 10px 20px;
+}
+
+nav .logo {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+nav .logo img {
+  width: 71px;
+  height: 62px;
+}
+
+nav .logo a {
+  text-decoration: none;
+  color: var(--dark-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav .nav-links ul {
+  display: flex;
+  gap: 2rem;
+}
+
+nav .nav-links ul li {
+  list-style: none;
+}
+
+nav .nav-links ul li a {
+  text-decoration: none;
+  color: var(--dark-color);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+nav .nav-links ul li a:hover {
+  color: var(--dark-orange);
+}
+
+.join-btn {
+  background-color: var(--dark-orange);
+  text-decoration: none;
+  color: var(--light-color);
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 0.8rem 2.2rem;
+  border-radius: 10px;
+  border: none;
+  transition: 0.5s;
+}
+
+.join-btn:hover {
+  scale: 1.1;
+  background-color: var(--gray-color);
+}
+
+nav .toggle-btn {
+  display: none;
+  color: var(--dark-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* table styling */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px; /* تقليل المسافة الكبيرة */
+}
+
+table th, table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table td {
+  color: #555;
+}
+
+table td .btn {
+  padding: 2px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+table td .btn.accept {
+  background-color: #28a745;
+  color: #fff;
+}
+
+table td .btn.waiting {
+  background-color: #f99325;
+  color: #fff;
+}
+
+table td .btn.reject {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+table td .btn:hover {
+  opacity: 0.9;
+}
+
+/* search bar styling */
+
+.search-bar {
+  margin: 10px auto; /* تقليل المسافة البيضاء */
+  max-width: 600px;
+  margin-left: 1px;
+}
+
+.search-bar input {
+  width: 50%;
+  padding: 10px 15px;
+  font-size: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--dark-orange);
+}
+
+/* footer styling */
+
+footer {
+  width: 100%;
+  background-color: var(--gray-color);
+}
+
+footer .top {
+  padding: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+footer .top .set h2 {
+  font-size: 1.5rem;
+  color: var(--dark-orange);
+  margin-bottom: 5px;
+}
+
+footer .top .set p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--light-color);
+}
+
+footer .bottom {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+footer .bottom p {
+  color: var(--light-color);
+  font-weight: 500;
+}
+
+footer .bottom .icons i {
+  color: var(--light-color);
+  font-size: 1.5rem;
+  transition: 0.5s;
+}
+
+footer .bottom .icons i:hover {
+  color: var(--dark-orange);
+}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Dashboard - AutiConnect VR</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard">
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="dashboard-nav">
+                <h1 class="dashboard-title">Parent Dashboard</h1>
+                <div class="user-info">
+                    <span id="userName">Sarah Johnson</span>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+        <div class="container">
+            <!-- Child Information -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="card-title">Emma's Profile</h2>
+                    <span class="status-badge status-completed">Active</span>
+                </div>
+                <div class="session-meta">
+                    <div class="meta-item">
+                        <h4>Age</h4>
+                        <div class="meta-value">8 years old</div>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Diagnosis</h4>
+                        <div class="meta-value">Autism Spectrum Disorder</div>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Total Sessions</h4>
+                        <div class="meta-value">24 completed</div>
+                    </div>
+                    <div class="meta-item">
+                        <h4>Current Stress Level</h4>
+                        <div class="stress-indicator stress-low">
+                            <span class="stress-dot"></span>
+                            Low
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Recent VR Sessions -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Recent VR Sessions</h2>
+                        <a href="session.html" class="btn btn-outline">View All</a>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Scenario</th>
+                                    <th>Duration</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr onclick="window.location.href='session.html'">
+                                    <td>Today</td>
+                                    <td>Ordering at a Café</td>
+                                    <td>12 min</td>
+                                    <td><span class="status-badge status-completed">Completed</span></td>
+                                </tr>
+                                <tr onclick="window.location.href='session.html'">
+                                    <td>Yesterday</td>
+                                    <td>Playground Interaction</td>
+                                    <td>8 min</td>
+                                    <td><span class="status-badge status-stopped">Stopped Early</span></td>
+                                </tr>
+                                <tr onclick="window.location.href='session.html'">
+                                    <td>Jan 28</td>
+                                    <td>Classroom Discussion</td>
+                                    <td>15 min</td>
+                                    <td><span class="status-badge status-completed">Completed</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Heart Rate Chart -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Heart Rate Trends</h2>
+                        <span class="card-subtitle">Last 7 days</span>
+                    </div>
+                    <div class="chart-container" id="heartRateChart">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; color: var(--primary-500); margin-bottom: 1rem;">❤️</div>
+                            <div style="font-size: 1.5rem; font-weight: 600; color: var(--gray-700);">78 BPM</div>
+                            <div style="color: var(--gray-500);">Average during sessions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Panel -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Notifications</h2>
+                    <span class="card-subtitle">Stay updated on Emma's progress</span>
+                </div>
+                <div id="notificationsList">
+                    <div class="notification">
+                        <div class="notification-time">Today, 2:45 PM</div>
+                        <div class="notification-message">
+                            Emma completed the "Ordering at a Café" scenario with excellent performance! Stress levels remained low throughout.
+                        </div>
+                    </div>
+                    <div class="notification high-stress">
+                        <div class="notification-time">Jan 28, 3:20 PM</div>
+                        <div class="notification-message">
+                            High stress detected during playground scenario. Session was automatically paused for Emma's comfort.
+                        </div>
+                    </div>
+                    <div class="notification">
+                        <div class="notification-time">Jan 27, 10:15 AM</div>
+                        <div class="notification-message">
+                            Dr. Martinez has updated Emma's therapy plan. New scenarios have been added to her program.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Progress Overview</h2>
+                    <span class="card-subtitle">Emma's improvement over time</span>
+                </div>
+                <div class="dashboard-grid">
+                    <div>
+                        <h4 style="margin-bottom: var(--space-2); color: var(--gray-600);">Completed Sessions</h4>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                        <p style="margin-top: var(--space-1); font-size: 0.875rem; color: var(--gray-500);">24 of 32 sessions</p>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: var(--space-2); color: var(--gray-600);">Stress Management</h4>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%; background: var(--success-500);"></div>
+                        </div>
+                        <p style="margin-top: var(--space-1); font-size: 0.875rem; color: var(--gray-500);">85% improvement</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

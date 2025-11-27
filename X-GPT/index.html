@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
+  <meta name="author" content="X Project">
+  
+  <meta property="og:title" content="X GPT | Smart Chatbot by X Project">
+  <meta property="og:description" content="Talk to X GPT — the official AI assistant from X Project. Get answers, support, and ideas anytime. Powered by students, for students.">
+  <meta property="og:image" content="https://x-project.co/X-GPT/Black%20Logo-02.png">
+  <meta property="og:url" content="https://x-project.co/home.html">
+  <meta property="og:type" content="website">
+
+  <meta name="keywords" content="X Project, X project, x project, xproject, Xproject, XProject,Student Activity, Cairo University, Entrepreneurship, Leadership, University Events">
+
+  <link rel="icon" href="https://x-project.co/img/logo.png" type="image/png">
+  <title>X-project</title>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <title>X GPT</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+  width: 100%;
+  height: 60px; 
+  background: #f99325;
+  display: flex;
+  align-items: center;
+  gap: 20px; 
+  padding-left: 20px; 
+}
+
+.arrow {
+  height: 22px; 
+  width: auto;
+  cursor: pointer;
+}
+.frame {
+  background: white;
+  height: 40px; 
+  width: 40px;  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.logo {
+  height: 60%; 
+  width: auto;
+}
+
+.text {
+  height: 20px; 
+  width: auto;
+}
+
+    .chat-area {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message.sent {
+  align-self: flex-start;
+  background-color: #f99325;
+  color: black;
+  font-weight: bold;
+  border-radius: 20px;
+  margin-left: 5px;
+  position: relative;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  max-width: 70%;
+}
+.message.received {
+  align-self: flex-end; 
+  background-color: #fff;
+  color: black;
+  font-weight: bold;
+  border-radius: 20px;
+  margin-left: 5px;        
+  margin-right: 5px;       
+  padding: 10px 20px;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  max-width: 70%;
+  position: relative;
+}
+
+    .sent {
+      align-self: flex-start;
+      background-color: #f99325;
+      color: black;
+      border-bottom-left-radius: 0;
+      margin-left: 30px;
+    }
+
+    .received {
+      align-self: flex-end;
+      background-color: white;
+      color: black;
+      border-bottom-right-radius: 0;
+      margin-right: 30px;
+    }
+
+    .input-bar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 30px;
+      width: 100%;
+      background-color: transparent;
+    }
+
+    .input-bar input {
+      width: 100%;
+      padding: 20px 70px 20px 20px; 
+      border: none;
+      border-radius: 50px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .send_button {
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 70px;
+      height: 70px;
+      
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .send_button .send_icon {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #stopButton {
+      display: none;
+    }
+
+    #viewCodeBtn {
+      right: 100px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <img src="Arrow.png" alt="Arrow" class="arrow">
+    <div class="frame">
+      <img src="Black Logo-02.png" alt="logo" class="logo">
+    </div>
+    <img src="XGPT.png" alt="XGPT" class="text">
+  </nav>
+
+  <div class="chat-area" id="messages"></div>
+  <p id="typingIndicator" style="display:none; padding: 10px 30px; color: #fff;">...</p>
+
+  <div class="input-bar">
+    <input type="text" id="userInput" placeholder="Type something..." />
+    <button class="send_button" id="sendButton">
+      <img src="Send icone.png" alt="send_icon" class="send_icon">
+    </button>
+    <button class="send_button" id="stopButton">
+      <img src="pause icone.png" alt="stop_icon" class="send_icon">
+    </button>
+    <button class="send_button" id="viewCodeBtn">
+      <img src="Code_icon.png" alt="code_icon" class="send_icon">
+    </button>
+  </div>
+
+  <script>
+    const input = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
+    const stopButton = document.getElementById('stopButton');
+    const viewCodeBtn = document.getElementById('viewCodeBtn');
+    const messages = document.getElementById('messages');
+    const typingIndicator = document.getElementById('typingIndicator');
+  
+    const chatHistory = [];
+  
+    let typingInterval = null;
+    let typingTarget = null;
+    let typingFullText = '';
+  
+    window.addEventListener('DOMContentLoaded', () => {
+      const welcomeMessage = ' Welcome to X-Project GPT!👋 \nHow can I assist you today?';
+      appendMessageTypingEffect(welcomeMessage, 'sent');
+    });
+  
+    sendButton.addEventListener('click', async () => {
+      const userMessage = input.value.trim();
+      if (!userMessage) return;
+  
+      chatHistory.push({ role: 'user', content: userMessage });
+      appendMessage(userMessage, 'received');
+      input.value = '';
+  
+      typingIndicator.style.display = 'block';
+      input.disabled = true;
+      sendButton.style.display = 'none';
+      stopButton.style.display = 'inline-block';
+      viewCodeBtn.style.display = 'none';
+  
+      const res = await fetch('https://x-project.co/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHistory })
+      });
+  
+      const data = await res.json();
+      const aiReply = data.reply;
+      chatHistory.push({ role: 'assistant', content: aiReply });
+      appendMessageTypingEffect(aiReply, 'sent');
+    });
+  
+    stopButton.addEventListener('click', () => {
+      if (typingInterval) {
+        clearInterval(typingInterval);
+        typingInterval = null;
+        if (typingTarget) typingTarget.innerHTML = typingFullText;
+      }
+      finishTyping();
+      viewCodeBtn.style.display = 'none';
+    });
+  
+    function detectDirection(text) {
+      const arabicRegex = /[\u0600-\u06FF]/;
+      return arabicRegex.test(text) ? 'rtl' : 'ltr';
+    }
+  
+    function appendMessage(text, role) {
+      const div = document.createElement('div');
+      div.className = `message ${role}`;
+      div.style.direction = detectDirection(text);
+      div.innerHTML = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/(https?:\/\/[^\s]+)/g,
+                 '<a href="$1" target="_blank" style="color:#4fc3f7;">$1</a>');
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+  
+    function appendMessageTypingEffect(text, role) {
+      const div = document.createElement('div');
+      div.className = `message ${role}`;
+      div.style.direction = detectDirection(text);
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+  
+      const safeText = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/(https?:\/\/[^\s]+)/g,
+                 '<a href="$1" target="_blank" style="color:#4fc3f7;">$1</a>');
+  
+      typingTarget = div;
+      typingFullText = safeText;
+  
+      let i = 0;
+      typingInterval = setInterval(() => {
+        if (i >= safeText.length) {
+          finishTyping();
+          return;
+        }
+        div.innerHTML += safeText.charAt(i++);
+        messages.scrollTop = messages.scrollHeight;
+      }, 25);
+    }
+  
+    function finishTyping() {
+      clearInterval(typingInterval);
+      typingInterval = null;
+      typingIndicator.style.display = 'none';
+      input.disabled = false;
+      sendButton.style.display = 'inline-block';
+      stopButton.style.display = 'none';
+  
+      if (/```|<[^>]+>|function |console\.log|class |#include/.test(typingFullText)) {
+        viewCodeBtn.style.display = 'inline-block';
+        viewCodeBtn.onclick = () => openCodeWindow(typingFullText);
+      }
+    }
+  
+    function openCodeWindow(code) {
+      const newWin = window.open('', '_blank');
+      if (!newWin) return alert("Please allow pop-ups.");
+      let cleanedCode = code.replace(/```[\w]*\n?/g, '').replace(/```/g, '');
+      newWin.document.write(`<pre style="background:#1e1e1e;color:#f1f1f1;padding:20px;font-size:16px;font-family:monospace;white-space:pre-wrap;">${cleanedCode.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>`);
+      newWin.document.title = "Code Snippet";
+    }
+  
+    document.querySelector('.arrow').addEventListener('click', () => {
+      window.history.back();
+    });
+  </script>
+  
+
+
+</body>
+</html>

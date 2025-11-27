@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - AutiConnect VR</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard">
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="dashboard-nav">
+                <h1 class="dashboard-title">Doctor Dashboard</h1>
+                <div class="user-info">
+                    <span id="userName">Dr. Martinez</span>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+        <div class="container">
+            <!-- Patient Overview -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="card-title">Patient Overview</h2>
+                    <span class="card-subtitle">6 active patients</span>
+                </div>
+                <div class="patient-list">
+                    <div class="patient-card" onclick="selectPatient('emma')">
+                        <div class="patient-info">
+                            <h3>Emma Johnson</h3>
+                            <p>Age 8 • ASD • 24 sessions completed</p>
+                        </div>
+                        <div class="patient-stats">
+                            <div class="stat-number">85%</div>
+                            <div class="stat-label">Progress</div>
+                        </div>
+                    </div>
+                    <div class="patient-card" onclick="selectPatient('alex')">
+                        <div class="patient-info">
+                            <h3>Alex Chen</h3>
+                            <p>Age 10 • ASD • 18 sessions completed</p>
+                        </div>
+                        <div class="patient-stats">
+                            <div class="stat-number">72%</div>
+                            <div class="stat-label">Progress</div>
+                        </div>
+                    </div>
+                    <div class="patient-card" onclick="selectPatient('lily')">
+                        <div class="patient-info">
+                            <h3>Lily Rodriguez</h3>
+                            <p>Age 7 • ASD • 31 sessions completed</p>
+                        </div>
+                        <div class="patient-stats">
+                            <div class="stat-number">91%</div>
+                            <div class="stat-label">Progress</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Selected Patient Details -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Patient Details</h2>
+                        <span id="selectedPatientName" class="card-subtitle">Emma Johnson</span>
+                    </div>
+                    <div id="patientDetails">
+                        <div class="session-meta">
+                            <div class="meta-item">
+                                <h4>Current Stress Level</h4>
+                                <div class="stress-indicator stress-low">
+                                    <span class="stress-dot"></span>
+                                    Low
+                                </div>
+                            </div>
+                            <div class="meta-item">
+                                <h4>Last Session</h4>
+                                <div class="meta-value">Today, 2:30 PM</div>
+                            </div>
+                            <div class="meta-item">
+                                <h4>Average Heart Rate</h4>
+                                <div class="meta-value">78 BPM</div>
+                            </div>
+                            <div class="meta-item">
+                                <h4>Session Success Rate</h4>
+                                <div class="meta-value">87%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Charts -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Progress Analytics</h2>
+                        <span class="card-subtitle">Last 30 days</span>
+                    </div>
+                    <div class="chart-container">
+                        <div style="text-align: center;">
+                            <div style="display: flex; justify-content: space-around; align-items: end; height: 100px; margin-bottom: 1rem;">
+                                <div style="width: 20px; height: 40px; background: var(--primary-400); border-radius: 4px;"></div>
+                                <div style="width: 20px; height: 60px; background: var(--primary-500); border-radius: 4px;"></div>
+                                <div style="width: 20px; height: 80px; background: var(--primary-600); border-radius: 4px;"></div>
+                                <div style="width: 20px; height: 90px; background: var(--success-500); border-radius: 4px;"></div>
+                            </div>
+                            <div style="color: var(--gray-600);">Sessions completed per week</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Sessions -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Sessions</h2>
+                    <a href="session.html" class="btn btn-outline">View Session Details</a>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Date</th>
+                                <th>Scenario</th>
+                                <th>Duration</th>
+                                <th>Avg Heart Rate</th>
+                                <th>Stress Level</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr onclick="window.location.href='session.html'">
+                                <td>Emma Johnson</td>
+                                <td>Today</td>
+                                <td>Ordering at a Café</td>
+                                <td>12 min</td>
+                                <td>76 BPM</td>
+                                <td>
+                                    <div class="stress-indicator stress-low">
+                                        <span class="stress-dot"></span>
+                                        Low
+                                    </div>
+                                </td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                            </tr>
+                            <tr onclick="window.location.href='session.html'">
+                                <td>Alex Chen</td>
+                                <td>Today</td>
+                                <td>Group Discussion</td>
+                                <td>10 min</td>
+                                <td>92 BPM</td>
+                                <td>
+                                    <div class="stress-indicator stress-medium">
+                                        <span class="stress-dot"></span>
+                                        Medium
+                                    </div>
+                                </td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                            </tr>
+                            <tr onclick="window.location.href='session.html'">
+                                <td>Lily Rodriguez</td>
+                                <td>Yesterday</td>
+                                <td>Birthday Party</td>
+                                <td>15 min</td>
+                                <td>68 BPM</td>
+                                <td>
+                                    <div class="stress-indicator stress-low">
+                                        <span class="stress-dot"></span>
+                                        Low
+                                    </div>
+                                </td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Notes Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Clinical Notes</h2>
+                    <span class="card-subtitle">Recent observations and recommendations</span>
+                </div>
+                <div class="notes-content">
+                    <p><strong>Progress Update - Emma Johnson:</strong></p>
+                    <p>Emma has shown remarkable improvement in her social interaction confidence. Her stress levels have decreased by 40% over the past month. I recommend introducing more complex scenarios involving multiple participants. Continue current therapy schedule with twice-weekly sessions.</p>
+                    <p style="margin-top: var(--space-3);"><em>- Dr. Martinez, Jan 29, 2025</em></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
