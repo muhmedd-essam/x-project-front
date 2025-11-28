@@ -147,77 +147,93 @@
           
         </div>
       </div> -->
-      <form id="joinForm" enctype="multipart/form-data">
-        <div class="form-control">
-          <input type="text" name="name" id="name" required />
-          <label for="name"><span>Name</span></label>
-        </div>
-        <div class="form-control">
-          <input type="email" name="email" id="email" required />
-          <label for="email"><span>E-mail</span></label>
-        </div>
-        <div class="form-control">
-          <input type="text" name="whatsapp" id="phone" required />
-          <label for="phone"><span>WhatsApp</span></label>
-        </div>
-        <div class="form-control" style="margin-bottom: 2rem;">
-          <p style="margin-top: 10px;">After payment, take a screenshot and upload it below</p>
-        </div>
-        <div class="form-control">
-          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 35px;">
-            <label for="payment_screenshot"
-              style="cursor: pointer; background-color: var(--dark-orange); color: #fff; padding: 10px 15px; border-radius: 5px; font-weight: 500; white-space: nowrap;">
-              Upload Payment Screenshot
-            </label>
-            <br>
-            <input type="file" name="payment_screenshot" id="payment_screenshot" accept="image/*" required style="display: none;" />
-            <span id="payment-file-name" style="color: var(--dark-color); font-weight: 500; font-size: 0.95rem;">No file chosen</span>
-          </div>
-        </div>
-        
-        <br>
-        <div class="form-control">
-          <select name="role" id="role" class="custom-dropdown" onchange="toggleRoleFields()" required>
-            <option value="">Select Role</option>
-            <option value="member">Member</option>
-            <option value="delegate">Delegate</option>
-            <option value="outcomer">Outcomer</option>
-          </select>
-        </div>
-        <div class="form-control" id="committee-container" style="display:none;">
-          <select name="committee" id="committee" class="custom-dropdown">
-            <option value="">Select Committee</option>
-            <option>Marketing</option>
-            <option>Graphic Design</option>
-            <option>Web Development</option>
-            <option>Photography</option>
-            <option>Project Management</option>
-            <option>AC Coaching & Juniors</option>
-            <option>Social Responsibility</option>
-            <option>Public Relations</option>
-            <option>Logistics & Events</option>
-            <option>Fundraising</option>
-            <option>Human Resources & Quality Management</option>
-          </select>
-        </div>
-        <div class="form-control" id="team-container" style="display:none;">
-          <select name="team" id="team" class="custom-dropdown">
-            <option value="">Select Team</option>
-            <option>Team 1</option>
-            <option>Team 2</option>
-            <option>Team 3</option>
-            <option>Team 4</option>
-            <option>Team 5</option>
-            <option>Team 6</option>
-            <option>Team 7</option>
-            <option>Team 8</option>
-            <option>Team 9</option>
-            <option>Team 10</option>
-          </select>
-        </div>
-        
-        <button type="submit" class="login-btn">Submit</button>
-      </form>
+    <form id="joinForm" enctype="multipart/form-data">
+
+      <!-- Name -->
+      <div class="form-control">
+        <input type="text" name="name" id="name" required />
+        <label for="name"><span>Name</span></label>
+      </div>
+
+      <!-- Email -->
+      <div class="form-control">
+        <input type="email" name="email" id="email" required />
+        <label for="email"><span>E-mail</span></label>
+      </div>
+
+      <!-- Phone (backend expects "phone", not whatsapp) -->
+      <div class="form-control">
+        <input type="text" name="phone" id="phone" required />
+        <label for="phone"><span>Phone</span></label>
+      </div>
+
+      <!-- Faculty -->
+      <div class="form-control">
+        <input type="text" name="faculty" id="faculty" required />
+        <label for="faculty"><span>Faculty</span></label>
+      </div>
+
+      <!-- University -->
+      <div class="form-control">
+        <input type="text" name="university" id="university" required />
+        <label for="university"><span>University</span></label>
+      </div>
+
+      <!-- Level -->
+      <div class="form-control">
+        <input type="text" name="level" id="level" required />
+        <label for="level"><span>Level</span></label>
+      </div>
+
+      <!-- Strengths -->
+      <div class="form-control">
+        <input type="text" name="strengths" id="strengths" required />
+        <label for="strengths"><span>Strengths</span></label>
+      </div>
+
+      <!-- Weaknesses -->
+      <div class="form-control">
+        <input type="text" name="weaknesses" id="weaknesses" required />
+        <label for="weaknesses"><span>Weaknesses</span></label>
+      </div>
+
+      <!-- Committee -->
+      <div class="form-control">
+        <select name="committee" id="committee" required>
+          <option value="">Select First Committee</option>
+          <option>Project Management</option>
+          <option>Web Development</option>
+          <option>External Relations</option>
+          <option>Social Responsibility</option>
+          <option>Logistics & Events</option>
+          <option>Human Resources</option>
+          <option>Training & Development</option>
+          <option>Graphic Designing</option>
+          <option>Photography</option>
+          <option>Marketing</option>
+        </select>
+      </div>
+
+      <div class="form-control">
+        <select name="committee2" id="committee2">
+          <option value="">Select Second Committee (Optional)</option>
+          <option>Project Management</option>
+          <option>Web Development</option>
+          <option>External Relations</option>
+          <option>Social Responsibility</option>
+          <option>Logistics & Events</option>
+          <option>Human Resources</option>
+          <option>Training & Development</option>
+          <option>Graphic Designing</option>
+          <option>Photography</option>
+          <option>Marketing</option>
+        </select>
+      </div>
+
+
+      <button type="submit" class="login-btn">Submit</button>
+    </form>
+
       <div id="success-message" style="display: none;" class="success-container">
         Application submitted successfully!
     </div>
@@ -228,55 +244,66 @@
 
      <!-- end-form  -->
      <script>
-      function toggleRoleFields() {
-        const role = document.getElementById('role').value;
-        document.getElementById('committee-container').style.display = role === 'member' ? 'block' : 'none';
-        document.getElementById('team-container').style.display = role === 'delegate' ? 'block' : 'none';
-      }
-      document.getElementById('payment_screenshot').addEventListener('change', function () {
-  const fileName = this.files[0]?.name || 'No file chosen';
-  document.getElementById('payment-file-name').textContent = fileName;
-});
+     // ===========================
+      // File: join.js
+      // ===========================
+
+      // Show selected file name (optional if you add a screenshot field)
+      document.getElementById('payment_screenshot')?.addEventListener('change', function () {
+          const fileName = this.files[0]?.name || 'No file chosen';
+          document.getElementById('payment-file-name').textContent = fileName;
+      });
+
+      // FORM SUBMIT HANDLER
       const form = document.getElementById('joinForm');
+
       form.addEventListener('submit', async function (e) {
-  e.preventDefault();
+          e.preventDefault();
 
-  document.getElementById('success-message').style.display = 'none';
-  const errorBox = document.getElementById('error-message');
-  errorBox.style.display = 'none';
-  errorBox.textContent = '';
+          // Hide previous messages
+          const successBox = document.getElementById('success-message');
+          const errorBox = document.getElementById('error-message');
+          successBox.style.display = 'none';
+          errorBox.style.display = 'none';
+          errorBox.textContent = '';
 
-  const formData = new FormData(form);
+          // Collect data
+          const formData = new FormData(form);
 
-  try {
-    await axios.post('https://x-project.co/api/openning/join', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+          try {
+              // Send data to backend
+              await axios.post("https://x-project.co/api/applications/store", formData, {
+                  headers: { "Content-Type": "multipart/form-data" }
+              });
 
-    document.getElementById('success-message').style.display = 'block';
-    form.reset();
-    toggleRoleFields();
-    document.getElementById('payment-file-name').textContent = 'No file chosen';
+              // Success
+              successBox.style.display = "block";
+              form.reset();
 
-  } catch (err) {
-    let msg = 'حدث خطأ أثناء إرسال الطلب.';
+              // Reset file name
+              const fileNameEl = document.getElementById('payment-file-name');
+              if (fileNameEl) fileNameEl.textContent = 'No file chosen';
 
-    if (err.response && err.response.data) {
-      const data = err.response.data;
+          } catch (err) {
+              let msg = "حدث خطأ أثناء إرسال الطلب.";
 
-      // Laravel validation: { message: "...", errors: {...} }
-      if (data.message) msg = data.message;
+              if (err.response && err.response.data) {
+                  const data = err.response.data;
 
-      if (data.errors) {
-        // دمج كل رسائل الحقول في سطر واحد أو أكثر
-        msg = Object.values(data.errors).flat().join('\n');
-      }
-    }
+                  if (data.message) msg = data.message;
 
-    errorBox.textContent = msg;
-    errorBox.style.display = 'block';
-  }
-});
+                  if (data.errors) {
+                      msg = Object.values(data.errors)
+                                  .flat()
+                                  .join("\n");
+                  }
+              }
+
+              errorBox.textContent = msg;
+              errorBox.style.display = "block";
+          }
+      });
+
 
       </script>
       
