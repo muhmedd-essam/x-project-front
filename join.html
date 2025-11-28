@@ -198,8 +198,9 @@
       </div>
 
       <!-- Committee -->
-      <div class="form-control">
-        <select name="committee" id="committee" required>
+      <div class="dropdown-container">
+        <label for="committee">First Committee</label>
+        <select name="committee" id="committee" class="custom-dropdown" required>
           <option value="">Select First Committee</option>
           <option>Project Management</option>
           <option>Web Development</option>
@@ -214,8 +215,9 @@
         </select>
       </div>
 
-      <div class="form-control">
-        <select name="committee2" id="committee2">
+      <div class="dropdown-container">
+        <label for="committee2">Second Committee (Optional)</label>
+        <select name="committee2" id="committee2" class="custom-dropdown">
           <option value="">Select Second Committee (Optional)</option>
           <option>Project Management</option>
           <option>Web Development</option>
@@ -229,6 +231,7 @@
           <option>Marketing</option>
         </select>
       </div>
+
 
 
       <button type="submit" class="login-btn">Submit</button>
