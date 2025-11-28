@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registrations Table | X Project</title>
   <link rel="stylesheet" href="../instcss/style.css" />
   <style>
@@ -10,9 +11,9 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
-      background-image: url("../BG.png"); 
-    background-size: cover;
-    background-position: center;
+      background-image: url("../BG.png");
+      background-size: cover;
+      background-position: center;
     }
 
     h2 {
@@ -35,7 +36,8 @@
       margin-top: 20px;
     }
 
-    th, td {
+    th,
+    td {
       padding: 12px 15px;
       border: 1px solid #ddd;
       text-align: center;
@@ -88,10 +90,13 @@
     }
 
     @media (max-width: 600px) {
-      th, td {
+
+      th,
+      td {
         font-size: 12px;
         padding: 8px;
       }
+
       img.speaker-photo {
         width: 50px;
         height: 50px;
@@ -99,6 +104,7 @@
     }
   </style>
 </head>
+
 <body>
   <h2>Event Registrations</h2>
 
@@ -124,7 +130,7 @@
   <script>
     async function loadData() {
       try {
-        const res = await fetch('https://x-project.co/public/api/event-registrations');
+        const res = await fetch('https://x-project.co/api/event-registrations');
         const json = await res.json();
 
         const table = document.getElementById('dataTable');
@@ -174,4 +180,5 @@
     loadData();
   </script>
 </body>
+
 </html>

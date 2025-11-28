@@ -126,7 +126,7 @@
             <option value="⁠Social Responsibility">⁠Social Responsibility</option>
             <option value="Public Relations">Public Relations</option>
             <option value="Logistics & Events">Logistics & Events</option> -->
-            <option value="Fundraising">Fundraising</option>
+            <option value="External relations">External relations</option>
             <!-- <option value="HR & QM">Human Resources & Quality Management</option> -->
           </select>
         </div>
@@ -173,7 +173,7 @@
 
         // Set default filter to 'Marketing'
         const committeeFilter = document.querySelector("#committeeFilter");
-        committeeFilter.value = 'Fundraising'; // Set the default filter to 'Marketing'
+        committeeFilter.value = 'External relations'; // Set the default filter to 'Marketing'
 
         filterData(); // Apply filter immediately after setting the default value
       } catch (error) {
@@ -260,7 +260,7 @@
 
     async function changeCalledStatus(id, called) {
       try {
-        const response = await fetch(`https://x-project.co/public/api/applications/called/${id}`, {
+        const response = await fetch(`https://x-project.co/api/applications/called/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -327,7 +327,7 @@
     async function changeStatus(id, status) {
       try {
         const response = await fetch(
-          `https://x-project.co/public/api/applications/change-status/${id}`,
+          `https://x-project.co/api/applications/change-status/${id}`,
           {
             method: "PUT",
             headers: {

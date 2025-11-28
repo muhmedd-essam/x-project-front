@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Picked Names</title>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch("https://x-project.co/public/api/picked-names")
+            fetch("https://x-project.co/api/picked-names")
                 .then(response => response.json())
                 .then(data => {
                     let tableBody = document.getElementById("table-body");
@@ -31,16 +32,20 @@
             border-collapse: collapse;
             margin-top: 20px;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
     </style>
 </head>
+
 <body>
     <h2>Picked Names List</h2>
     <table>
@@ -59,4 +64,5 @@
         </tbody>
     </table>
 </body>
+
 </html>

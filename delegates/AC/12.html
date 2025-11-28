@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="../../img/logo.png" type="image/png">
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
-  <link
-  rel="stylesheet"
-  href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
-/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 
   <link rel="stylesheet" href="css/applications.css" />
   <title>X-Project</title>
@@ -31,23 +25,28 @@
       margin: 0;
       padding: 0;
     }
+
     .container {
       padding: 20px;
       margin: auto;
       max-width: 1300px;
     }
+
     .search-bar {
       display: flex;
       justify-content: space-between;
       margin-top: 7px;
     }
+
     .search-bar input {
       padding: 8px;
       width: 200px;
     }
+
     .status-filter select {
       padding: 8px;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -55,7 +54,9 @@
       overflow-x: auto;
       display: block;
     }
-    table th, table td {
+
+    table th,
+    table td {
       min-width: 100px;
       border: 1px solid #000;
       padding: 2px;
@@ -63,11 +64,12 @@
       font-size: 9px;
       color: #ffff;
     }
-    
+
     table th {
       background-color: #000;
       color: #ffff;
     }
+
     .btn {
       padding: 8px 16px;
       color: white;
@@ -75,6 +77,7 @@
       cursor: pointer;
       margin: 0 5px;
     }
+
     .modal {
       display: none;
       position: fixed;
@@ -88,29 +91,37 @@
       width: 90%;
       max-width: 400px;
     }
+
     .modal.active {
       display: block;
     }
+
     @media screen and (max-width: 768px) {
       .container {
         padding: 10px;
       }
+
       .search-bar {
         flex-direction: column;
         align-items: center;
       }
+
       .search-bar input {
         width: 100%;
         margin-bottom: 10px;
       }
+
       table {
         display: block;
         overflow-x: auto;
       }
-      table th, table td {
+
+      table th,
+      table td {
         font-size: 8px;
         padding: 2px;
       }
+
       .btn {
         padding: 6px 10px;
         font-size: 10px;
@@ -118,6 +129,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Nav -->
@@ -134,22 +146,23 @@
     <div style=" display: flex; justify-content: space-between; align-items: center;">
       <!-- Search bar -->
       <div class="search-bar">
-        <input type="text" id="search" placeholder="Search by name or phone" style="padding: 8px; width: 200px;" oninput="searchApplications()">
+        <input type="text" id="search" placeholder="Search by name or phone" style="padding: 8px; width: 200px;"
+          oninput="searchApplications()">
       </div>
-    
+
       <!-- Filters and Counter -->
       <div style="display: flex; gap: 10px; align-items: center;">
         <label id="filterCount" style="font-weight: bold; font-size: 16px;">Total: 0</label>
-    
-        
-    
-        
-    
-        
+
+
+
+
+
+
       </div>
     </div>
-    
-    
+
+
 
     <!-- Table -->
     <table id="applicationsTable">
@@ -176,7 +189,7 @@
   <script>
     async function fetchApplications() {
       try {
-        const response = await fetch("https://x-project.co/public/api/delegate/all");
+        const response = await fetch("https://x-project.co/api/delegate/all");
         const data = await response.json();
         applicationsData = data.data;
         document.getElementById("filterCount").textContent = `Total: ${applicationsData.length}`;
@@ -186,19 +199,19 @@
         console.error("Error fetching applications:", error);
       }
     }
-    
+
     function renderTable(applications) {
-  const tableBody = document.querySelector("#applicationsTable tbody");
-  tableBody.innerHTML = "";
+      const tableBody = document.querySelector("#applicationsTable tbody");
+      tableBody.innerHTML = "";
 
-  applications.forEach((app) => {
-    console.log(`ID: ${app.id}, Called: ${app.called}`); // علشان نشوف القيم الراجعة
+      applications.forEach((app) => {
+        console.log(`ID: ${app.id}, Called: ${app.called}`); // علشان نشوف القيم الراجعة
 
-    const isCalled = app.called === 1 || app.called === "1" ? "checked" : "";
-    const isNotCalled = app.called === 0 || app.called === "0" ? "checked" : "";
+        const isCalled = app.called === 1 || app.called === "1" ? "checked" : "";
+        const isNotCalled = app.called === 0 || app.called === "0" ? "checked" : "";
 
-    const row = document.createElement("tr");
-    row.innerHTML = `
+        const row = document.createElement("tr");
+        row.innerHTML = `
     <td>
         <label>
           <input type="radio" name="called_${app.id}" value="1" onclick="changeCalledStatus(${app.id}, 1)" ${isCalled}> Yes
@@ -220,14 +233,14 @@
         <button class="btn" onclick="sendWhatsApp('${app.phone}', '${app.name}')" style="background-color: rgba(249, 147, 37, 0.9);">WhatsApp</button>
       </td>
     `;
-    tableBody.appendChild(row);
-  });
-}
+        tableBody.appendChild(row);
+      });
+    }
 
-    
+
     async function changeCalledStatus(id, called) {
       try {
-        await fetch(`https://x-project.co/public/api/delegate/called/${id}`, {
+        await fetch(`https://x-project.co/api/delegate/called/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ called })
@@ -238,21 +251,21 @@
     }
 
     function formatDateTime(isoString) {
-    const date = new Date(isoString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
+      const date = new Date(isoString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
 
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
-}
-    
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+
     async function scheduleInterview(id, interviewDate) {
       try {
         const formattedDate = formatDateTime(interviewDate);
         console.log(formattedDate);
-        await fetch(`https://x-project.co/public/api/delegate/schedule-interview/${id}`, {
+        await fetch(`https://x-project.co/api/delegate/schedule-interview/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ interview_date: formattedDate })
@@ -270,7 +283,7 @@
       renderTable(filteredData);
     }
 
-    
+
     function sendWhatsApp(phone, name) {
       const message = `Hey ${name},\n\nOur best delegate 🫡\nWe're waiting for you to join us and take the lead! 🤩\n\n📍 Interview Details:\n🕐 Time: Tomorrow at 1:00 PM\n📍 Location: Whale, Dokki\n🔗 https://maps.app.goo.gl/Rg3YdwzAe4ZadxjLA?g_st=com.google.maps.preview.copy\n\nSee you there! 💪\n\nBest,\nAhmed Meslhe\nAC & JR Member | XProject`;
       window.open(`https://wa.me/+2${phone}?text=${encodeURIComponent(message)}`, '_blank');
@@ -289,7 +302,7 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       const searchBar = document.querySelector(".search-bar");
-      
+
       const filterDropdown = document.createElement("select");
       filterDropdown.innerHTML = `
         <option value="all">All</option>
@@ -298,40 +311,40 @@
       `;
       filterDropdown.style.padding = "8px";
       filterDropdown.onchange = () => filterByCalledStatus(filterDropdown.value);
-      
+
       searchBar.appendChild(filterDropdown);
     });
-    
+
     document.addEventListener("DOMContentLoaded", fetchApplications);
 
-  
-    </script>
-    
 
-<script>
-function extractTableData() {
-  const table = document.getElementById('applicationsTable');
-  const rows = table.querySelectorAll('tr');
-  const data = [];
+  </script>
 
-  rows.forEach(row => {
-    const rowData = [];
-    const cells = row.querySelectorAll('td');
-    cells.forEach((cell, index) => {
-      // نتجاهل العمود الأخير (الـ "Actions")
-      if (index < cells.length - 1) {
-        rowData.push(cell.textContent);
-      }
-    });
-    if (rowData.length > 0) {
-      data.push(rowData);
+
+  <script>
+    function extractTableData() {
+      const table = document.getElementById('applicationsTable');
+      const rows = table.querySelectorAll('tr');
+      const data = [];
+
+      rows.forEach(row => {
+        const rowData = [];
+        const cells = row.querySelectorAll('td');
+        cells.forEach((cell, index) => {
+          // نتجاهل العمود الأخير (الـ "Actions")
+          if (index < cells.length - 1) {
+            rowData.push(cell.textContent);
+          }
+        });
+        if (rowData.length > 0) {
+          data.push(rowData);
+        }
+      });
+
+      return data;
     }
-  });
 
-  return data;
-}
-
-</script>
+  </script>
 
 
 

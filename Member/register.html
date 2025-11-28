@@ -3,19 +3,22 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
-    <meta name="author" content="X Project">
-    
-    <meta property="og:title" content="X Project | Official Website">
-    <meta property="og:description" content="Join X Project, the leading student activity at Cairo University since 2012.">
-    <meta property="og:image" content="https://x-project.co/X-Project/img/logo.png">
-    <meta property="og:url" content="https://x-project.co/X-Project/home.html">
-    <meta property="og:type" content="website">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
+  <meta name="author" content="X Project">
 
-    <meta name="keywords" content="X Project, X project, x project, xproject, Xproject, XProject,Student Activity, Cairo University, Entrepreneurship, Leadership, University Events">
+  <meta property="og:title" content="X Project | Official Website">
+  <meta property="og:description"
+    content="Join X Project, the leading student activity at Cairo University since 2012.">
+  <meta property="og:image" content="https://x-project.co/X-Project/img/logo.png">
+  <meta property="og:url" content="https://x-project.co/X-Project/home.html">
+  <meta property="og:type" content="website">
 
-    <link rel="icon" href="../img/logo.png" type="image/png">
+  <meta name="keywords"
+    content="X Project, X project, x project, xproject, Xproject, XProject,Student Activity, Cairo University, Entrepreneurship, Leadership, University Events">
+
+  <link rel="icon" href="../img/logo.png" type="image/png">
 
   <title>Register | X Project</title>
   <link rel="stylesheet" href="style.css" />
@@ -105,7 +108,7 @@
       const committee = document.getElementById("committee").value;
 
       try {
-        const response = await fetch("https://x-project.co/public/api/register", {
+        const response = await fetch("https://x-project.co/api/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password, committee }),
@@ -114,25 +117,25 @@
         const result = await response.json();
 
         if (response.ok) {
-            // Auto login after registration
-            const loginRes = await fetch("https://x-project.co/public/api/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
-            });
+          // Auto login after registration
+          const loginRes = await fetch("https://x-project.co/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+          });
 
-            const loginResult = await loginRes.json();
+          const loginResult = await loginRes.json();
 
-            if (loginRes.ok) {
-                localStorage.setItem("token", loginResult.token);
-                localStorage.setItem("memberName", loginResult.user.name);
-                localStorage.setItem("memberCommittee", loginResult.user.committee);
-                window.location.href = "Home.html";
-            } else {
-                alert("Account created but auto-login failed. Please login manually.");
-                window.location.href = "login.html";
-            }
-            }
+          if (loginRes.ok) {
+            localStorage.setItem("token", loginResult.token);
+            localStorage.setItem("memberName", loginResult.user.name);
+            localStorage.setItem("memberCommittee", loginResult.user.committee);
+            window.location.href = "Home.html";
+          } else {
+            alert("Account created but auto-login failed. Please login manually.");
+            window.location.href = "login.html";
+          }
+        }
       } catch (err) {
         alert("Network error. Please try again.");
       }

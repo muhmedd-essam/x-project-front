@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Name Picker</title>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
         body {
             font-family: "Poppins", sans-serif;
             text-align: center;
@@ -90,6 +92,7 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
     <div class="container">
         <h2>Random Name Picker</h2>
@@ -120,55 +123,56 @@
 
         $(document).ready(function () {
             let hasPicked = false;
-            
+
             $("#pickButton").click(function () {
                 if (hasPicked) {
                     showAlert("You have already picked a name and cannot pick again.");
                     return;
                 }
-                
+
                 let userName = $("#name").val().trim();
                 let committee = $("#committee").val().trim();
-                
+
                 if (!userName || !committee) {
                     showAlert("You must enter your name and committee first.");
                     return;
                 }
-                
-                $("#spinner").show();
-                
-                let deviceId = getDeviceId(); // جلب معرف الجهاز
-               
-console.log("Sending request with data:", {
-    picker_name: userName,
-    picker_committee: committee,
-    device_id: deviceId
-});
 
-        $.post("https://x-project.co/public/api/pick-random", {
-            picker_name: userName,
-            picker_committee: committee,
-            device_id: deviceId  // إرسال معرف الجهاز مع الطلب
-        }, function(response) {
-            $("#spinner").hide();
-            if (response.picked) {
-                $("#output").text(`Picked: ${response.picked.name} (${response.picked.committee})`);
-                hasPicked = true;
-            } else {
-                showAlert(response.message);
-            }
-        }).fail(function(xhr) {
-            $("#spinner").hide();
-            if (xhr.status === 403) {
-                showAlert("You have already picked a name and cannot pick again.");
-            } else if (xhr.status === 404) {
-                showAlert("No available names to pick.");
-            } else {
-                showAlert("An error occurred while fetching data.");
-            }
-        });
+                $("#spinner").show();
+
+                let deviceId = getDeviceId(); // جلب معرف الجهاز
+
+                console.log("Sending request with data:", {
+                    picker_name: userName,
+                    picker_committee: committee,
+                    device_id: deviceId
+                });
+
+                $.post("https://x-project.co/api/pick-random", {
+                    picker_name: userName,
+                    picker_committee: committee,
+                    device_id: deviceId  // إرسال معرف الجهاز مع الطلب
+                }, function (response) {
+                    $("#spinner").hide();
+                    if (response.picked) {
+                        $("#output").text(`Picked: ${response.picked.name} (${response.picked.committee})`);
+                        hasPicked = true;
+                    } else {
+                        showAlert(response.message);
+                    }
+                }).fail(function (xhr) {
+                    $("#spinner").hide();
+                    if (xhr.status === 403) {
+                        showAlert("You have already picked a name and cannot pick again.");
+                    } else if (xhr.status === 404) {
+                        showAlert("No available names to pick.");
+                    } else {
+                        showAlert("An error occurred while fetching data.");
+                    }
+                });
             });
         });
     </script>
 </body>
+
 </html>

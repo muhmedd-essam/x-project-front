@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Form | X Project</title>
   <link rel="stylesheet" href="../instcss/style.css" />
   <link rel="icon" href="../logo.png" type="image/png">
@@ -14,10 +15,19 @@
       font-weight: bold;
       text-align: center;
     }
-    .success { background-color: #d4edda; color: #155724; }
-    .error { background-color: #f8d7da; color: #721c24; }
+
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <img src="../logo & Slogan.png" alt="logo" class="logo" />
@@ -54,7 +64,7 @@
       const formData = new FormData(form);
 
       try {
-        const res = await fetch('https://x-project.co/public/api/event-registrations', {
+        const res = await fetch('https://x-project.co/api/event-registrations', {
           method: 'POST',
           body: formData,
         });
@@ -75,4 +85,5 @@
     });
   </script>
 </body>
+
 </html>

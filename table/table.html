@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Table</title>
@@ -10,38 +11,47 @@
       padding: 20px;
       background-color: #eee;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       background-color: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-    th, td {
+
+    th,
+    td {
       border: 1px solid #ddd;
       padding: 10px;
       text-align: center;
     }
+
     th {
       background-color: #f0f0f0;
       font-weight: bold;
     }
+
     textarea {
       width: 100%;
       height: 40px;
       font-size: 14px;
       padding: 3px;
     }
+
     button {
       padding: 5px 10px;
       margin-top: 5px;
     }
+
     .img-preview {
       cursor: pointer;
       transition: 0.3s;
     }
+
     .img-preview:hover {
       transform: scale(1.1);
     }
+
     #imgModal {
       display: none;
       position: fixed;
@@ -51,8 +61,9 @@
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: rgba(0,0,0,0.8);
+      background-color: rgba(0, 0, 0, 0.8);
     }
+
     #imgModal img {
       margin: 5% auto;
       display: block;
@@ -61,85 +72,87 @@
     }
   </style>
 </head>
+
 <body>
 
-<div id="imgModal" onclick="this.style.display='none'">
-  <img id="modalImg" src="" alt="Expanded Image" />
-</div>
+  <div id="imgModal" onclick="this.style.display='none'">
+    <img id="modalImg" src="" alt="Expanded Image" />
+  </div>
 
-<input type="text" id="searchInput" placeholder="Search by name or number" onkeyup="filterTable()" style="margin-bottom: 10px; padding: 5px; width: 50%;">
+  <input type="text" id="searchInput" placeholder="Search by name or number" onkeyup="filterTable()"
+    style="margin-bottom: 10px; padding: 5px; width: 50%;">
 
-<select id="filterHR" onchange="filterTable()">
-  <option value="">Filter HR</option>
-  <option value="1">True</option>
-  <option value="0">False</option>
-  <option value="null">Not Checked</option>
-</select>
+  <select id="filterHR" onchange="filterTable()">
+    <option value="">Filter HR</option>
+    <option value="1">True</option>
+    <option value="0">False</option>
+    <option value="null">Not Checked</option>
+  </select>
 
-<select id="filterFR" onchange="filterTable()">
-  <option value="">Filter FR</option>
-  <option value="1">True</option>
-  <option value="0">False</option>
-  <option value="null">Not Checked</option>
-</select>
+  <select id="filterFR" onchange="filterTable()">
+    <option value="">Filter FR</option>
+    <option value="1">True</option>
+    <option value="0">False</option>
+    <option value="null">Not Checked</option>
+  </select>
 
-<select id="filterRole" onchange="filterTable()">
-  <option value="">Filter by Role</option>
-  <option value="Member">Member</option>
-  <option value="Delegate">Delegate</option>
-  <option value="Outcomer">Outcomer</option>
-</select>
+  <select id="filterRole" onchange="filterTable()">
+    <option value="">Filter by Role</option>
+    <option value="Member">Member</option>
+    <option value="Delegate">Delegate</option>
+    <option value="Outcomer">Outcomer</option>
+  </select>
 
-<table id="dataTable">
-  <thead>
-    <tr>
-      <th>Rank</th>
-      <th>Name</th>
-      <th>Number</th>
-      <th>Email</th>
-      <th>Photo</th>
-      <th>Committee</th>
-      <th>Attend</th>
-      <th>FR</th>
-      <th>Custom Message</th>
-      <th>Send Default</th>
-    </tr>
-  </thead>
-  <tbody id="dataBody"></tbody>
-</table>
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Number</th>
+        <th>Email</th>
+        <th>Photo</th>
+        <th>Committee</th>
+        <th>Attend</th>
+        <th>FR</th>
+        <th>Custom Message</th>
+        <th>Send Default</th>
+      </tr>
+    </thead>
+    <tbody id="dataBody"></tbody>
+  </table>
 
-<canvas id="ticketCanvas" width="1689" height="591" style="display:none;"></canvas>
-<script>
-function sanitizeNumber(number) {
-  if (!number) return '';
+  <canvas id="ticketCanvas" width="1689" height="591" style="display:none;"></canvas>
+  <script>
+    function sanitizeNumber(number) {
+      if (!number) return '';
 
-  // إزالة المسافات من الرقم
-  number = number.replace(/\s+/g, '');
+      // إزالة المسافات من الرقم
+      number = number.replace(/\s+/g, '');
 
-  // لو الرقم فعلاً 11 رقم ويبدأ بـ 0 → سيبه زي ما هو
-  if (/^0\d{10}$/.test(number)) {
-    return number;
-  }
+      // لو الرقم فعلاً 11 رقم ويبدأ بـ 0 → سيبه زي ما هو
+      if (/^0\d{10}$/.test(number)) {
+        return number;
+      }
 
-  // إزالة +20 أو +2 من البداية
-  number = number.replace(/^\+20?/, '');
+      // إزالة +20 أو +2 من البداية
+      number = number.replace(/^\+20?/, '');
 
-  // لو الرقم مبيبدأش بـ 0 → نضيف صفر
-  if (!number.startsWith('0')) {
-    number = '0' + number;
-  }
-console.log(number);
-  return number;
-}
+      // لو الرقم مبيبدأش بـ 0 → نضيف صفر
+      if (!number.startsWith('0')) {
+        number = '0' + number;
+      }
+      console.log(number);
+      return number;
+    }
 
   </script>
-<script>
-function renderTable(data) {
-  const tbody = document.getElementById('dataBody');
-  tbody.innerHTML = '';
-  data.forEach((entry, index) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
+  <script>
+    function renderTable(data) {
+      const tbody = document.getElementById('dataBody');
+      tbody.innerHTML = '';
+      data.forEach((entry, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
       <td>${index + 1}</td>
       <td>${entry.name}</td>
 <td>${sanitizeNumber(entry.whatsapp)}</td>
@@ -162,127 +175,128 @@ function renderTable(data) {
         <button onclick="sendDefaultMessage('${entry.name}', '${entry.whatsapp}', '${entry.applied_for}')">Send</button>
       </td>
     `;
-    tbody.appendChild(tr);
-  });
-}
-
-function showImage(url) {
-  const modal = document.getElementById('imgModal');
-  const modalImg = document.getElementById('modalImg');
-  modalImg.src = url;
-  modal.style.display = 'block';
-}
-
-function updateCheck(id, field, value) {
-  fetch(`https://x-project.co/public/api/openning/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify({ [field]: value })
-  })
-  .then(res => res.json())
-  .then(data => console.log('Updated:', data))
-  .catch(err => console.error('Error:', err));
-}
-
-function filterTable() {
-  const input = document.getElementById('searchInput').value.toLowerCase();
-  const filterHR = document.getElementById('filterHR').value;
-  const filterFR = document.getElementById('filterFR').value;
-  const filterRole = document.getElementById('filterRole').value.toLowerCase();
-
-  const rows = document.querySelectorAll('#dataBody tr');
-
-  rows.forEach(row => {
-    const name = row.children[1].textContent.toLowerCase();
-    const number = row.children[2].textContent.toLowerCase();
-    const role = row.children[5].textContent.toLowerCase(); // Assuming role is in the 6th column
-
-    const hrInput = row.querySelector('input[name^="hr"]:checked');
-    const frInput = row.querySelector('input[name^="fr"]:checked');
-    const hrChecked = hrInput ? hrInput.value : 'null';
-    const frChecked = frInput ? frInput.value : 'null';
-
-    const matchesSearch = name.includes(input) || number.includes(input);
-    const matchesHR = !filterHR || hrChecked === filterHR;
-    const matchesFR = !filterFR || frChecked === filterFR;
-    const matchesRole = !filterRole || role.includes(filterRole);
-
-    row.style.display = matchesSearch && matchesHR && matchesFR && matchesRole ? '' : 'none';
-  });
-}
-
-async function sendDefaultMessage(name, number, role) {
-    try {
-      const canvas = document.getElementById('ticketCanvas');
-      const ctx = canvas.getContext('2d');
-
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.src = '/X-Project/table/Ticket.png';
-      await new Promise(resolve => img.onload = resolve);
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = "black";
-      const wordCount = name.trim().split(/\s+/).length;
-      ctx.font = wordCount >= 3 ? "bold 60px Poppins" : "bold 80px Poppins";
-      ctx.fillText(name, 300, 300);
-
-      ctx.font = "30px Poppins";
-      ctx.fillText(role, 310, 428);
-      ctx.fillText(number, 500, 488);
-
-      const dataUrl = canvas.toDataURL("image/png");
-
-      const response = await fetch('/public/api/openning/upload-ticket', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ticket: dataUrl })
+        tbody.appendChild(tr);
       });
+    }
 
-      const result = await response.json();
+    function showImage(url) {
+      const modal = document.getElementById('imgModal');
+      const modalImg = document.getElementById('modalImg');
+      modalImg.src = url;
+      modal.style.display = 'block';
+    }
 
-      if (!result.url) {
-        alert("فشل رفع التذكرة");
-        return;
+    function updateCheck(id, field, value) {
+      fetch(`https://x-project.co/api/openning/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ [field]: value })
+      })
+        .then(res => res.json())
+        .then(data => console.log('Updated:', data))
+        .catch(err => console.error('Error:', err));
+    }
+
+    function filterTable() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const filterHR = document.getElementById('filterHR').value;
+      const filterFR = document.getElementById('filterFR').value;
+      const filterRole = document.getElementById('filterRole').value.toLowerCase();
+
+      const rows = document.querySelectorAll('#dataBody tr');
+
+      rows.forEach(row => {
+        const name = row.children[1].textContent.toLowerCase();
+        const number = row.children[2].textContent.toLowerCase();
+        const role = row.children[5].textContent.toLowerCase(); // Assuming role is in the 6th column
+
+        const hrInput = row.querySelector('input[name^="hr"]:checked');
+        const frInput = row.querySelector('input[name^="fr"]:checked');
+        const hrChecked = hrInput ? hrInput.value : 'null';
+        const frChecked = frInput ? frInput.value : 'null';
+
+        const matchesSearch = name.includes(input) || number.includes(input);
+        const matchesHR = !filterHR || hrChecked === filterHR;
+        const matchesFR = !filterFR || frChecked === filterFR;
+        const matchesRole = !filterRole || role.includes(filterRole);
+
+        row.style.display = matchesSearch && matchesHR && matchesFR && matchesRole ? '' : 'none';
+      });
+    }
+
+    async function sendDefaultMessage(name, number, role) {
+      try {
+        const canvas = document.getElementById('ticketCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = '/X-Project/table/Ticket.png';
+        await new Promise(resolve => img.onload = resolve);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "black";
+        const wordCount = name.trim().split(/\s+/).length;
+        ctx.font = wordCount >= 3 ? "bold 60px Poppins" : "bold 80px Poppins";
+        ctx.fillText(name, 300, 300);
+
+        ctx.font = "30px Poppins";
+        ctx.fillText(role, 310, 428);
+        ctx.fillText(number, 500, 488);
+
+        const dataUrl = canvas.toDataURL("image/png");
+
+        const response = await fetch('/public/api/openning/upload-ticket', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ticket: dataUrl })
+        });
+
+        const result = await response.json();
+
+        if (!result.url) {
+          alert("فشل رفع التذكرة");
+          return;
+        }
+
+        const message = `مساء الخير ${name}، معاك تيم fr من X project، بناكد عليك حجز التيكت الخاصه ب infinity X event، يوم الجمعه الموافق 4/7، الساعه 1 ظهرا في قاعة المؤتمرات، المجلس العربي للطفولة، شارع مكرم عبيد امام طارق السلاب و قباني للاثاث وبجوار مسجد الايمان\n\nرابط التذكرة الخاصة بيك:\n${result.url}\n\nخريطة جوجل:\nhttps://maps.app.goo.gl/yTMiqKH62D95FcaQ8`;
+
+        const cleanNumber = sanitizeNumber(number);
+        console.log(cleanNumber);
+        //  console.log(cleanNumber.slice(1));
+
+        const internationalNumber = '+2' + cleanNumber;
+        console.log(internationalNumber);
+        window.open(`https://wa.me/${internationalNumber}?text=${encodeURIComponent(message)}`, '_blank');
+      } catch (err) {
+        console.error("خطأ أثناء إرسال الرسالة:", err);
+        alert("حدث خطأ أثناء إرسال التذكرة");
       }
-
-      const message = `مساء الخير ${name}، معاك تيم fr من X project، بناكد عليك حجز التيكت الخاصه ب infinity X event، يوم الجمعه الموافق 4/7، الساعه 1 ظهرا في قاعة المؤتمرات، المجلس العربي للطفولة، شارع مكرم عبيد امام طارق السلاب و قباني للاثاث وبجوار مسجد الايمان\n\nرابط التذكرة الخاصة بيك:\n${result.url}\n\nخريطة جوجل:\nhttps://maps.app.goo.gl/yTMiqKH62D95FcaQ8`;
-
-      const cleanNumber = sanitizeNumber(number);
-      console.log(cleanNumber);
-    //  console.log(cleanNumber.slice(1));
-
-      const internationalNumber = '+2' + cleanNumber;
-      console.log(internationalNumber);
-      window.open(`https://wa.me/${internationalNumber}?text=${encodeURIComponent(message)}`, '_blank');
-    } catch (err) {
-      console.error("خطأ أثناء إرسال الرسالة:", err);
-      alert("حدث خطأ أثناء إرسال التذكرة");
     }
-  }
-function sendCustomMessage(button, number) {
-    const textarea = button.previousElementSibling;
-    const message = textarea.value.trim();
-    if (message) {
-      const cleanNumber = sanitizeNumber(number);
-      const internationalNumber = '2' + cleanNumber.slice(1); // eg. 01123456789 → 201123456789
-      const url = `https://wa.me/${internationalNumber}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
-    } else {
-      alert('Please write a message first.');
+    function sendCustomMessage(button, number) {
+      const textarea = button.previousElementSibling;
+      const message = textarea.value.trim();
+      if (message) {
+        const cleanNumber = sanitizeNumber(number);
+        const internationalNumber = '2' + cleanNumber.slice(1); // eg. 01123456789 → 201123456789
+        const url = `https://wa.me/${internationalNumber}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+      } else {
+        alert('Please write a message first.');
+      }
     }
-  }
 
-fetch('https://x-project.co/public/api/openning')
-  .then(res => res.json())
-  .then(data => renderTable(data))
-  .catch(err => console.error('Failed to fetch data:', err));
-</script>
+    fetch('https://x-project.co/api/openning')
+      .then(res => res.json())
+      .then(data => renderTable(data))
+      .catch(err => console.error('Failed to fetch data:', err));
+  </script>
 
 </body>
+
 </html>

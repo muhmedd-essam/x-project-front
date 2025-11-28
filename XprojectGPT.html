@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
+  <meta name="description"
+    content="X Project is a student activity established in 2012 at Cairo University, offering leadership, teamwork, and academic development.">
   <meta name="author" content="X Project">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
@@ -35,7 +37,7 @@
       background: #1f1f1f;
       border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -140,165 +142,167 @@
     }
   </style>
 </head>
+
 <body>
 
-<div class="chat-container">
-  <div class="logo">
-    <img src="logo & Slogan.png" alt="X Project Logo">
+  <div class="chat-container">
+    <div class="logo">
+      <img src="logo & Slogan.png" alt="X Project Logo">
+    </div>
+
+    <div class="messages" id="messages"></div>
+    <div id="typingIndicator">Assistant is typing...</div>
+
+    <form id="chatForm">
+      <input type="text" id="userInput" placeholder="Type your message..." required />
+      <button type="submit">Send</button>
+      <button type="button" id="stopButton" style="display: none;">⛔ Stop</button>
+      <button type="button" id="viewCodeBtn" style="display: none;">📝 View Code</button>
+    </form>
   </div>
 
-  <div class="messages" id="messages"></div>
-  <div id="typingIndicator">Assistant is typing...</div>
+  <script>
+    const form = document.getElementById('chatForm');
+    const input = document.getElementById('userInput');
+    const button = form.querySelector('button[type="submit"]');
+    const stopButton = document.getElementById('stopButton');
+    const viewCodeBtn = document.getElementById('viewCodeBtn');
+    const messages = document.getElementById('messages');
+    const typingIndicator = document.getElementById('typingIndicator');
 
-  <form id="chatForm">
-    <input type="text" id="userInput" placeholder="Type your message..." required />
-    <button type="submit">Send</button>
-    <button type="button" id="stopButton" style="display: none;">⛔ Stop</button>
-    <button type="button" id="viewCodeBtn" style="display: none;">📝 View Code</button>
-  </form>
-</div>
-
-<script>
-  const form = document.getElementById('chatForm');
-  const input = document.getElementById('userInput');
-  const button = form.querySelector('button[type="submit"]');
-  const stopButton = document.getElementById('stopButton');
-  const viewCodeBtn = document.getElementById('viewCodeBtn');
-  const messages = document.getElementById('messages');
-  const typingIndicator = document.getElementById('typingIndicator');
-
-  const chatHistory = [];
-  window.addEventListener('DOMContentLoaded', () => {
-    const welcomeMessage = '👋 Welcome to X-Project GPT!\nHow can I assist you today?';
-    appendMessageTypingEffect(welcomeMessage, 'ai');
-  });
-
-  let typingInterval = null;
-
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const userMessage = input.value.trim();
-    if (!userMessage) return;
-
-    chatHistory.push({ role: 'user', content: userMessage });
-    appendMessage(userMessage, 'user');
-    input.value = '';
-
-    typingIndicator.style.display = 'block';
-    input.disabled = true;
-    button.disabled = true;
-    stopButton.style.display = 'none';
-    viewCodeBtn.style.display = 'none';
-
-    const res = await fetch('https://x-project.co/public/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: chatHistory })
+    const chatHistory = [];
+    window.addEventListener('DOMContentLoaded', () => {
+      const welcomeMessage = '👋 Welcome to X-Project GPT!\nHow can I assist you today?';
+      appendMessageTypingEffect(welcomeMessage, 'ai');
     });
 
-    const data = await res.json();
-    const aiReply = data.reply;
-    chatHistory.push({ role: 'assistant', content: aiReply });
-    appendMessageTypingEffect(aiReply, 'ai');
-  });
+    let typingInterval = null;
 
-  stopButton.addEventListener('click', () => {
-    if (typingInterval) {
-      clearInterval(typingInterval);
-      typingInterval = null;
-    }
-    typingIndicator.style.display = 'none';
-    input.disabled = false;
-    button.disabled = false;
-    stopButton.style.display = 'none';
-    viewCodeBtn.style.display = 'none';
-    input.focus();
-  });
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const userMessage = input.value.trim();
+      if (!userMessage) return;
 
-  function detectDirection(text) {
-    const arabicRegex = /[\u0600-\u06FF]/;
-    return arabicRegex.test(text) ? 'rtl' : 'ltr';
-  }
+      chatHistory.push({ role: 'user', content: userMessage });
+      appendMessage(userMessage, 'user');
+      input.value = '';
 
-  function appendMessage(text, role) {
-    const div = document.createElement('div');
-    const dir = detectDirection(text);
-    div.className = `message ${role} ${dir}`;
-    let formattedText = text
-  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-  .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#4fc3f7;">$1</a>');
-div.innerHTML = formattedText;    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
-  }
+      typingIndicator.style.display = 'block';
+      input.disabled = true;
+      button.disabled = true;
+      stopButton.style.display = 'none';
+      viewCodeBtn.style.display = 'none';
 
-  function appendMessageTypingEffect(text, role) {
-    const div = document.createElement('div');
-    const dir = detectDirection(text);
-    div.className = `message ${role} ${dir}`;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
+      const res = await fetch('https://x-project.co/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHistory })
+      });
 
-    let safeText = text
-  .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-  .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#4fc3f7;">$1</a>');
-    let i = 0;
-    let displayedText = "";
+      const data = await res.json();
+      const aiReply = data.reply;
+      chatHistory.push({ role: 'assistant', content: aiReply });
+      appendMessageTypingEffect(aiReply, 'ai');
+    });
 
-    typingIndicator.style.display = 'block';
-    stopButton.style.display = 'inline-block';
-
-    typingInterval = setInterval(() => {
-      if (i >= safeText.length) {
+    stopButton.addEventListener('click', () => {
+      if (typingInterval) {
         clearInterval(typingInterval);
         typingInterval = null;
-        typingIndicator.style.display = 'none';
-        input.disabled = false;
-        button.disabled = false;
-        stopButton.style.display = 'none';
-        input.focus();
-
-        if (containsCode(text)) {
-          viewCodeBtn.style.display = 'inline-block';
-          viewCodeBtn.onclick = () => openCodeWindow(text);
-        } else {
-          viewCodeBtn.style.display = 'none';
-        }
-
-        return;
       }
+      typingIndicator.style.display = 'none';
+      input.disabled = false;
+      button.disabled = false;
+      stopButton.style.display = 'none';
+      viewCodeBtn.style.display = 'none';
+      input.focus();
+    });
 
-      displayedText += safeText.charAt(i);
-      div.innerHTML = displayedText;
-      i++;
-      messages.scrollTop = messages.scrollHeight;
-    }, 25);
-  }
-
-  function containsCode(text) {
-    return /<[^>]+>|```|function |def |console\.log|class |#include/g.test(text);
-  }
-
-  function openCodeWindow(code) {
-    const newWin = window.open('', '_blank');
-    if (!newWin) return alert("Please allow pop-ups.");
-
-    let language = 'txt';
-    let cleanedCode = code;
-
-    const langMatch = code.match(/```(\w+)/);
-    if (langMatch) {
-      language = langMatch[1];
-      cleanedCode = code.replace(/```[\w]*\n?/g, '').replace(/```/g, '');
+    function detectDirection(text) {
+      const arabicRegex = /[\u0600-\u06FF]/;
+      return arabicRegex.test(text) ? 'rtl' : 'ltr';
     }
 
-    newWin.document.write(`
+    function appendMessage(text, role) {
+      const div = document.createElement('div');
+      const dir = detectDirection(text);
+      div.className = `message ${role} ${dir}`;
+      let formattedText = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#4fc3f7;">$1</a>');
+      div.innerHTML = formattedText; messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function appendMessageTypingEffect(text, role) {
+      const div = document.createElement('div');
+      const dir = detectDirection(text);
+      div.className = `message ${role} ${dir}`;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+
+      let safeText = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#4fc3f7;">$1</a>');
+      let i = 0;
+      let displayedText = "";
+
+      typingIndicator.style.display = 'block';
+      stopButton.style.display = 'inline-block';
+
+      typingInterval = setInterval(() => {
+        if (i >= safeText.length) {
+          clearInterval(typingInterval);
+          typingInterval = null;
+          typingIndicator.style.display = 'none';
+          input.disabled = false;
+          button.disabled = false;
+          stopButton.style.display = 'none';
+          input.focus();
+
+          if (containsCode(text)) {
+            viewCodeBtn.style.display = 'inline-block';
+            viewCodeBtn.onclick = () => openCodeWindow(text);
+          } else {
+            viewCodeBtn.style.display = 'none';
+          }
+
+          return;
+        }
+
+        displayedText += safeText.charAt(i);
+        div.innerHTML = displayedText;
+        i++;
+        messages.scrollTop = messages.scrollHeight;
+      }, 25);
+    }
+
+    function containsCode(text) {
+      return /<[^>]+>|```|function |def |console\.log|class |#include/g.test(text);
+    }
+
+    function openCodeWindow(code) {
+      const newWin = window.open('', '_blank');
+      if (!newWin) return alert("Please allow pop-ups.");
+
+      let language = 'txt';
+      let cleanedCode = code;
+
+      const langMatch = code.match(/```(\w+)/);
+      if (langMatch) {
+        language = langMatch[1];
+        cleanedCode = code.replace(/```[\w]*\n?/g, '').replace(/```/g, '');
+      }
+
+      newWin.document.write(`
       <pre style="background:#1e1e1e;color:#f1f1f1;padding:20px;font-size:16px;font-family:monospace;white-space:pre-wrap;">
 ${cleanedCode.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
       </pre>
     `);
-    newWin.document.title = "Code Snippet - " + language;
-  }
-</script>
+      newWin.document.title = "Code Snippet - " + language;
+    }
+  </script>
 
 </body>
+
 </html>

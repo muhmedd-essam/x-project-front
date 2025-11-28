@@ -127,7 +127,7 @@
             <option value="Public Relations">Public Relations</option>
             <option value="Logistics & Events">Logistics & Events</option>
             <option value="Fundraising">Fundraising</option> -->
-            <option value="HR & QM">Human Resources & Quality Management</option>
+            <option value="Human Resources">Human Resources</option>
           </select>
         </div>
       </div>
@@ -173,7 +173,7 @@
 
         // Set default filter to 'Marketing'
         const committeeFilter = document.querySelector("#committeeFilter");
-        committeeFilter.value = 'HR & QM'; // Set the default filter to 'Marketing'
+        committeeFilter.value = 'Human Resources'; // Set the default filter to 'Marketing'
 
         filterData(); // Apply filter immediately after setting the default value
       } catch (error) {
@@ -260,7 +260,7 @@
 
     async function changeCalledStatus(id, called) {
       try {
-        const response = await fetch(`https://x-project.co/public/api/applications/called/${id}`, {
+        const response = await fetch(`https://x-project.co/api/applications/called/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -328,7 +328,7 @@
     async function changeStatus(id, status) {
       try {
         const response = await fetch(
-          `https://x-project.co/public/api/applications/change-status/${id}`,
+          `https://x-project.co/api/applications/change-status/${id}`,
           {
             method: "PUT",
             headers: {
