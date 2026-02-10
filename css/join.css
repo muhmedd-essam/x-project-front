@@ -237,41 +237,50 @@ nav .dropdown li a {
 .form-control {
   position: relative;
   margin: 1.25rem 0 2.5rem;
+  min-height: 3.5rem;
 }
 
-.form-control input {
+.form-control input,
+.form-control textarea {
   background: transparent;
   border: 0;
   border-bottom: 1px var(--dark-color) solid;
   display: block;
   width: 100%;
-  padding: 1.25rem 0;
+  padding: 1.25rem 0 0.5rem 0;
   font-size: 1.125rem;
   color: var(--light-color);
+  outline: none;
 }
 
-.form-control input:focus {
+.form-control textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.form-control input:focus,
+.form-control textarea:focus {
   outline: 0;
   border-bottom-color: var(--dark-orange);
 }
 
 .form-control label {
   position: absolute;
-  top: 0.938rem;
-  left: 10;
-}
-
-.form-control label span {
-  display: inline-block;
+  top: 1.25rem;
+  left: 0;
   font-size: 1.125rem;
-  min-width: 0.313rem;
-  transition: 0.3s cubic-bezier (0.53, 0.246, 0.265, 1.66);
+  color: var(--gray-color);
+  pointer-events: none;
+  transition: 0.25s ease;
 }
 
-.form-control input:focus + label span,
-.form-control input:valid + label span {
+.form-control input:focus + label,
+.form-control input:valid + label,
+.form-control textarea:focus + label,
+.form-control textarea:valid + label {
+  top: 0;
   color: var(--orange-color);
-  transform: translateY(-1.875rem);
+  font-size: 0.875rem;
 }
 
 @media (max-width: 1050px) {
